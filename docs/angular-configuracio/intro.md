@@ -4,31 +4,12 @@ sidebar_position: 1
 
 # Intro
 
-Docusaurus creates a **page for each blog post**, but also a **blog index page**, a **tag system**, an **RSS** feed...
+El següent document és una guia d'instal·lació de l'entorn de desenvolupament d'un plugin d'Harmonix (HxPlugin) en Angular i la inicialització bàsica d'un **HxPlugin**.
 
-## Create your first Post
+  
 
-Create a file at `blog/2021-02-28-greetings.md`:
+Els plugins d'Harmonix desenvolupats en Angular tenen certes limitacions. Veure [_Annex 2- Limitacions Angular a Harmonix_](https://app.clickup.com/9012015559/v/dc/8cjgwe7-2192/8cjgwe7-6932?block=block-684b2b08-4e4e-4cd7-a83f-57381a91b60d)
 
-```md title="blog/2021-02-28-greetings.md"
----
-slug: greetings
-title: Greetings!
-authors:
-  - name: Joel Marcey
-    title: Co-creator of Docusaurus 1
-    url: https://github.com/JoelMarcey
-    image_url: https://github.com/JoelMarcey.png
-  - name: Sébastien Lorber
-    title: Docusaurus maintainer
-    url: https://sebastienlorber.com
-    image_url: https://github.com/slorber.png
-tags: [greetings]
----
+  
 
-Congratulations, you have made your first post!
-
-Feel free to play around and edit this post as much as you like.
-```
-
-A new blog post is now available at [http://localhost:3000/blog/greetings](http://localhost:3000/blog/greetings).
+L'exemple següent s'explicarà fent servir el Shell de l'ETC de Primària com exemple, però és extrapol·lable a qualsevol altre shell. Tot Shell ha de ser publicat i consumible per un plugin.

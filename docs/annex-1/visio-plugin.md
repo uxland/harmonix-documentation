@@ -4,54 +4,30 @@ sidebar_position: 2
 
 # 2- Visió ràpida Plugin
 
-Documents are **groups of pages** connected through:
+I per acabar, tenim els "**plugins**", que no són més que paquets que desenvolupa un 3r, que es compilen, i que un cop publicats a un "Plugin Store" , estan llestos per ser consumits pel Shell.
 
-- a **sidebar**
-- **previous/next navigation**
-- **versioning**
+  
 
-## Create your first Doc
+Cada plugin, necessita compilar-se i fer un bundle, generant un arxiu JavaScript, per exemple:
 
-Create a Markdown file at `docs/hello.md`:
+**_plugin1-version-23.45.js._**
 
-```md title="docs/hello.md"
-# Hello
+  
 
-This is my **first Docusaurus document**!
-```
+Aquests plugins, en el seu Javascript necessiten definir un **punt d'entrada** per iniciar el seu cicle de vida. En aquest punt d'iniciació, cada plugin rep un objecte provinent del Shell, anomenat **api**. Amb aquesta API, el plugin té tot el necessari per funcionar dins del Shell. Per exemple, té una forma per registrar cada component a cada regió que s'hagi definit (menú, header, main, footer). Té una forma per escoltar events que un altre plugin hagi pogut comunicar, o un client HTTP per fer crides a un backend, o una forma per ensenyar un missatge de notificació en pantalla, entre moltes altres coses. Això serà un exemple de punt d'entrada d'un plugin
 
-A new document is now available at [http://localhost:3000/docs/hello](http://localhost:3000/docs/hello).
+  
 
-## Configure the Sidebar
+```typescript
+export const initialize = (api: PrimariaApi) =>{
 
-Docusaurus automatically **creates a sidebar** from the `docs` folder.
+  //registre de Web Components a l'esquelet del Shell primària
+  api.registerView(shellRegions.menu, ())=> new Plugin1MenuWebComponent());
+  api.registerView(shellRegions.header, ()=> new Plugin1HeaderWebComponent);
+  api.registerView(shellRegions.footer, ()=> new Plugin1FooterWebComponent());
+  api.registerView(shellRegions.main, ()=> new Plugin1MainWebComponent());
 
-Add metadata to customize the sidebar label and position:
-
-```md title="docs/hello.md" {1-4}
----
-sidebar_label: 'Hi!'
-sidebar_position: 3
----
-
-# Hello
-
-This is my **first Docusaurus document**!
-```
-
-It is also possible to create your sidebar explicitly in `sidebars.js`:
-
-```js title="sidebars.js"
-export default {
-  tutorialSidebar: [
-    'intro',
-    // highlight-next-line
-    'hello',
-    {
-      type: 'category',
-      label: 'Tutorial',
-      items: ['tutorial-basics/create-a-document'],
-    },
-  ],
-};
+  //fer una crida per obtenir dades del meu plugin
+  api.httpClient.request(`${apiUrl}/get-plugin-data`).then((res: any) => { console.log(res) });
+}
 ```

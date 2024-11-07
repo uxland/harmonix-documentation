@@ -4,31 +4,13 @@ sidebar_position: 3
 
 # Funcionalitats
 
-Docusaurus creates a **page for each blog post**, but also a **blog index page**, a **tag system**, an **RSS** feed...
+*   **Servei de descobriment**. Servei que proporciona el llistat de plugins disponibles per a la instància d'Harmonix i la seva ubicació.
+*   **Gestió d'usuaris i proveïdors.** Proporcionarà un panell d'administració que permetrà la creació i administració d'usuaris i rols.
+*   **Desplegament independent de plugins**. Mitjançant una API, els proveïdors podran desplegar noves versions dels seus plugins de forma independent.
+*   **Control de versions**. Hi haurà un panell d'administració que permetrà controlar la versió retornada en el servei de descobriment.
+*   **Gestió de regles**. Permetrà la configuració de regles sobre els plugins retornats en el servei de desplegament, basades en condicions (per exemple, rol d'usuari).
+*   **CDN.** Els plugins desplegaran els seus arxius compilats al servidor de Plugin Store perquè serveixi el contingut, evitant que els plugins requereixin una infraestructura pròpia.
 
-## Create your first Post
+  
 
-Create a file at `blog/2021-02-28-greetings.md`:
-
-```md title="blog/2021-02-28-greetings.md"
----
-slug: greetings
-title: Greetings!
-authors:
-  - name: Joel Marcey
-    title: Co-creator of Docusaurus 1
-    url: https://github.com/JoelMarcey
-    image_url: https://github.com/JoelMarcey.png
-  - name: Sébastien Lorber
-    title: Docusaurus maintainer
-    url: https://sebastienlorber.com
-    image_url: https://github.com/slorber.png
-tags: [greetings]
----
-
-Congratulations, you have made your first post!
-
-Feel free to play around and edit this post as much as you like.
-```
-
-A new blog post is now available at [http://localhost:3000/blog/greetings](http://localhost:3000/blog/greetings).
+**NOTA**: El Framework Harmonix no disposa d'una infraestructura pròpia i per tant, un Plugin Store propi. Actualment, cada projecte d'aplicació basat en Harmonix ha de disposar d'un Plugin Store personalitzat amb la seva infraestructura i el seu CI/CD corresponent, així com la seva aplicació frontal i backend per gestionar els rols i permisos específics d'aquell projecte.

@@ -4,54 +4,16 @@ sidebar_position: 2
 
 # Cicle de Vida Offline
 
-Documents are **groups of pages** connected through:
+El cicle de vida offline consisteix en:
 
-- a **sidebar**
-- **previous/next navigation**
-- **versioning**
+1. Inicialització/Estructuració
+2. Desenvolupament i proves
+3. Publicació
+4. Manteniment
+5. Actualitzacions
+6. Desaprovació
+7. Desactivació
 
-## Create your first Doc
+  
 
-Create a Markdown file at `docs/hello.md`:
-
-```md title="docs/hello.md"
-# Hello
-
-This is my **first Docusaurus document**!
-```
-
-A new document is now available at [http://localhost:3000/docs/hello](http://localhost:3000/docs/hello).
-
-## Configure the Sidebar
-
-Docusaurus automatically **creates a sidebar** from the `docs` folder.
-
-Add metadata to customize the sidebar label and position:
-
-```md title="docs/hello.md" {1-4}
----
-sidebar_label: 'Hi!'
-sidebar_position: 3
----
-
-# Hello
-
-This is my **first Docusaurus document**!
-```
-
-It is also possible to create your sidebar explicitly in `sidebars.js`:
-
-```js title="sidebars.js"
-export default {
-  tutorialSidebar: [
-    'intro',
-    // highlight-next-line
-    'hello',
-    {
-      type: 'category',
-      label: 'Tutorial',
-      items: ['tutorial-basics/create-a-document'],
-    },
-  ],
-};
-```
+Mentre que les fases (1), (2) i (4) són purament locals, les fases (3), (5), (6) i (7) implicaran el servei de Plugin Store. Un servei de Plugin Store hauria de donar suport a totes aquestes accions. Normalment, a la fase (3) també es pot fer un desplegament progressiu, que implicaria començar només amb un subconjunt d'usuaris fins que el plugin arribi al nivell de maduresa desitjat.

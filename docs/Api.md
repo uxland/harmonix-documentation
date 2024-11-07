@@ -2,46 +2,20 @@
 sidebar_position: 7
 ---
 
-# Api
+# API
 
-Let's discover **Docusaurus in less than 5 minutes**.
+Harmonix proporciona una **API** als plugins per tal d'**injectar els components en les diferents regions** del Shell i gestionar el seu cicle de vida, així com un objecte d'**informació del plugin**, i algunes funcionalitats més.
 
-## Getting Started
-
-Get started by **creating a new site**.
-
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
-
-### What you'll need
-
-- [Node.js](https://nodejs.org/en/download/) version 18.0 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
-
-## Generate a new site
-
-Generate a new Docusaurus site using the **classic template**.
-
-The classic template will automatically be added to your project after you run the command:
-
-```bash
-npm init docusaurus@latest my-website classic
+```scss
+export interface HarmonixApi {
+    regionManager: HarmonixRegionManager;
+    pluginInfo: PluginInfo;
+    createLocaleManager(messages: LocalizationMessages): Promise<HarmonixLocaleApi>;
+}
 ```
 
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
+  
 
-The command also installs all necessary dependencies you need to run Docusaurus.
+Ara bé, cada instància d'aplicació Shell, pot tenir les seves **necessitats diferents**. És per això, que el que es recomana fer, és que el **Shell declari una nova API extenent la d'Harmonix**, dotant així als plugins de noves funcionalitats lligades al negoci i necessitats per aquella aplicació en concret.
 
-## Start your site
-
-Run the development server:
-
-```bash
-cd my-website
-npm run start
-```
-
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
-
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
-
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads automatically** and displays your changes.
+En aquestes necessitats podem trobar serveis d'interacció, modals, autenticació, traduccions, un gestor d'estat global, etcètera. Podeu veure un exemple d'extensió de l'Api, en el [document t'integració de l'ETC de Primària](https://doc.clickup.com/9012015559/d/h/8cjgwe7-3532/b3a23bc489160e1), una aplicació basada en Harmonix.

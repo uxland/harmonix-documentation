@@ -4,9 +4,20 @@ sidebar_position: 2
 
 # 1- API HarmonixRegionManager
 
-Un plugin és una llibreria/paquet de Node.js que exporta almenys una funció `initialize` que rep una API de plugin per a connectar components a una instància de Harmonix Shell que l'allotja.
+Harmonix té una api per defecte per fer tota aquesta gestió de injecció de vistes a regions.
 
-El cicle de vida d'un plugin existeix en dues categories diferents:
+```plain
+export interface HarmonixRegionManager {
+    registerView(regionName: string, view: HarmonixViewDefinition): Promise<void>;
+    removeView(regionName: string, viewId: string): Promise<void>;
+    activateView(regionName: string, viewId: string): Promise<void>;
+    deactivateView(regionName: string, viewId: string): Promise<void>;
+    getRegion(regionName: string): Promise<IRegion>;
+    isViewActive(regionName: string, viewId: string): Promise<boolean>;
+    containsView(regionName: string, viewId: string): Promise<boolean>;
+}
+```
 
-*   **Cicle de vida offline**, és a dir, tot el que fa referència al desenvolupament, manteniment i provisionament d'un plugin.
-*   **Cicle de vida online**, és a dir, tot el que fa referència a carregar i avaluar un plugin dins d'una aplicació shell.
+  
+
+Cada plugin pot declarar diferents vistes i injectar-les per les diferents regions.

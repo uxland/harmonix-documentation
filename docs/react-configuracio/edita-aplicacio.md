@@ -4,31 +4,53 @@ sidebar_position: 5
 
 # 5- Edita la teva aplicació
 
-Docusaurus creates a **page for each blog post**, but also a **blog index page**, a **tag system**, an **RSS** feed...
+Pots començar per editar la teva aplicació obrint el directori del teu projecte en el teu editor de codi favorit.
 
-## Create your first Post
+  
 
-Create a file at `blog/2021-02-28-greetings.md`:
+*   Substitueix les regles d'estil de l'arxiu `index.css` per les següents:
 
-```md title="blog/2021-02-28-greetings.md"
----
-slug: greetings
-title: Greetings!
-authors:
-  - name: Joel Marcey
-    title: Co-creator of Docusaurus 1
-    url: https://github.com/JoelMarcey
-    image_url: https://github.com/JoelMarcey.png
-  - name: Sébastien Lorber
-    title: Docusaurus maintainer
-    url: https://sebastienlorber.com
-    image_url: https://github.com/slorber.png
-tags: [greetings]
----
+```css
+body {
+  margin: 0;
+  overflow: hidden;
+  font-size: 14px;
+  background-color: #f5f6fa;
+  font-family: 'Roboto', sans-serif;
+  pointer-events: auto !important;
+  width: 100%;
+  height: 100%;
+}
 
-Congratulations, you have made your first post!
-
-Feel free to play around and edit this post as much as you like.
+html {
+  font-size: 14px;
+  overflow: hidden;
+  font-family: 'Roboto', sans-serif;
+  width: 100%;
+  height: 100%;
+}
 ```
 
-A new blog post is now available at [http://localhost:3000/blog/greetings](http://localhost:3000/blog/greetings).
+I a continuació enllaça aquest arxiu `index.css` al head del teu arxiu `index.html`:
+
+```css
+  <link rel="stylesheet" href="./src/index.css" />
+```
+
+  
+
+*   Crea un arxiu `sandbox.ts` a la carpeta src del projecte
+*   Importa aquest arxiu `sandbox.ts` en el teu `index.html` com script d'entrada. Per a això, modifica la ruta de la següent línia per la del sandbox:
+
+```xml
+  <script type="module" src="/src/main.tsx"></script>
+```
+
+*   Al `index.html` , dins de l'etiqueta _body_ pots eliminar el següent:
+
+  
+
+```html
+<div id="root"></div>
+```
+

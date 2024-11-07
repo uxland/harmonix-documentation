@@ -4,44 +4,34 @@ sidebar_position: 3
 
 # Flux de treball
 
-Let's discover **Docusaurus in less than 5 minutes**.
+Harmonix ha estat creat per construir aplicacions on l'**experiència de desenvolupament** esdevé un punt clau, per això la comoditat pel desenvolupador és una prioritat.
 
-## Getting Started
+  
 
-Get started by **creating a new site**.
+Això s'aconsegueix gràcies a **l'autonomia** de desenvolupament de plugins, juntament amb el conjunt d'eines de configuració **senzilla i estàndard.**
 
-Or **try Docusaurus immediately** with **[docusaurus.new](https://docusaurus.new)**.
+  
 
-### What you'll need
+El **flux de desenvolupament** passa per una **primera fase de creació del Shell** basat en Harmonix, on es declaren les regions principals i es configuren les eines necessàries fins que l'aplicació esdevé en un estat de "**fàbrica de plugins**". És llavors quan els desenvolupadors poden començar a crear plugins amb el sandbox proporcionat i que aniran a parar en aquest Shell.
 
-- [Node.js](https://nodejs.org/en/download/) version 18.0 or above:
-  - When installing Node.js, you are recommended to check all checkboxes related to dependencies.
+  
 
-## Generate a new site
+Els plugins són **compilats i desplegats al Plugin Store**, i des d'allà es portarà un control sobre les versions de cada plugin i es configurarà els rols i permisos necessaris. Finalment, l'aplicació amb el motor Harmonix obtindrà aquests plugins i els **executarà asíncronament**, construint així l'aplicació final.
 
-Generate a new Docusaurus site using the **classic template**.
+A continuació, es detalla el **flux d'execució** d'una aplicació Harmonix:
 
-The classic template will automatically be added to your project after you run the command:
+  
 
-```bash
-npm init docusaurus@latest my-website classic
-```
+0- L'usuari obre l'aplicació al Browser al domini corresponent
 
-You can type this command into Command Prompt, Powershell, Terminal, or any other integrated terminal of your code editor.
+1- El shell, mitjançant Harmonix, crea l'esquelet, l'objecte API i inicia el procés principal d'obtenció de plugins
 
-The command also installs all necessary dependencies you need to run Docusaurus.
+2- Es descarreguen els fitxers de cada plugin publicats al Plugin Store
 
-## Start your site
+3- Es crida la funció d'iniciació de cada plugin de forma paral·lela
 
-Run the development server:
+4- Cada plugin realitza les tasques que ha definit en el seu punt d'inicialització
 
-```bash
-cd my-website
-npm run start
-```
+5- La UI es va component a mesura que es van resolent els registres de components de plugins
 
-The `cd` command changes the directory you're working with. In order to work with your newly created Docusaurus site, you'll need to navigate the terminal there.
-
-The `npm run start` command builds your website locally and serves it through a development server, ready for you to view at http://localhost:3000/.
-
-Open `docs/intro.md` (this page) and edit some lines: the site **reloads automatically** and displays your changes.
+7- L'usuari veu finalment una sola aplicació composta de diferents plugins i Web Components i pot interactuar amb ella.

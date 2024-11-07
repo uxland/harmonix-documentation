@@ -4,31 +4,4 @@ sidebar_position: 2
 
 # 2- Tractar l'API que es rep en el muntatge, com a singleton
 
-Docusaurus creates a **page for each blog post**, but also a **blog index page**, a **tag system**, an **RSS** feed...
-
-## Create your first Post
-
-Create a file at `blog/2021-02-28-greetings.md`:
-
-```md title="blog/2021-02-28-greetings.md"
----
-slug: greetings
-title: Greetings!
-authors:
-  - name: Joel Marcey
-    title: Co-creator of Docusaurus 1
-    url: https://github.com/JoelMarcey
-    image_url: https://github.com/JoelMarcey.png
-  - name: Sébastien Lorber
-    title: Docusaurus maintainer
-    url: https://sebastienlorber.com
-    image_url: https://github.com/slorber.png
-tags: [greetings]
----
-
-Congratulations, you have made your first post!
-
-Feel free to play around and edit this post as much as you like.
-```
-
-A new blog post is now available at [http://localhost:3000/blog/greetings](http://localhost:3000/blog/greetings).
+Quan inicialitzem un plugin, rebem per paràmetre l'objecte API. És important no fer gaires tractaments en aquesta API, com clonar l'objecte, afegir referències innecessàries o altres males pràctiques. Hem de tractar aquest objecte API com un **singleton únic** i que serà la font de la veritat i les eines necessàries per treballar. Una bona pràctica seria crear un contenidor de dependències (per exemple el que crea la llibreria **_inversify_**) i afegir l'API com a dependència al contenidor perquè pugui resoldre-la en qualsevol punt del nostre codi en forma de singleton.

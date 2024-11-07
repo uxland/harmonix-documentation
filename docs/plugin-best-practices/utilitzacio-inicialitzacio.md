@@ -4,31 +4,15 @@ sidebar_position: 3
 
 # 3- Utilitzar la inicialització correctament com a punt d'entrada i inici del cicle de vida del teu plugin
 
-Docusaurus creates a **page for each blog post**, but also a **blog index page**, a **tag system**, an **RSS** feed...
+En la funció "_initialize_" que s'ha d'implementar, és un bon punt per fer les primeres configuracions necessàries del teu plugin, així com les primeres crides a serveis i injecció de vistes a regions.
 
-## Create your first Post
+Exemple:
 
-Create a file at `blog/2021-02-28-greetings.md`:
-
-```md title="blog/2021-02-28-greetings.md"
----
-slug: greetings
-title: Greetings!
-authors:
-  - name: Joel Marcey
-    title: Co-creator of Docusaurus 1
-    url: https://github.com/JoelMarcey
-    image_url: https://github.com/JoelMarcey.png
-  - name: Sébastien Lorber
-    title: Docusaurus maintainer
-    url: https://sebastienlorber.com
-    image_url: https://github.com/slorber.png
-tags: [greetings]
----
-
-Congratulations, you have made your first post!
-
-Feel free to play around and edit this post as much as you like.
+```typescript
+export const initialize = async (api: PrimariaApi) => {
+  registerViews(api); //registre de vistes a regions
+  await initializeLocalization(api); //inicialització de les traduccions del plugin
+  bootstrapFeatures(api); //inicialització dels casos d'ús del plugin
+  return Promise.resolve();
+};
 ```
-
-A new blog post is now available at [http://localhost:3000/blog/greetings](http://localhost:3000/blog/greetings).

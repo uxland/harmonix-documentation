@@ -4,31 +4,58 @@ sidebar_position: 9
 
 # 9- Declarar una col·lecció de plugins
 
-Docusaurus creates a **page for each blog post**, but also a **blog index page**, a **tag system**, an **RSS** feed...
+S'ha de declarar cada plugin que es vulgui inicialitzar en el shell. Per a això, podem crear un arxiu `plugins.ts` on exportarem l'array de les definicions dels plugins. A cada element l'indicarem l'id i una funció per a importar-ho. Exemple:
 
-## Create your first Post
+  
 
-Create a file at `blog/2021-02-28-greetings.md`:
+```coffeescript
+import { PluginDefinition, Plugin } from "@uxland/primary-shell";
 
-```md title="blog/2021-02-28-greetings.md"
----
-slug: greetings
-title: Greetings!
-authors:
-  - name: Joel Marcey
-    title: Co-creator of Docusaurus 1
-    url: https://github.com/JoelMarcey
-    image_url: https://github.com/JoelMarcey.png
-  - name: Sébastien Lorber
-    title: Docusaurus maintainer
-    url: https://sebastienlorber.com
-    image_url: https://github.com/slorber.png
-tags: [greetings]
----
+const importer: () => Promise<Plugin> = () => import("./plugin") as any;
 
-Congratulations, you have made your first post!
-
-Feel free to play around and edit this post as much as you like.
+export const plugins: PluginDefinition[] = [{ pluginId: "react-plugin", importer: importer }];
 ```
 
-A new blog post is now available at [http://localhost:3000/blog/greetings](http://localhost:3000/blog/greetings).
+  
+
+Ara s'ha d'indicar al shell que inicialitzi els plugins en el procés d'inicialització de l'app de l'arxiu `sandbox.ts` anterior. Per a això, utilitzarem la funció _bootstrapPlugins_ passant-li la col·lecció de plugins que hem creat abans_._
+
+L'arxiu quedaria d'aquesta manera:
+
+  
+
+```javascript
+import { bootstrapPlugins, initializeShell } from "@uxland/primary-shell";
+import { plugins } from "./plugins"
+import "@uxland/primary-shell/dist/style.css";
+
+const createAndAppendSandboxApp= () => {
+  const app = document.createElement("sandbox-app");
+  document.body.appendChild(app);
+  const sandbox = document.querySelector("sandbox-app");
+  return sandbox as HTMLElement;
+};
+
+const initializeSandboxApp = (sandbox: HTMLElement) => {
+  try {
+    if (sandbox) {
+        initializeShell(sandbox);
+        bootstrapPlugins(plugins); // Cridem a la funció de inicialització de tots els plugins
+      }
+    }
+    catch (error) {
+      console.warn(error);
+    }
+ }
+
+const app = createAndAppendSandboxApp();
+initializeSandboxApp(app);
+```
+
+  
+
+Després d'aquests passos, ja podries veure en consola el missatge que has escrit a la funció _initializeSandboxApp_.
+
+  
+
+![](https://t9012015559.p.clickup-attachments.com/t9012015559/ca063fcd-310e-436c-85e9-72bb4e7a6f3d/image.png)

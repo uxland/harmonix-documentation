@@ -4,31 +4,15 @@ sidebar_position: 5
 
 # 5- Prefixar les vistes d'un plugin amb el id del plugin
 
-Docusaurus creates a **page for each blog post**, but also a **blog index page**, a **tag system**, an **RSS** feed...
+Per tal que 2 plugins de 2 iniciatives diferents no col·lisionin, creant una vista amb el mateix id (header-view, main-view) per exemple, és recomanable prefixar els id's de les vistes a injectar amb el pluginId que arriba sempre a la funció "initialize".
 
-## Create your first Post
+Exemple:
 
-Create a file at `blog/2021-02-28-greetings.md`:
+```typescript
+const pluginId = api.pluginInfo.pluginId;
 
-```md title="blog/2021-02-28-greetings.md"
----
-slug: greetings
-title: Greetings!
-authors:
-  - name: Joel Marcey
-    title: Co-creator of Docusaurus 1
-    url: https://github.com/JoelMarcey
-    image_url: https://github.com/JoelMarcey.png
-  - name: Sébastien Lorber
-    title: Docusaurus maintainer
-    url: https://sebastienlorber.com
-    image_url: https://github.com/slorber.png
-tags: [greetings]
----
-
-Congratulations, you have made your first post!
-
-Feel free to play around and edit this post as much as you like.
+api.regionManager.registerMainView({
+    id: `${pluginId}-main-view`,
+    factory: mainFactory
+  },);
 ```
-
-A new blog post is now available at [http://localhost:3000/blog/greetings](http://localhost:3000/blog/greetings).

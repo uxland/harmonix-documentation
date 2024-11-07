@@ -1,12 +1,9 @@
 ---
-sidebar_position: 1
+sidebar_position: 2
 ---
 
 # Visió general
 
-Un plugin és una llibreria/paquet de Node.js que exporta almenys una funció `initialize` que rep una API de plugin per a connectar components a una instància de Harmonix Shell que l'allotja.
-
-El cicle de vida d'un plugin existeix en dues categories diferents:
-
-*   **Cicle de vida offline**, és a dir, tot el que fa referència al desenvolupament, manteniment i provisionament d'un plugin.
-*   **Cicle de vida online**, és a dir, tot el que fa referència a carregar i avaluar un plugin dins d'una aplicació shell.
+*   És un servei que proporciona una manera de subministrar dinàmicament plugins a una instància de Harmonix. Això permet actualitzacions en temps real i la integració de noves funcions sense desplegar tota l'aplicació.
+*   Té un servei de descobriment que retorna un JSON que llista tots els plugins disponibles, incloent-hi la seva metadada i ubicacions. Aquest objecte JSON serveix com a registre per a tots els microfrontends (plugins) que la instància de Harmonix pot carregar.
+*   Quan la instància de Harmonix s'inicia, recupera el llistat de plugins des de la URL especificada i analitza el JSON per obtenir els detalls de cada plugin, incloent la seva URL i versió. Finalment, els plugins es carreguen dinàmicament a l'aplicació.
