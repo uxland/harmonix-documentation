@@ -76,9 +76,27 @@ const config: Config = {
       items: [
         {
           type: 'docSidebar',
+          sidebarId: 'introSidebar',
+          position: 'left',
+          label: 'Intro',
+        },
+        {
+          type: 'docSidebar',
           sidebarId: 'tutorialSidebar',
           position: 'left',
           label: 'Tutorial',
+        },
+        {
+          type: 'docSidebar',
+          sidebarId: 'createPluginSidebar',
+          position: 'left',
+          label: 'Crear un plugin',
+        },
+        {
+          type: 'docSidebar',
+          sidebarId: 'faqSidebar',
+          position: 'left',
+          label: 'FAQ',
         },
         // {to: '/blog', label: 'Blog', position: 'left'},
         {
@@ -96,7 +114,7 @@ const config: Config = {
           items: [
             {
               label: 'Tutorial',
-              to: '/docs/category/introducció',
+              to: '/docs/category/característiques',
             },
           ],
         },
