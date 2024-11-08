@@ -94,6 +94,12 @@ const config: Config = {
         },
         {
           type: 'docSidebar',
+          sidebarId: 'bestPracticesSidebar',
+          position: 'left',
+          label: 'Best practices',
+        },
+        {
+          type: 'docSidebar',
           sidebarId: 'faqSidebar',
           position: 'left',
           label: 'FAQ',
