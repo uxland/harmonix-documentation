@@ -76,15 +76,15 @@ const config: Config = {
       items: [
         {
           type: 'docSidebar',
-          sidebarId: 'introSidebar',
+          sidebarId: 'conceptsSidebar',
           position: 'left',
-          label: 'Intro',
+          label: 'Conceptes',
         },
         {
           type: 'docSidebar',
-          sidebarId: 'tutorialSidebar',
+          sidebarId: 'apiSidebar',
           position: 'left',
-          label: 'Tutorial',
+          label: 'API',
         },
         {
           type: 'docSidebar',
