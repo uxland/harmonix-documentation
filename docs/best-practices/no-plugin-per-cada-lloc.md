@@ -2,7 +2,7 @@
 sidebar_position: 4
 ---
 
-# 4- No fer un plugin per cada lloc on volem mostrar informació
+# No fer un plugin per cada lloc on volem mostrar informació
 
 Cal recordar que un plugin és una part independent del sistema capaç de resoldre diferents casos d'ús d'un mateix àmbit. És important entendre que un plugin és capaç d'injectar diferents vistes/web components a diferents regions del Shell, però alhora que les dades que es mostren en aquests components vinguin de la mateixa única font de dades.
 

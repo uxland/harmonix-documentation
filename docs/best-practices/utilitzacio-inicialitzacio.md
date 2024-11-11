@@ -2,7 +2,7 @@
 sidebar_position: 3
 ---
 
-# 3- Utilitzar la inicialització correctament com a punt d'entrada i inici del cicle de vida del teu plugin
+# Utilitzar la inicialització correctament com a punt d'entrada i inici del cicle de vida del teu plugin
 
 En la funció "_initialize_" que s'ha d'implementar, és un bon punt per fer les primeres configuracions necessàries del teu plugin, així com les primeres crides a serveis i injecció de vistes a regions.
 

@@ -1,8 +1,0 @@
-{
-  "label": "Gestió de regions i vistes a Harmonix",
-  "position": 8,
-  "link": {
-    "type": "generated-index",
-    "description": "Explora l'API HarmonixRegionManager, l'extensió de regions i la creació d'una API fàcil d'usar, amb exemples complets de regions al Shell."
-  }
-}

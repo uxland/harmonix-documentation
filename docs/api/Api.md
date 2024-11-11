@@ -6,7 +6,7 @@ sidebar_position: 7
 
 Harmonix proporciona una **API** als plugins per tal d'**injectar els components en les diferents regions** del Shell i gestionar el seu cicle de vida, així com un objecte d'**informació del plugin**, i algunes funcionalitats més.
 
-```scss
+```typescript
 export interface HarmonixApi {
     regionManager: HarmonixRegionManager;
     pluginInfo: PluginInfo;

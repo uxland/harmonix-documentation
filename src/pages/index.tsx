@@ -19,8 +19,18 @@ function HomepageHeader() {
         <div className={styles.buttons}>
           <Link
             className="button button--secondary button--lg"
-            to="/docs/category/característiques">
-            Harmonix Tutorial 🚀
+            to="https://stackblitz.com/~/github.com/uxland/harmonix-angular-plugin-demo">
+            Angular
+          </Link>
+          <Link
+            className="button button--secondary button--lg"
+            to="https://stackblitz.com/~/github.com/uxland/harmonix-lit-plugin-demo">
+            Lit
+          </Link>
+          <Link
+            className="button button--secondary button--lg"
+            to="https://stackblitz.com/~/github.com/uxland/harmonix-react-plugin-demo">
+            React
           </Link>
         </div>
       </div>
