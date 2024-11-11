@@ -4,8 +4,10 @@ import useDocusaurusContext from '@docusaurus/useDocusaurusContext';
 import Layout from '@theme/Layout';
 import HomepageFeatures from '@site/src/components/HomepageFeatures';
 import Heading from '@theme/Heading';
-
 import styles from './index.module.css';
+import AngularIcon from '@site/static/img/logo-angular.svg';
+import LitIcon from '@site/static/img/logo-lit.svg';
+import ReactIcon from '@site/static/img/logo-react.svg';
 
 function HomepageHeader() {
   const {siteConfig} = useDocusaurusContext();
@@ -18,19 +20,22 @@ function HomepageHeader() {
         <p className="hero__subtitle">{siteConfig.tagline}</p>
         <div className={styles.buttons}>
           <Link
-            className="button button--secondary button--lg"
+            className={clsx('button button--secondary button--lg', styles.buttonWithIcon)}
             to="https://stackblitz.com/~/github.com/uxland/harmonix-angular-plugin-demo">
             Angular
+            <AngularIcon className={styles.icon} />
           </Link>
           <Link
-            className="button button--secondary button--lg"
+            className={clsx('button button--secondary button--lg', styles.buttonWithIcon)}
             to="https://stackblitz.com/~/github.com/uxland/harmonix-lit-plugin-demo">
             Lit
+            <LitIcon className={styles.icon} />
           </Link>
           <Link
-            className="button button--secondary button--lg"
+            className={clsx('button button--secondary button--lg', styles.buttonWithIcon)}
             to="https://stackblitz.com/~/github.com/uxland/harmonix-react-plugin-demo">
             React
+            <ReactIcon className={styles.icon} />
           </Link>
         </div>
       </div>

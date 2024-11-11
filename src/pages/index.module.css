@@ -22,3 +22,15 @@
   justify-content: center;
   gap: 15px;
 }
+.buttonWithIcon {
+  display: flex;
+  align-items: center;
+}
+.icon {
+  width: 20px;
+  height: 20px;
+  margin-left: 8px;
+  vertical-align: middle;
+  filter: grayscale(100%);
+}
+
