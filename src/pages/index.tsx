@@ -47,7 +47,7 @@ export default function Home(): JSX.Element {
   const {siteConfig} = useDocusaurusContext();
   return (
     <Layout
-      title={`Harmonix framework ${siteConfig.title}`}
+      title={`Harmonix framework`}
       description="Harmonix és un framework basat en un sistema de plugins modular">
       <HomepageHeader />
       <main>

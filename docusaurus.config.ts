@@ -147,7 +147,7 @@ const config: Config = {
       //     ],
       //   },
       // ],
-      copyright: `Copyright © ${new Date().getFullYear()} Harmonix. Built by Uxland.`,
+      copyright: `Built by Uxland.`,
     },
     prism: {
       theme: prismThemes.github,

@@ -10,29 +10,29 @@ type FeatureItem = {
 
 const FeatureList: FeatureItem[] = [
   {
-    title: 'Optimització',
+    title: 'Integració modular de plugins',
     Svg: require('@site/static/img/optimization.svg').default,
     description: (
       <>
-        Visió completa i optimització de l'entorn de treball.
+        Permet integrar fàcilment plugins a través d’un sistema de regions, mantenint cada plugin independent però visualment cohesiu.
       </>
     ),
   },
   {
-    title: 'Rendiment',
+    title: 'Rendiment òptim amb càrrega diferida',
     Svg: require('@site/static/img/performance.svg').default,
     description: (
       <>
-        Alt rendiment que potencia l'eficiència i facilita una experiència de treball fluida.
+        Carrega els plugins segons la regió, optimitzant la velocitat i millorant l’experiència de l’usuari.
       </>
     ),
   },
   {
-    title: 'Versatilitat',
+    title: 'Escalabilitat i manteniment simplificat',
     Svg: require('@site/static/img/versatility.svg').default,
     description: (
       <>
-        Plataforma versàtil que ofereix una solució adaptable als professionals.
+        Facilita l’escalabilitat i les actualitzacions de cada plugin sense impactar la resta, millorant la capacitat de manteniment.
       </>
     ),
   },

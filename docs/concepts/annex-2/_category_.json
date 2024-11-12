@@ -1,8 +1,0 @@
-{
-  "label": "ANNEX 2: Limitacions Angular a Harmonix",
-  "position": 15,
-  "link": {
-    "type": "generated-index",
-    "description": "Exploració de l'encapsulació del Shadow DOM, les limitacions associades al routing en Harmonix, i la versió d'Angular del Shell."
-  }
-}
