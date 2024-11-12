@@ -21,6 +21,14 @@
   align-items: center;
   justify-content: center;
   gap: 15px;
+  flex-wrap: wrap;
+}
+
+@media screen and (max-width: 996px) {
+  .buttons {
+    flex-direction: column;
+    gap: 10px;
+  }
 }
 .buttonWithIcon {
   display: flex;

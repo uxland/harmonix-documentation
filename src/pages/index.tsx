@@ -21,9 +21,9 @@ function HomepageHeader() {
         <div className={styles.buttons}>
           <Link
             className={clsx('button button--secondary button--lg', styles.buttonWithIcon)}
-            to="https://stackblitz.com/~/github.com/uxland/harmonix-angular-plugin-demo">
-            Angular
-            <AngularIcon className={styles.icon} />
+            to="https://stackblitz.com/~/github.com/uxland/harmonix-react-plugin-demo">
+            React
+            <ReactIcon className={styles.icon} />
           </Link>
           <Link
             className={clsx('button button--secondary button--lg', styles.buttonWithIcon)}
@@ -33,9 +33,9 @@ function HomepageHeader() {
           </Link>
           <Link
             className={clsx('button button--secondary button--lg', styles.buttonWithIcon)}
-            to="https://stackblitz.com/~/github.com/uxland/harmonix-react-plugin-demo">
-            React
-            <ReactIcon className={styles.icon} />
+            to="https://stackblitz.com/~/github.com/uxland/harmonix-angular-plugin-demo">
+            Angular
+            <AngularIcon className={styles.icon} />
           </Link>
         </div>
       </div>

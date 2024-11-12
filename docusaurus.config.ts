@@ -71,7 +71,7 @@ const config: Config = {
       title: 'Harmonix',
       logo: {
         alt: 'Harmonix Logo',
-        src: 'img/harmonixLogoBlack.png',
+        src: 'img/harmonixLogo.svg',
       },
       items: [
         {
@@ -106,10 +106,15 @@ const config: Config = {
         },
         // {to: '/blog', label: 'Blog', position: 'left'},
         {
-          href: 'https://github.com/uxland/harmonix-documentation',
-          label: 'GitHub',
+          type: 'html',
           position: 'right',
+          value: '<a  style="padding: 12px;">v1.0.18</a>',
         },
+        // {
+        //   href: 'https://github.com/uxland/harmonix-documentation',
+        //   label: 'GitHub',
+        //   position: 'right', 0,375rem
+        // },
       ],
     },
     footer: {
