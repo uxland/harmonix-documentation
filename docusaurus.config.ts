@@ -152,7 +152,7 @@ const config: Config = {
       //     ],
       //   },
       // ],
-      copyright: `Built by Uxland.`,
+      copyright: `Built by <a href="https://www.uxland.es/" target="_blank" rel="noopener noreferrer" style="color: #FF60C1;">Uxland</a>.`,
     },
     prism: {
       theme: prismThemes.github,
