@@ -14,6 +14,12 @@ export const HeroSection: React.FC = () => {
           </div>
         </div>
         <div className={styles.arrow}></div>
+        <div className={styles.code}>
+          <div></div>
+          <div>
+            {/* <img src="/static/img/harmonixCode.svg" alt="Hero" className={styles.heroImage} /> */}
+          </div>
+        </div>
       </div>
     </section>
   );

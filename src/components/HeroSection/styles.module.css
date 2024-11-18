@@ -89,7 +89,6 @@
   margin: 0 auto;
   position: relative;
 }
-
 .arrow::after {
   content: '';
   position: absolute;
@@ -101,6 +100,12 @@
   border-left: 6px solid transparent;
   border-right: 6px solid transparent;
   border-top: 8px solid #99a9ff;
+}
+.code {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
 }
 
   
