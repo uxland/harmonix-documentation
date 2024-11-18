@@ -121,43 +121,43 @@ const config: Config = {
         // },
       ],
     },
-    footer: {
-      style: 'dark',
-      // links: [
-      //   {
-      //     title: 'Docs',
-      //     items: [
-      //       {
-      //         label: 'Tutorial',
-      //         to: '/docs/category/característiques',
-      //       },
-      //     ],
-      //   },
-      //   {
-      //     title: 'Community',
-      //     items: [
-      //       {
-      //         label: 'Uxland',
-      //         href: 'https://www.uxland.es/',
-      //       },
-      //     ],
-      //   },
-      //   {
-      //     title: 'More',
-      //     items: [
-      //       {
-      //         label: 'GitHub',
-      //         href: 'https://github.com/uxland/harmonix-documentation',
-      //       },
-      //       {
-      //         label: 'Blog',
-      //         to: '/blog',
-      //       },
-      //     ],
-      //   },
-      // ],
-      copyright: `Built by <a href="https://www.uxland.es/" target="_blank" rel="noopener noreferrer" style="color: #FF60C1;">Uxland</a>.`,
-    },
+    // footer: {
+    //   style: 'dark',
+    //   // links: [
+    //   //   {
+    //   //     title: 'Docs',
+    //   //     items: [
+    //   //       {
+    //   //         label: 'Tutorial',
+    //   //         to: '/docs/category/característiques',
+    //   //       },
+    //   //     ],
+    //   //   },
+    //   //   {
+    //   //     title: 'Community',
+    //   //     items: [
+    //   //       {
+    //   //         label: 'Uxland',
+    //   //         href: 'https://www.uxland.es/',
+    //   //       },
+    //   //     ],
+    //   //   },
+    //   //   {
+    //   //     title: 'More',
+    //   //     items: [
+    //   //       {
+    //   //         label: 'GitHub',
+    //   //         href: 'https://github.com/uxland/harmonix-documentation',
+    //   //       },
+    //   //       {
+    //   //         label: 'Blog',
+    //   //         to: '/blog',
+    //   //       },
+    //   //     ],
+    //   //   },
+    //   // ],
+    //   copyright: `Built by <a href="https://www.uxland.es/" target="_blank" rel="noopener noreferrer" style="color: #FF60C1;">Uxland</a>.`,
+    // },
     prism: {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,

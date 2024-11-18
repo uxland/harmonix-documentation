@@ -1,0 +1,19 @@
+.features {
+    background-color: #111;
+    color: #fff;
+    padding: 2rem;
+    text-align: center;
+  }
+  
+  .featureList {
+    display: flex;
+    justify-content: center;
+    gap: 1rem;
+  }
+  
+  .feature {
+    background: #222;
+    padding: 1rem;
+    border-radius: 8px;
+  }
+  
