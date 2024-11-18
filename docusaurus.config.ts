@@ -7,7 +7,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 const config: Config = {
   title: 'Harmonix',
   tagline: 'Efficient by design',
-  favicon: 'img/harmonixLogoBlack.ico',
+  favicon: 'img/harmonixLogo.ico',
 
   // Set the production url of your site here
   url: 'https://harmonixframework.dev/',
@@ -70,7 +70,7 @@ const config: Config = {
 
   themeConfig: {
     // Replace with your project's social card
-    image: 'img/harmonixLogoBlack.png',
+    image: 'img/harmonixLogo.svg',
     navbar: {
       title: 'Harmonix',
       logo: {

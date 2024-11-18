@@ -1,25 +1,106 @@
 .hero {
-    background: linear-gradient(180deg, #0f2027, #203a43, #2c5364);
-    color: #fff;
-    text-align: center;
-    padding: 4rem 2rem;
-  }
-  
-  .content h1 {
-    font-size: 2.5rem;
-    margin-bottom: 1rem;
-  }
-  
-  .content p {
-    margin-bottom: 2rem;
-  }
-  
-  .buttons button {
-    background-color: #00ffcc;
-    border: none;
-    color: #000;
-    padding: 0.75rem 1.5rem;
-    margin: 0 0.5rem;
-    cursor: pointer;
-  }
+  background: #1d1d1d;
+  color: #fff;
+  text-align: center;
+  padding: 4rem 2rem;
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 84px;
+} 
+.title {
+  font-size: 62px;
+  font-family: sans-serif;
+  font-size: 82px;
+  font-weight: bold;
+  line-height: 74px;
+  text-align: center;
+  background: linear-gradient(90deg, #8093ff, #66ffe5, #8093ff);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.description {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+} 
+.header {
+  color: #f4f4f4;
+  font-family: sans-serif;
+  /* font-weight: regular; */
+  font-size: 62px;
+  line-height: 74px;
+  width: 838.6px;
+  height: 288.2px;
+  /* padding: 208.9px 13px 62.4px 809.6px; */
+}
+.buttons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+}
+.getStartedButton {
+  color: black;
+  border: none;
+  padding: 12px;
+  cursor: pointer;
+  border-radius: 8px;
+  border: solid 1px #2c2c2c;
+  background-color: #5ce4cf;
+  font-size: 16px;
+  width: 163px;
+  height: 46px;
+  font-family: sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 22,4px;
+}
+.getStartedButton:hover {
+  background-color: #4bcbb6;
+}
+.playgroundButton {
+  background-color: #99a9ff;
+  color: black;
+  border: none;
+  padding: 12px;
+  cursor: pointer;
+  border-radius: 8px;
+  font-size: 16px;
+  width: 163px;
+  height: 46px;
+  font-family: sans-serif;
+  font-weight: 600;
+  font-size: 16px;
+  line-height: 22,4px;
+}
+.playgroundButton:hover {
+  background-color: #798bff;
+}
+.arrow {
+  width: 2px;
+  height: 54px;
+  background-image: linear-gradient(to bottom, #66ffe5, #99a9ff);
+  margin: 0 auto;
+  position: relative;
+}
+
+.arrow::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 8px solid #99a9ff;
+}
+
   
