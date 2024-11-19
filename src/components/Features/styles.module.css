@@ -1,19 +1,42 @@
 .features {
-    background-color: #111;
-    color: #fff;
-    padding: 2rem;
-    text-align: center;
-  }
-  
-  .featureList {
+  color: #f4f4f4;
+  padding: 2rem;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  .title {
     display: flex;
+    flex-direction: row;
+    align-items: center;
     justify-content: center;
-    gap: 1rem;
+    gap: 17px;
+  .titleText {
+      font-size: 62px;
+      line-height: 74px;
+      white-space: nowrap;
+      display: flex;
+      align-items: center;
+    }
   }
-  
-  .feature {
-    background: #222;
-    padding: 1rem;
-    border-radius: 8px;
+  .vectorTitle {
+    height: 25px;
+    width: 16px;
   }
+  .benefit {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 110px;
+    .benefitImage {
+      height: 540px;
+      width: 540px;
+    }
+    .vectorBenefit {
+      height: 16px;
+      width: 10px;
+    }
+  }
+}
   
