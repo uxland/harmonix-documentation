@@ -7,7 +7,7 @@ import type * as Preset from '@docusaurus/preset-classic';
 const config: Config = {
   title: 'Harmonix',
   tagline: 'Efficient by design',
-  favicon: 'img/harmonixLogoBlack.ico',
+  favicon: 'img/harmonixLogo.ico',
 
   // Set the production url of your site here
   url: 'https://harmonixframework.dev/',
@@ -70,12 +70,12 @@ const config: Config = {
 
   themeConfig: {
     // Replace with your project's social card
-    image: 'img/harmonixLogoBlack.png',
+    image: 'img/harmonixLogo.svg',
     navbar: {
       title: 'Harmonix',
       logo: {
         alt: 'Harmonix Logo',
-        src: 'img/harmonixLogo.svg',
+        src: 'img/harmonixLogoNew.svg',
       },
       items: [
         {
@@ -121,46 +121,50 @@ const config: Config = {
         // },
       ],
     },
-    footer: {
-      style: 'dark',
-      // links: [
-      //   {
-      //     title: 'Docs',
-      //     items: [
-      //       {
-      //         label: 'Tutorial',
-      //         to: '/docs/category/característiques',
-      //       },
-      //     ],
-      //   },
-      //   {
-      //     title: 'Community',
-      //     items: [
-      //       {
-      //         label: 'Uxland',
-      //         href: 'https://www.uxland.es/',
-      //       },
-      //     ],
-      //   },
-      //   {
-      //     title: 'More',
-      //     items: [
-      //       {
-      //         label: 'GitHub',
-      //         href: 'https://github.com/uxland/harmonix-documentation',
-      //       },
-      //       {
-      //         label: 'Blog',
-      //         to: '/blog',
-      //       },
-      //     ],
-      //   },
-      // ],
-      copyright: `Built by <a href="https://www.uxland.es/" target="_blank" rel="noopener noreferrer" style="color: #FF60C1;">Uxland</a>.`,
-    },
+    // footer: {
+    //   style: 'dark',
+    //   // links: [
+    //   //   {
+    //   //     title: 'Docs',
+    //   //     items: [
+    //   //       {
+    //   //         label: 'Tutorial',
+    //   //         to: '/docs/category/característiques',
+    //   //       },
+    //   //     ],
+    //   //   },
+    //   //   {
+    //   //     title: 'Community',
+    //   //     items: [
+    //   //       {
+    //   //         label: 'Uxland',
+    //   //         href: 'https://www.uxland.es/',
+    //   //       },
+    //   //     ],
+    //   //   },
+    //   //   {
+    //   //     title: 'More',
+    //   //     items: [
+    //   //       {
+    //   //         label: 'GitHub',
+    //   //         href: 'https://github.com/uxland/harmonix-documentation',
+    //   //       },
+    //   //       {
+    //   //         label: 'Blog',
+    //   //         to: '/blog',
+    //   //       },
+    //   //     ],
+    //   //   },
+    //   // ],
+    //   copyright: `Built by <a href="https://www.uxland.es/" target="_blank" rel="noopener noreferrer" style="color: #FF60C1;">Uxland</a>.`,
+    // },
     prism: {
       theme: prismThemes.github,
       darkTheme: prismThemes.dracula,
+    },
+    colorMode: {
+      defaultMode: 'light',
+      disableSwitch: true,
     },
   } satisfies Preset.ThemeConfig,
 };
