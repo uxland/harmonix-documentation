@@ -1,4 +1,5 @@
 .features {
+  background-color: #1D1D1D;
   color: #f4f4f4;
   padding: 2rem;
   text-align: center;
@@ -37,6 +38,12 @@
       height: 16px;
       width: 10px;
     }
+  }
+  .line {
+    width: 1160px;
+    height: 1px;
+    margin: 61px auto;
+    background-image: linear-gradient(to right, rgba(128, 147, 255, 0), #7d9bfa 21%, #60dbd4 79%, rgba(92, 228, 207, 0));
   }
 }
   

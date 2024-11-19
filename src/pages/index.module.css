@@ -3,10 +3,6 @@
  * and scoped locally.
  */
 
- :root {
-  background-color: #1D1D1D;
-}
-
 .heroBanner {
   padding: 4rem 0;
   text-align: center;
@@ -44,12 +40,6 @@
   margin-left: 8px;
   vertical-align: middle;
   filter: grayscale(100%);
-}
-.line {
-  width: 1160px;
-  height: 1px;
-  margin: 61px auto;
-  background-image: linear-gradient(to right, rgba(128, 147, 255, 0), #7d9bfa 21%, #60dbd4 79%, rgba(92, 228, 207, 0));
 }
 
 

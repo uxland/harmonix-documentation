@@ -25,6 +25,7 @@ export const HeroSection: React.FC = () => {
             <img src="img/harmonixCode.svg" alt="Hero" className={styles.heroImage} />
           </div>
         </div>
+        <div className={styles.line}></div>
       </div>
     </section>
   );

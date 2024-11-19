@@ -49,6 +49,7 @@ export const Features: React.FC = () => {
           <img src="img/icon4.png" alt="benefit4" className={styles.benefitImage} />
         </div>
       </div>
+      <div className={styles.line}></div>
     </div>
   );
 };

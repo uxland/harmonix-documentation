@@ -138,5 +138,11 @@
   height: 746px;
   box-shadow: 0 0 50px 20px #1D1D1D;
 }
+.line {
+  width: 1160px;
+  height: 1px;
+  margin: 61px auto;
+  background-image: linear-gradient(to right, rgba(128, 147, 255, 0), #7d9bfa 21%, #60dbd4 79%, rgba(92, 228, 207, 0));
+}
 
   
