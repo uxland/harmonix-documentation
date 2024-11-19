@@ -5,6 +5,7 @@ import { Features } from '../components/Features';
 import { TechStack } from '../components/TechStack';
 import { Footer } from '../components/Footer';
 import styles from './index.module.css';
+import { Community } from '../components/Community';
 
 
 export default function Home(): JSX.Element {
@@ -16,6 +17,7 @@ export default function Home(): JSX.Element {
         <HeroSection />
         <Features />
         <TechStack />
+        <Community />
       </main>
       <Footer />
     </Layout>
