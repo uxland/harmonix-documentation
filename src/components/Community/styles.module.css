@@ -2,7 +2,6 @@
   background: #1d1d1d;
   color: #f4f4f4;
   padding-inline: 140px;
-  text-align: center;
   display: flex;
   flex-direction: column;
   gap: 73px;
@@ -10,12 +9,14 @@
     display: flex;
     flex-direction: row;
     align-items: center;
+    justify-content: center;
+    gap: 159px;
     /* width: 1160px; */
     height: 658px;
     padding: 69px;
     background-color: #232526;
     .text {
-      /* width: 459px; */
+      width: 459px;
       height: 562px;
       flex-grow: 0;
       /* padding: 9px 189px 9px 28px; */
@@ -32,24 +33,31 @@
     .discordSection {
       display: flex;
       flex-direction: column;
-      
+      align-items: flex-start;
       gap: 32px;
-    }
-    .discordButton {
-      color: #30363a;
-      border: none;
-      padding: 12px;
-      cursor: pointer;
-      border-radius: 8px;
-      border: solid 1px #2c2c2c;
-      background-color: #99a9ff;
-      font-size: 16px;
-      width: 163px;
-      height: 46px;
-      font-family: sans-serif;
-      font-weight: 600;
-      font-size: 16px;
-      line-height: 22,4px;
+      width: 361px;
+      .discordButton {
+        color: #30363a;
+        border: none;
+        padding: 12px;
+        cursor: pointer;
+        border-radius: 8px;
+        border: solid 1px #2c2c2c;
+        background-color: #99a9ff;
+        font-size: 16px;
+        width: 163px;
+        height: 46px;
+        font-family: sans-serif;
+        font-weight: 600;
+        font-size: 16px;
+        line-height: 22,4px;
+      }
+      .discordText {
+        width: 347px;
+        font-size: 16px;
+        line-height: 24px;
+        color: #b8b8b8;
+      }
     }
   }
   .title {

@@ -10,8 +10,8 @@ export const Community: React.FC = () => {
           Al nostre Discord trobaràs tota la informació per a formar part de la nostra família
         </div>
         <div className={styles.discordSection}>
-          <img src="/img/discord-logo.svg" alt="Discord" className={styles.icons} />
-          <div>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
+          <img src="/img/discord-logo.png" alt="Discord" className={styles.icons} />
+          <div className={styles.discordText}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
           sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
           <button className={styles.discordButton}>UNEIX-TE JA</button>
         </div>
