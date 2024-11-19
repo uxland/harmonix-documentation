@@ -4,7 +4,7 @@ import styles from './styles.module.css';
 export const TechStack: React.FC = () => {
   return (
     <section className={styles.techStack}>
-      <div className={styles.title}>Tecnologíes soportades</div>
+      <div className={styles.title}>Tecnologies suportades</div>
       <div>
         <img src="/img/logo-angular.svg" alt="Angular" className={styles.icons} />
         <img src="/img/logo-react.svg" alt="React" className={styles.icons}/>
