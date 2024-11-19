@@ -51,6 +51,10 @@
         font-weight: 600;
         font-size: 16px;
         line-height: 22,4px;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+      }
+      .discordButton:hover {
+        background-color: #8093ff;
       }
       .discordText {
         width: 347px;
