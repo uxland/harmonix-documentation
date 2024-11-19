@@ -101,11 +101,42 @@
   border-right: 6px solid transparent;
   border-top: 8px solid #99a9ff;
 }
-.code {
+.codeContainer {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
+}
+.textCode {
+  font-family: sans-serif;
+  color: #f4f4f4;
+  position: relative;
+  z-index: 2;
+  margin-right: -105px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  text-align: left; /* Justificación general para los hijos */
+}
+
+.textCode .codeTitle {
+  font-size: 62px;
+  line-height: 74px;
+  text-align: left; /* Justificación específica */
+}
+
+.textCode .codeText {
+  width: 393px;
+  display: flex;
+  text-align: left; /* Justificación específica */
+}
+
+.heroImage {
+  position: relative;
+  z-index: 1;
+  width: 849px;
+  height: 746px;
+  box-shadow: 0 0 50px 20px #1D1D1D;
 }
 
   

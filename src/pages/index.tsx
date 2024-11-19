@@ -5,6 +5,7 @@ import { HeroSection } from '../components/HeroSection';
 import { Features } from '../components/Features';
 import { TechStack } from '../components/TechStack';
 import { Footer } from '../components/Footer';
+import styles from './index.module.css';
 
 
 export default function Home(): JSX.Element {
@@ -15,7 +16,9 @@ export default function Home(): JSX.Element {
       <Header />
       <main>
         <HeroSection />
+        <div className={styles.line}></div>
         <Features />
+        <div className={styles.line}></div>
         <TechStack />
       </main>
       <Footer />

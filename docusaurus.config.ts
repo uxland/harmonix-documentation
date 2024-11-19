@@ -75,7 +75,7 @@ const config: Config = {
       title: 'Harmonix',
       logo: {
         alt: 'Harmonix Logo',
-        src: 'img/harmonixLogo.svg',
+        src: 'img/harmonixLogoNew.svg',
       },
       items: [
         {
