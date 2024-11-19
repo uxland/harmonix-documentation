@@ -3,13 +3,16 @@ import styles from './styles.module.css';
 
 export const TechStack: React.FC = () => {
   return (
-    <section id="tech-stack" className={styles.techStack}>
-      <h2>Technologies</h2>
+    <section className={styles.techStack}>
+      <div className={styles.title}>Tecnologíes soportades</div>
       <div>
-        <img src="/path-to/angular-icon.svg" alt="Angular" />
-        <img src="/path-to/react-icon.svg" alt="React" />
-        <img src="/path-to/lit-icon.svg" alt="Lit" />
+        <img src="/img/logo-angular.svg" alt="Angular" className={styles.icons} />
+        <img src="/img/logo-react.svg" alt="React" className={styles.icons}/>
+        <img src="/img/logo-lit.svg" alt="Lit" className={styles.icons}/>
+        <img src="/img/jsIcon.svg" alt="Javascript" className={styles.icons}/>
+        <img src="/img/tsIcon.svg" alt="Typescript" className={styles.icons}/>
       </div>
+      <div className={styles.line}></div>
     </section>
   );
 };
