@@ -38,5 +38,5 @@ jobs:
             local_path: './build/*'
             remote_path: '/harmonixframework'
             sftp_only: true
-            password: E33se64a!
+            password: ${{ secrets.SFTP_PASS }}
 
