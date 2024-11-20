@@ -13,7 +13,9 @@ export const Community: React.FC = () => {
           <img src="/img/discord-logo.png" alt="Discord" className={styles.icons} />
           <div className={styles.discordText}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
           sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
-          <button className={styles.discordButton}>UNEIX-TE JA</button>
+          <a className={styles.discordButton} href="https://discord.gg/EaB97Ahy" target="_blank" 
+            rel="noopener noreferrer">UNEIX-TE JA
+          </a>
         </div>
       </div>
       <div className={styles.line}></div>
