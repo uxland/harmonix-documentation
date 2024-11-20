@@ -6,6 +6,7 @@ import { TechStack } from '../components/TechStack';
 import { Footer } from '../components/Footer';
 import styles from './index.module.css';
 import { Community } from '../components/Community';
+import { GetStarted } from '../components/GetStarted';
 
 
 export default function Home(): JSX.Element {
@@ -18,6 +19,7 @@ export default function Home(): JSX.Element {
         <Features />
         <TechStack />
         <Community />
+        <GetStarted />
       </main>
       <Footer />
     </Layout>
