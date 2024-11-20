@@ -30,6 +30,23 @@
     align-items: center;
     justify-content: center;
     gap: 110px;
+    .benefitContent {
+      text-align: start;
+      display: flex;
+      flex-direction: column;
+      gap: 24px;
+      width: 518px;
+    }
+    .benefitTitle {
+      color: b8b8b8b3;
+      font-size: 16px;
+      letter-spacing: 4.8px;
+    }
+    .benefitSubTitle {
+      color: f4f4f4;
+      font-size: 44px;
+      line-height: 50px;
+    }
     .benefitImage {
       height: 540px;
       width: 540px;
