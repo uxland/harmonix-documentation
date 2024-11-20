@@ -39,14 +39,21 @@
   /* padding: 208.9px 13px 62.4px 809.6px; */
 }
 .buttons {
+  color: #30363a;
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   gap: 16px;
+  a {
+    text-decoration: none;
+  }
+  a:hover {
+    color: black;
+  }
 }
 .getStartedButton {
-  color: black;
+  color: #30363a;
   border: none;
   padding: 12px;
   cursor: pointer;
@@ -66,7 +73,7 @@
 }
 .playgroundButton {
   background-color: #99a9ff;
-  color: black;
+  color: #30363a;
   border: none;
   padding: 12px;
   cursor: pointer;
@@ -81,6 +88,7 @@
 }
 .playgroundButton:hover {
   background-color: #798bff;
+  color: black;
 }
 .arrow {
   width: 2px;

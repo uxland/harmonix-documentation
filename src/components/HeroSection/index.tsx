@@ -1,5 +1,6 @@
 import React from 'react';
 import styles from './styles.module.css';
+import Link from '@docusaurus/Link';
 
 export const HeroSection: React.FC = () => {
   return (
@@ -9,7 +10,11 @@ export const HeroSection: React.FC = () => {
         <div className={styles.description}>
           <div className={styles.header}>The Ultimate<br></br>Multi-Team Micro Frontend Framework</div>
           <div className={styles.buttons}>
-            <button className={styles.getStartedButton}>GET STARTED</button>
+            <Link
+              className={styles.getStartedButton}
+              to="/docs/concepts/introduccio">
+              GET STARTED
+            </Link>
             <button className={styles.playgroundButton}>PLAYGROUND</button>
           </div>
         </div>
