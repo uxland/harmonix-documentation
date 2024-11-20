@@ -29,6 +29,12 @@
       align-items: flex-start;
       gap: 32px;
       width: 418px;
+      a {
+        text-decoration: none;
+      }
+      a:hover {
+        color: black;
+      }
       .getStartedButton {
         width: 163px;
         height: 46px;
@@ -47,6 +53,8 @@
         line-height: 1.4;
         color: #30363a;
         cursor: pointer;
+        text-decoration: none;
+
       }
       .getStartedButton:hover {
         background-image: conic-gradient(from 0.5turn, #66ffe5, #8093ff 0.44turn, #66ffe5);
