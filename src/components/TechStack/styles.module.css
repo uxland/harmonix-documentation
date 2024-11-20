@@ -6,22 +6,22 @@
   display: flex;
   flex-direction: column;
   gap: 73px;
-  .title {
-    font-size: 62px;
-    line-height: 74px;
-    white-space: nowrap;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-  }
-  .icons {
-    width: 76px;
-    height: 67px;
-  }
-  .line {
-    width: 1160px;
-    height: 1px;
-    margin: 61px auto;
-    background-image: linear-gradient(to right, rgba(128, 147, 255, 0), #7d9bfa 21%, #60dbd4 79%, rgba(92, 228, 207, 0));
-  }
+}
+.title {
+  font-size: 62px;
+  line-height: 74px;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.icons {
+  width: 76px;
+  height: 67px;
+}
+.line {
+  width: 1160px;
+  height: 1px;
+  margin: 61px auto;
+  background-image: linear-gradient(to right, rgba(128, 147, 255, 0), #7d9bfa 21%, #60dbd4 79%, rgba(92, 228, 207, 0));
 }
