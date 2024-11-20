@@ -59,47 +59,8 @@
 .codeContainer {
   display: flex;
   flex-direction: row;
-}
-@media screen and (max-width: 996px) {
-  .hero {
-    padding: 20px
-  }
-  .heroWrapper {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 20px;
-  }
-  .title {
-    font-size: 42px;
-    width: auto;
-  }
-  .header {
-    font-size: 32px;
-    width: auto;
-    text-align: left;
-  }
-  .buttons {
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    gap: 10px;
-  }
-  .codeContainer {
-    display: flex;
-    flex-direction: column;
-  }
-  .description {
-    display: flex;
-    flex-direction: column;
-    align-items: flex-start;
-  }
-  .arrow {
-    display: none;
-  }
-  .line {
-    width: 360px;
-  }
+  align-items: center;
+  justify-content: center;
 }
 .getStartedButton {
   color: #30363a;
@@ -158,12 +119,6 @@
   border-right: 6px solid transparent;
   border-top: 8px solid #99a9ff;
 }
-.codeContainer {
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-}
 .textCode {
   font-family: sans-serif;
   color: #f4f4f4;
@@ -200,6 +155,52 @@
   height: 1px;
   margin: 61px auto;
   background-image: linear-gradient(to right, rgba(128, 147, 255, 0), #7d9bfa 21%, #60dbd4 79%, rgba(92, 228, 207, 0));
+}
+
+@media screen and (max-width: 996px) {
+  .hero {
+    padding: 20px
+  }
+  .heroWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  .title {
+    font-size: 42px;
+    width: auto;
+  }
+  .header {
+    font-size: 32px;
+    width: auto;
+    text-align: left;
+  }
+  .buttons {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  .codeContainer {
+    display: flex;
+    flex-direction: column-reverse;
+  }
+  .description {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .heroImage {
+    width: auto;
+    height: auto;
+  }
+  .arrow {
+    display: none;
+  }
+  .line {
+    width: 360px;
+  }
 }
 
   
