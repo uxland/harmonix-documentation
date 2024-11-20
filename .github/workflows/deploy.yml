@@ -1,0 +1,38 @@
+name: Deploy to IONOS via SFTP
+
+on:
+  push:
+    branches:
+      - main  # Deploys when changes are pushed to the main branch
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the code
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Step 2: Set up Node.js 20
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # Step 3: Install dependencies and build the site
+      - name: Install and Build Docusaurus
+        run: |
+          yarn install
+          yarn build
+
+      # Step 4: Deploy via SFTP
+      - name: Deploy to IONOS Server
+        uses: appleboy/scp-action@v0.1.4
+        with:
+          host: ${{ secrets.SFTP_HOST }}
+          username: ${{ secrets.SFTP_USERNAME }}
+          password: ${{ secrets.SFTP_PASSWORD }} # Use key instead if preferred
+          source: ./build/
+          target: /harmonixframework
