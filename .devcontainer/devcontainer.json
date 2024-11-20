@@ -1,0 +1,12 @@
+{
+    "name": "Node 20",
+    "image": "mcr.microsoft.com/vscode/devcontainers/javascript-node:20",
+    "mounts": [
+      "source=${localEnv:HOME}/.gitconfig,target=/home/node/.gitconfig,type=bind,consistency=cached",
+      "source=${localEnv:HOME}/.ssh,target=/home/node/.ssh,type=bind,consistency=cached"
+    ],
+    "remoteUser": "node",
+    "postStartCommand": "sudo chown -R node:node /home/node/.ssh && sudo chmod 700 /home/node/.ssh && sudo chmod 600 /home/node/.ssh/*",
+    "forwardPorts": [3000]
+  }
+  
