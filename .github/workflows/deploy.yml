@@ -21,11 +21,16 @@ jobs:
         with:
           node-version: 20
 
+      - name: Echo SFTP Host
+        run: echo "SFTP_HOST: ${{ secrets.SFTP_HOST }}"
+
+
       # Step 3: Install dependencies and build the site
       - name: Install and Build Docusaurus
         run: |
           yarn install
           yarn build
+
 
       # Step 4: Deploy via SFTP
       - name: Deploy to IONOS Server
