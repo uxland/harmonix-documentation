@@ -10,8 +10,9 @@ export const GetStarted: React.FC = () => {
           Democratitza i distribueix el desenvolupament de la teva aplicació
         </div>
         <div className={styles.getStartedSection}>
-          <div className={styles.getStartedText}>Lorem ipsum dolor sit amet, consectetur adipiscing elit, 
-          sed do eiusmod tempor incididunt ut labore et dolore magna aliqua.</div>
+          <div className={styles.getStartedText}>Elimina les barreres del teu desenvolupament i fes créixer la teva aplicació sense límits. 
+            Amb Harmonix, pots distribuir el treball de manera eficient entre equips independents, escalant i adaptant-te a noves necessitats de manera ràpida. 
+            Comença ara i allibera tot el potencial dels teus equips i aplicació.</div>
           <Link
             className={styles.getStartedButton}
             to="/docs/concepts/introduccio">
