@@ -32,11 +32,11 @@ jobs:
       - name: Deploy to IONOS Server
         uses: wlixcc/SFTP-Deploy-Action@v1.2.4
         with:
-            username: ${{ secrets.SFTP_USER }}
+            username: acc1804162827
             server: home669771443.1and1-data.host
             port: 22
             local_path: './build/*'
             remote_path: '/harmonixframework'
             sftp_only: true
-            password: ${{ secrets.SFTP_PASSWORD }}
+            password: E33se64a!
 
