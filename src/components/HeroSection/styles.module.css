@@ -45,12 +45,6 @@
   align-items: center;
   justify-content: center;
   gap: 16px;
-  a {
-    text-decoration: none;
-  }
-  a:hover {
-    color: black;
-  }
 }
 .getStartedButton {
   color: #30363a;
@@ -69,6 +63,7 @@
   line-height: 22,4px;
 }
 .getStartedButton:hover {
+  color: #30363a;
   background-color: #4bcbb6;
 }
 .playgroundButton {
@@ -124,19 +119,19 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  text-align: left; /* Justificación general para los hijos */
+  text-align: left;
 }
 
 .textCode .codeTitle {
   font-size: 62px;
   line-height: 74px;
-  text-align: left; /* Justificación específica */
+  text-align: left;
 }
 
 .textCode .codeText {
   width: 393px;
   display: flex;
-  text-align: left; /* Justificación específica */
+  text-align: left;
 }
 
 .heroImage {
