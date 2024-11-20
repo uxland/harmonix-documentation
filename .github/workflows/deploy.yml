@@ -32,7 +32,7 @@ jobs:
         uses: appleboy/scp-action@v0.1.4
         with:
           host: ${{ secrets.SFTP_HOST }}
-          username: ${{ secrets.SFTP_USERNAME }}
+          username: ${{ secrets.SFTP_USER }}
           password: ${{ secrets.SFTP_PASSWORD }} # Use key instead if preferred
           source: ./build/
           target: /harmonixframework
