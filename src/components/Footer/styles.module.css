@@ -30,11 +30,15 @@
   display: inline;
 }
 .link {
-  color: #b8b8b8;
+  background-image: conic-gradient(from 0.37turn, #8093ff, #66ffe5 0.44turn, #8093ff);
+  background-clip: text;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
   text-decoration: none;
-  transition: color 0.3s ease;
+  transition: color 0.3s ease-in-out;
 }
 .link:hover {
-  color: #66ffe5;
-  text-decoration: underline;
+  background-image: conic-gradient(from 0.37turn, #66ffe5, #ff66cc 0.44turn, #66ffe5);
+  transform: scale(1.1);
+  box-shadow: 0 8px 12px rgba(0, 0, 0, 0.3);
 }
