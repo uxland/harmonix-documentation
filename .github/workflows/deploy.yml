@@ -21,10 +21,6 @@ jobs:
         with:
           node-version: 20
 
-      - name: Echo SFTP Host
-        run: echo "SFTP_HOST: ${{ secrets.SFTP_HOST }}"
-
-
       # Step 3: Install dependencies and build the site
       - name: Install and Build Docusaurus
         run: |
@@ -34,10 +30,13 @@ jobs:
 
       # Step 4: Deploy via SFTP
       - name: Deploy to IONOS Server
-        uses: appleboy/scp-action@v0.1.4
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
         with:
-          host: ${{ secrets.SFTP_HOST }}
-          username: ${{ secrets.SFTP_USER }}
-          password: ${{ secrets.SFTP_PASSWORD }} # Use key instead if preferred
-          source: ./build/
-          target: /harmonixframework
+            username: ${{ secrets.SFTP_USER }}
+            server: ${{ secrets.SFTP_HOST }}
+            port: 22
+            local_path: './build/*'
+            remote_path: '/harmonixframework'
+            sftp_only: true
+            password: ${{ secrets.SFTP_PASSWORD }}
+
