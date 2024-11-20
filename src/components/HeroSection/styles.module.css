@@ -28,15 +28,19 @@
   flex-direction: column;
   align-items: center;
 } 
+.heroWrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 84px;
+}
 .header {
   color: #f4f4f4;
   font-family: sans-serif;
-  /* font-weight: regular; */
   font-size: 62px;
   line-height: 74px;
   width: 838.6px;
   height: 288.2px;
-  /* padding: 208.9px 13px 62.4px 809.6px; */
 }
 .buttons {
   color: #30363a;
@@ -50,6 +54,51 @@
   }
   a:hover {
     color: black;
+  }
+}
+.codeContainer {
+  display: flex;
+  flex-direction: row;
+}
+@media screen and (max-width: 996px) {
+  .hero {
+    padding: 20px
+  }
+  .heroWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 20px;
+  }
+  .title {
+    font-size: 42px;
+    width: auto;
+  }
+  .header {
+    font-size: 32px;
+    width: auto;
+    text-align: left;
+  }
+  .buttons {
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+  }
+  .codeContainer {
+    display: flex;
+    flex-direction: column;
+  }
+  .description {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+  }
+  .arrow {
+    display: none;
+  }
+  .line {
+    width: 360px;
   }
 }
 .getStartedButton {
@@ -124,19 +173,19 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  text-align: left; /* Justificación general para los hijos */
+  text-align: left;
 }
 
 .textCode .codeTitle {
   font-size: 62px;
   line-height: 74px;
-  text-align: left; /* Justificación específica */
+  text-align: left;
 }
 
 .textCode .codeText {
   width: 393px;
   display: flex;
-  text-align: left; /* Justificación específica */
+  text-align: left;
 }
 
 .heroImage {

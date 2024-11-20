@@ -6,16 +6,18 @@ export const HeroSection: React.FC = () => {
   return (
     <section className={styles.hero}>
       <div className={styles.container}>
-        <h1 className={styles.title}>Harmonix</h1>
-        <div className={styles.description}>
-          <div className={styles.header}>The Ultimate<br></br>Multi-Team Micro Frontend Framework</div>
-          <div className={styles.buttons}>
-            <Link
-              className={styles.getStartedButton}
-              to="/docs/concepts/introduccio">
-              GET STARTED
-            </Link>
-            <button className={styles.playgroundButton}>PLAYGROUND</button>
+        <div className={styles.heroWrapper}>
+          <h1 className={styles.title}>Harmonix</h1>
+          <div className={styles.description}>
+            <div className={styles.header}>The Ultimate<br></br>Multi-Team Micro Frontend Framework</div>
+            <div className={styles.buttons}>
+              <Link
+                className={styles.getStartedButton}
+                to="/docs/concepts/introduccio">
+                GET STARTED
+              </Link>
+              <button className={styles.playgroundButton}>PLAYGROUND</button>
+            </div>
           </div>
         </div>
         <div className={styles.arrow}></div>
