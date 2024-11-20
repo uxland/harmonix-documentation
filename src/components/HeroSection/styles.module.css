@@ -63,6 +63,7 @@
   line-height: 22,4px;
 }
 .getStartedButton:hover {
+  color: #30363a;
   background-color: #4bcbb6;
 }
 .playgroundButton {

@@ -58,6 +58,7 @@
 
 }
 .getStartedButton:hover {
+  color: #30363a;
   background-image: conic-gradient(from 0.5turn, #66ffe5, #8093ff 0.44turn, #66ffe5);
 }
 .getStartedText {

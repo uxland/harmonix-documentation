@@ -63,6 +63,7 @@
   text-align: center;
 }
 .discordButton:hover {
+  color: #30363a;
   background-color: #8093ff;
 }
 .discordText {
