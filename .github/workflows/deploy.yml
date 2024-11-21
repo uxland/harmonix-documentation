@@ -1,0 +1,42 @@
+name: Deploy to IONOS via SFTP
+
+on:
+  push:
+    branches:
+      - master  # Deploys when changes are pushed to the main branch
+
+jobs:
+  deploy:
+    name: Deploy
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the code
+      - name: Checkout Code
+        uses: actions/checkout@v4
+
+      # Step 2: Set up Node.js 20
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+
+      # Step 3: Install dependencies and build the site
+      - name: Install and Build Docusaurus
+        run: |
+          yarn install
+          yarn build
+
+
+      # Step 4: Deploy via SFTP
+      - name: Deploy to IONOS Server
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+        with:
+            username: acc1804162827
+            server: home669771443.1and1-data.host
+            port: 22
+            local_path: './build/*'
+            remote_path: '/harmonixframework'
+            sftp_only: true
+            password: ${{ secrets.SFTP_PASS }}
+

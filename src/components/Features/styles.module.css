@@ -6,44 +6,64 @@
   display: flex;
   flex-direction: column;
   justify-content: center;
-  .title {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 17px;
-  .titleText {
-      font-size: 62px;
-      line-height: 74px;
-      white-space: nowrap;
-      display: flex;
-      align-items: center;
-    }
-  }
-  .vectorTitle {
-    height: 25px;
-    width: 16px;
-  }
-  .benefit {
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: center;
-    gap: 110px;
-    .benefitImage {
-      height: 540px;
-      width: 540px;
-    }
-    .vectorBenefit {
-      height: 16px;
-      width: 10px;
-    }
-  }
-  .line {
-    width: 1160px;
-    height: 1px;
-    margin: 61px auto;
-    background-image: linear-gradient(to right, rgba(128, 147, 255, 0), #7d9bfa 21%, #60dbd4 79%, rgba(92, 228, 207, 0));
-  }
+
+}
+
+.title {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 17px;
+}
+.titleText {
+  font-size: 62px;
+  line-height: 74px;
+  white-space: nowrap;
+  display: flex;
+  align-items: center;
+}
+.vectorTitle {
+  height: 25px;
+  width: 16px;
+}
+.benefit {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 110px;
+
+}
+.line {
+  width: 1160px;
+  height: 1px;
+  margin: 61px auto;
+  background-image: linear-gradient(to right, rgba(128, 147, 255, 0), #7d9bfa 21%, #60dbd4 79%, rgba(92, 228, 207, 0));
+}
+.benefitContent {
+  text-align: start;
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+  width: 518px;
+}
+.benefitTitle {
+  color: b8b8b8b3;
+  font-size: 16px;
+  letter-spacing: 4.8px;
+}
+.benefitSubTitle {
+  color: f4f4f4;
+  font-size: 44px;
+  line-height: 50px;
+}
+.benefitImage {
+  height: 540px;
+  width: 540px;
+}
+.vectorBenefit {
+  height: 16px;
+  width: 10px;
 }
   

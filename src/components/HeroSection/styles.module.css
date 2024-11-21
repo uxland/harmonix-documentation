@@ -49,12 +49,6 @@
   align-items: center;
   justify-content: center;
   gap: 16px;
-  a {
-    text-decoration: none;
-  }
-  a:hover {
-    color: black;
-  }
 }
 .codeContainer {
   display: flex;
@@ -79,6 +73,7 @@
   line-height: 22,4px;
 }
 .getStartedButton:hover {
+  color: #30363a;
   background-color: #4bcbb6;
 }
 .playgroundButton {

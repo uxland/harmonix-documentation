@@ -6,18 +6,18 @@ export const Footer: React.FC = () => {
     <div className={styles.wrapper}>
       <div className={styles.line}></div>
       <div className={styles.footer}>
-        <p className={styles.colorful}>LINKEDIN</p>
-        <p>REDDIT</p>
-        <p>FACEBOOK</p>
-        <p>TWITTER</p>
-        <p>PRIVACY & POLICY</p>
-        <p>COOKIES POLICY</p>
+        <p><a 
+            href="https://discord.gg/EaB97Ahy" 
+            target="_blank" 
+            className={styles.link}
+          >
+            DISCORD
+          </a></p>
         <p className={styles.colorful}>
           MADE BY{' '}
           <a 
             href="https://www.uxland.es" 
             target="_blank" 
-            rel="noopener noreferrer"
             className={styles.link}
           >
             UXLAND
