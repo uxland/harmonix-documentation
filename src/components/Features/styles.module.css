@@ -27,13 +27,20 @@
   height: 25px;
   width: 16px;
 }
-.benefit {
+.benefitAscending  {
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
   gap: 110px;
 
+}
+.benefitDescending {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: center;
+  gap: 110px;
 }
 .line {
   width: 1160px;
@@ -49,21 +56,70 @@
   width: 518px;
 }
 .benefitTitle {
-  color: b8b8b8b3;
+  color: #b8b8b8b3;
   font-size: 16px;
   letter-spacing: 4.8px;
 }
 .benefitSubTitle {
-  color: f4f4f4;
+  color: #f4f4f4;
   font-size: 44px;
   line-height: 50px;
 }
+.benefitDescription {
+  color: #b8b8b8;
+  font-size: 16px;
+  line-height: 24px;
+}
 .benefitImage {
-  height: 540px;
-  width: 540px;
+  height: auto;
+  width: 100%;
+  max-width: 540px;
+  object-fit: contain;
 }
 .vectorBenefit {
   height: 16px;
   width: 10px;
+}
+
+@media screen and (max-width: 996px) {
+  .titleText {
+    font-size: 36px;
+    line-height: 44px;
+    word-wrap: break-word;
+    white-space: normal; 
+  }
+  .benefitAscending  {
+    display: flex;
+    align-items: flex-start;
+    justify-content: flex-start;
+    flex-direction: column;
+    gap: 10px;
+  
+  }
+  .benefitDescending {
+    display: flex;
+    flex-direction: column-reverse;
+    align-items: flex-start;
+    justify-content: center;
+    gap: 10px;
+  }
+  .benefitContent {
+    text-align: start;
+    display: flex;
+    flex-direction: column;
+    gap: 19px;
+    width: auto;
+  }
+  .benefitSubTitle {
+    font-size: 32px;
+    line-height: 40px;
+  }
+  .benefitImage {
+    width: 100%;
+    height: auto;
+  }
+  .line {
+    width: 360px;
+  }
 }
   
