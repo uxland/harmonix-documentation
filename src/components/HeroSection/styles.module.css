@@ -12,7 +12,7 @@
 } 
 .title {
   font-size: 62px;
-  font-family: sans-serif;
+  font-family: "GinoraSans-Bold";
   font-size: 82px;
   font-weight: bold;
   line-height: 74px;
@@ -36,7 +36,7 @@
 }
 .header {
   color: #f4f4f4;
-  font-family: sans-serif;
+  font-family: "GinoraSans-Regular";
   font-size: 62px;
   line-height: 74px;
   width: 838.6px;
@@ -67,7 +67,7 @@
   font-size: 16px;
   width: 163px;
   height: 46px;
-  font-family: sans-serif;
+  font-family: "GinoraSans-Regular";
   font-weight: 600;
   font-size: 16px;
   line-height: 22,4px;
@@ -86,7 +86,7 @@
   font-size: 16px;
   width: 163px;
   height: 46px;
-  font-family: sans-serif;
+  font-family: "GinoraSans-Regular";
   font-weight: 600;
   font-size: 16px;
   line-height: 22,4px;
@@ -115,7 +115,6 @@
   border-top: 8px solid #99a9ff;
 }
 .textCode {
-  font-family: sans-serif;
   color: #f4f4f4;
   position: relative;
   z-index: 2;
@@ -124,6 +123,12 @@
   flex-direction: column;
   gap: 16px;
   text-align: left;
+}
+.codeTitle{
+  font-family: "GinoraSans-Regular";
+}
+.codeText{
+  font-family: "Gilroy-Regular";
 }
 
 .textCode .codeTitle {

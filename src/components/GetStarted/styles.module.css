@@ -13,10 +13,11 @@
 
 }
 .text {
+  font-family: "GinoraSans-Regular";
   width: 632px;
   height: 296px;
   font-size: 62px;
-  line-height: 1.19;
+  line-height: 74px;
   text-align: left;
   background-image: conic-gradient(from 0.37turn, #8093ff, #66ffe5 0.44turn, #8093ff);
   -webkit-background-clip: text;
@@ -37,6 +38,7 @@
 }
 
 .getStartedButton {
+  font-family: "Gilroy-Regular";
   width: 163px;
   height: 46px;
   display: flex;
@@ -62,6 +64,7 @@
   background-image: conic-gradient(from 0.5turn, #66ffe5, #8093ff 0.44turn, #66ffe5);
 }
 .getStartedText {
+  font-family: "Gilroy-Regular";
   font-size: 16px;
   line-height: 24px;
   color: #b8b8b8;

@@ -17,6 +17,7 @@
   gap: 17px;
 }
 .titleText {
+  font-family: "GinoraSans-Regular";
   font-size: 62px;
   line-height: 74px;
   white-space: nowrap;
@@ -56,16 +57,19 @@
   width: 518px;
 }
 .benefitTitle {
+  font-family: "GinoraSans-Regular";
   color: #b8b8b8b3;
   font-size: 16px;
   letter-spacing: 4.8px;
 }
 .benefitSubTitle {
+  font-family: "GinoraSans-Regular";
   color: #f4f4f4;
   font-size: 44px;
   line-height: 50px;
 }
 .benefitDescription {
+  font-family: "Gilroy-Regular";
   color: #b8b8b8;
   font-size: 16px;
   line-height: 24px;
