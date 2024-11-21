@@ -27,8 +27,8 @@ export const HeroSection: React.FC = () => {
             <span className={styles.codeText}>Harmonix és un framework JavaScript de microfrontends creat per facilitar i optimitzar el desenvolupament d'SPAs avançades. 
               Facilita la feina d'equips independents, permetent-los treballar de manera eficient, escalable i autònoma en aplicacions complexes.</span>
           </div>
-          <div>
-            <img src="img/harmonixCode.svg" alt="Hero" className={styles.heroImage} />
+          <div className={styles.codeImage}>
+            <img src="img/harmonixCode.png" alt="Hero" className={styles.heroImage} />
           </div>
         </div>
         <div className={styles.line}></div>
