@@ -18,9 +18,9 @@
 }
 .iconsWrapper {
   display: flex;
-  flex-wrap: wrap; /* Permite que los iconos se acomoden en varias filas */
-  justify-content: center; /* Alinea los iconos al centro */
-  gap: 16px; /* Añade un espacio entre los iconos */
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 16px;
 }
 .icons {
   width: 76px;
