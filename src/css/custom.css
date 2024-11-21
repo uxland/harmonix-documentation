@@ -4,6 +4,20 @@
  * work well for content-centric websites.
  */
 
+ @font-face {
+  font-family: "Gilroy-Regular";
+  src: url("/static/fonts/Gilroy-Regular.ttf") format('truetype'),
+}
+@font-face {
+  font-family: "GinoraSans-Regular";
+  src: url("/static/fonts/GinoraSans-Regular.otf") format('truetype'),
+}
+
+/* html {
+  font-family: "Gilroy-Regular";
+} */
+
+
 /* You can override the default Infima variables here. */
 :root {
   --ifm-color-primary: #3D3D3D;
