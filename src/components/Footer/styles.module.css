@@ -11,6 +11,7 @@
   background-image: linear-gradient(to right, rgba(128, 147, 255, 0.25), #7d9bfa 21%, #60dbd4 79%, rgba(92, 228, 207, 0.25));
 }
 .footer {
+  font-family: "GinoraSans-Regular";
   height: 200px;
   color: #b8b8b8;
   display: flex;
