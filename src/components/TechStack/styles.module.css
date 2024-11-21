@@ -15,6 +15,12 @@
   align-items: center;
   justify-content: center;
 }
+.iconsWrapper {
+  display: flex;
+  flex-wrap: wrap; /* Permite que los iconos se acomoden en varias filas */
+  justify-content: center; /* Alinea los iconos al centro */
+  gap: 16px; /* Añade un espacio entre los iconos */
+}
 .icons {
   width: 76px;
   height: 67px;
@@ -24,4 +30,31 @@
   height: 1px;
   margin: 61px auto;
   background-image: linear-gradient(to right, rgba(128, 147, 255, 0), #7d9bfa 21%, #60dbd4 79%, rgba(92, 228, 207, 0));
+}
+
+@media screen and (max-width: 996px) {
+  .techStack {
+    padding: 0rem 2rem;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+    width: auto;
+  }
+  .title {
+    font-size: 36px;
+    line-height: 44px;
+    white-space: normal;
+    text-align: left;
+  }
+  .iconsWrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    gap: 46px;
+    width: 100%;
+  }
+  .line {
+    width: 360px;
+  }
 }

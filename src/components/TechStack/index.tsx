@@ -5,7 +5,7 @@ export const TechStack: React.FC = () => {
   return (
     <section className={styles.techStack}>
       <div className={styles.title}>Tecnologies suportades</div>
-      <div>
+      <div className={styles.iconsWrapper}>
         <img src="/img/logo-angular.svg" alt="Angular" className={styles.icons} />
         <img src="/img/logo-react.svg" alt="React" className={styles.icons}/>
         <img src="/img/logo-lit.svg" alt="Lit" className={styles.icons}/>
