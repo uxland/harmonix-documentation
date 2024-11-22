@@ -20,7 +20,8 @@
 
 }
 .text {
-  font-family: "GinoraSans-Regular";
+  font-family: "GinoraSans";
+  font-weight: normal;
   width: 459px;
   height: 562px;
   flex-grow: 0;
@@ -53,7 +54,6 @@
   font-size: 16px;
   width: 163px;
   height: 46px;
-  font-weight: 600;
   font-size: 16px;
   line-height: 22,4px;
   transition: background-color 0.3s ease, transform 0.2s ease;
@@ -72,7 +72,8 @@
   color: #b8b8b8;
 }
 .title {
-  font-family: "GinoraSans-Regular";
+  font-family: "GinoraSans";
+  font-weight: normal;
   font-size: 62px;
   line-height: 74px;
   white-space: nowrap;
