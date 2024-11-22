@@ -8,6 +8,8 @@
   gap: 73px;
 }
 .title {
+  font-family: "GinoraSans";
+  font-weight: normal;
   font-size: 62px;
   line-height: 74px;
   white-space: nowrap;
