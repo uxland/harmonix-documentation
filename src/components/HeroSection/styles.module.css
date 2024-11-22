@@ -198,10 +198,10 @@
     gap: 40px;
   }
   .codeImage {
-    align-self: flex-start; /* Asegura que el contenedor de la imagen se alinee a la izquierda */
-    width: 100%; /* Ajusta el ancho para móviles si es necesario */
-    display: flex; /* Garantiza el flujo flexible */
-    justify-content: flex-start; /* Alinea el contenido del contenedor hacia la izquierda */
+    align-self: flex-start;
+    width: 100%;
+    display: flex;
+    justify-content: flex-start;
     text-align: left;
   }
   .description {
