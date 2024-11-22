@@ -87,11 +87,15 @@
 }
 
 @media screen and (max-width: 996px) {
+  .vectorTitle {
+    display: none;
+  }
   .titleText {
     font-size: 36px;
     line-height: 44px;
     word-wrap: break-word;
     white-space: normal; 
+    text-align: start;
   }
   .benefitAscending  {
     display: flex;
