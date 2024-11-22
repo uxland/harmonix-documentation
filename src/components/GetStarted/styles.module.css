@@ -1,7 +1,6 @@
 .section {
   background: #1d1d1d;
   color: #f4f4f4;
-  
 }
 .wrapper {
   display: flex;
@@ -10,7 +9,6 @@
   justify-content: center;
   gap: 159px;
   height: 658px;
-
 }
 .text {
   font-family: "GinoraSans";
@@ -35,7 +33,6 @@
   align-items: flex-start;
   gap: 32px;
   width: 418px;
-
 }
 
 .getStartedButton {
@@ -62,10 +59,42 @@
 .getStartedButton:hover {
   color: #30363a;
   background-image: conic-gradient(from 0.5turn, #66ffe5, #8093ff 0.44turn, #66ffe5);
+  text-decoration: none;
 }
 .getStartedText {
   font-family: "Gilroy-Regular";
   font-size: 16px;
   line-height: 24px;
   color: #b8b8b8;
+}
+
+@media screen and (max-width: 996px) {
+  .section {
+    padding: 0rem 2rem;
+    display: flex;
+    flex-direction: column;
+    width: auto;
+  }
+  .wrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    height: auto;
+    width: auto;
+    padding-top: 42px;
+    padding-bottom: 42px;
+  }
+  .text {
+    font-family: "GinoraSans";
+    font-weight: normal;
+    width: auto;
+    height: auto;
+    font-size: 35px;
+    line-height: 44px;
+  }
+  .getStartedSection {
+    gap: 32px;
+    width: auto;
+    height: auto;
+  }
 }

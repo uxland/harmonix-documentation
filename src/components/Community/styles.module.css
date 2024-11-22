@@ -59,10 +59,14 @@
   transition: background-color 0.3s ease, transform 0.2s ease;
   text-decoration: none;
   text-align: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .discordButton:hover {
   color: #30363a;
   background-color: #8093ff;
+  text-decoration: none;
 }
 .discordText {
   font-family: "Gilroy-Regular";
