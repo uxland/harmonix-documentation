@@ -72,10 +72,14 @@
   font-weight: normal;
   font-size: 16px;
   line-height: 22,4px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .getStartedButton:hover {
   color: #30363a;
   background-color: #4bcbb6;
+  text-decoration: none;
 }
 .playgroundButton {
   background-color: #99a9ff;
