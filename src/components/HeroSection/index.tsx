@@ -16,7 +16,11 @@ export const HeroSection: React.FC = () => {
                 to="/docs/concepts/introduccio">
                 GET STARTED
               </Link>
-              <button className={styles.playgroundButton}>PLAYGROUND</button>
+              <Link
+                className={styles.playgroundButton}
+                to="https://stackblitz.com/~/github.com/uxland/harmonix-react-plugin-demo">
+                PLAYGROUND
+              </Link>
             </div>
           </div>
         </div>
