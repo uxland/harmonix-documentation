@@ -12,9 +12,9 @@
 } 
 .title {
   font-size: 62px;
-  font-family: "GinoraSans-Bold";
-  font-size: 82px;
+  font-family: "GinoraSans";
   font-weight: bold;
+  font-size: 82px;
   line-height: 74px;
   text-align: center;
   background: linear-gradient(90deg, #8093ff, #66ffe5, #8093ff);
@@ -36,7 +36,8 @@
 }
 .header {
   color: #f4f4f4;
-  font-family: "GinoraSans-Regular";
+  font-family: "GinoraSans";
+  font-weight: normal;
   font-size: 62px;
   line-height: 74px;
   width: 838.6px;
@@ -67,8 +68,8 @@
   font-size: 16px;
   width: 163px;
   height: 46px;
-  font-family: "GinoraSans-Regular";
-  font-weight: 600;
+  font-family: "GinoraSans";
+  font-weight: normal;
   font-size: 16px;
   line-height: 22,4px;
 }
@@ -86,8 +87,8 @@
   font-size: 16px;
   width: 163px;
   height: 46px;
-  font-family: "GinoraSans-Regular";
-  font-weight: 600;
+  font-family: "GinoraSans";
+  font-weight: normal;
   font-size: 16px;
   line-height: 22,4px;
 }
@@ -125,7 +126,8 @@
   text-align: left;
 }
 .codeTitle{
-  font-family: "GinoraSans-Regular";
+  font-family: "GinoraSans";
+  font-weight: normal;
 }
 .codeText{
   font-family: "Gilroy-Regular";

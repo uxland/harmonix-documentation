@@ -9,23 +9,15 @@
   src: url("/static/fonts/Gilroy-Regular.ttf") format('truetype'),
 }
 @font-face {
-  font-family: "GinoraSans-Regular";
-  src: url("/static/fonts/GinoraSans-Regular.otf") format('truetype'),
+  font-family: "GinoraSans";
+  src: url("/static/fonts/GinoraSans-Regular.otf") format('truetype');
+  font-weight: normal;
 }
 @font-face {
-  font-family: "GinoraSans-Bold";
-  src: url("/static/fonts/GinoraSans-Bold.otf") format('truetype'),
+  font-family: "GinoraSans";
+  src: url("/static/fonts/GinoraSans-Bold.otf") format('truetype');
+  font-weight: bold;
 }
-
-/* html {
-  font-family: "Gilroy-Regular";
-} */
- /* html {
-  font-family: "GinoraSans-Regular";
-} */
-/* h1, h2, h3, h4, h5, h6 {
-  font-family: "GinoraSans-Regular";
-} */
 
 
 /* You can override the default Infima variables here. */
