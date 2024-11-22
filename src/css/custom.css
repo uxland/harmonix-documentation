@@ -9,12 +9,14 @@
   src: url("/static/fonts/Gilroy-Regular.ttf") format('truetype'),
 }
 @font-face {
-  font-family: "GinoraSans-Regular";
+  font-family: "GinoraSans";
   src: url("/static/fonts/GinoraSans-Regular.otf") format('truetype'),
+  font-weight: normal;
 }
 @font-face {
-  font-family: "GinoraSans-Bold";
+  font-family: "GinoraSans";
   src: url("/static/fonts/GinoraSans-Bold.otf") format('truetype'),
+  font-weight: bold;
 }
 
 /* html {
