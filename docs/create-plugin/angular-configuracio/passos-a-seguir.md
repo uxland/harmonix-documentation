@@ -184,15 +184,18 @@ ng generate library my-plugin
 Aixo hauria de generar una carpeta nova amb la llibreria de angular my-plugin.
 
 
-## Declarar arxiu d'entrada del plugin
+## Borrar arxius
 
+S'han d'eliminar els arxius `lib` i `public-api`.
+
+
+## Declarar arxiu d'entrada del plugin
 S'ha de declarar un arxiu on s'implementen les funcions necessàries per a declarar un plugin.
 
-En aquest tutorial decidim utilitzar un arxiu `plugin.ts` dins de la carpeta src:
-
-  
+En aquest tutorial decidim utilitzar un arxiu `projects/my-plugin/src/plugin.ts` dins de la carpeta src:
 
 ```javascript
+import "@angular/compiler";
 import { PrimariaApi } from "@uxland/primary-shell";
 
 export const initialize = (api: PrimariaApi) => {
@@ -205,16 +208,24 @@ export const dispose = (api: PrimariaApi) => {
     return Promise.resolve();
 };
 ```
+És important afegir el `import "@angular/compiler";` per poder compilar en temps d'execució en l'aplicació.
+
+En l'arxiu `ng-package.json` s'ha de modificar l'entrada de la llibreria a _entryFile_ i afegir _plugin.ts_. 
+
+
 
 ## Declarar importador de plugins
 
 ### Declarar la definicio de importacio de Plugin
+
+** ha d'estar en el sandbox+**
+
 Crearem un arxiu amb les definicions dels plugins amb els seus importadors. Per a això, crearem l'arxiu `plugins.ts` a la carpeta src amb la següent forma:
 
 ```typescript
 import { PluginDefinition, Plugin } from "@uxland/primary-shell";
 
-const importer: () => Promise<Plugin> = () => import("./plugin") as any;
+const importer: () => Promise<Plugin> = () => import("../projects/my-plugin/src/plugin") as any;
 export const plugins: PluginDefinition[] = [{ pluginId: "angular-plugin", importer: importer}]
 ```
 
@@ -228,6 +239,7 @@ Ho farem cridant a la funció _bootstrapPlugins_ en el `main.ts`.
 
 ```javascript
 import { bootstrapPlugins, initializeShell } from "@uxland/primary-shell";
+import { plugins } from "./plugins";
 //...
 
 const initializeSandboxApp = (sandbox: HTMLElement) => {
@@ -260,15 +272,18 @@ Ara que sabem que el plugin està inicialitzat correctament, crearem un componen
 
 ### Crear un component:
 
-  
 
 Crear un component amb el CLI d'Angular
 
   
 ```verilog
-ng generate component NewComponent --project plugin --view-encapsulation ShadowDom
+ng generate component MainView --project my-plugin --view-encapsulation ShadowDom
 ```
 
+  **Crear la vista **
+  - crear views folder
+  - ficar main-view a views
+  
   
 
 Això generarà un component d'Angular, amb la vista encapsulada en un ShadowDom, com indica.
@@ -299,48 +314,47 @@ export class AppComponent {
 
 ### Crear aplicació Angular:
 
-  
-
 A diferència d'altres frameworks com Lit, React... Angular requereix una instància d'aplicació, així que la cridarem en el `plugin.ts`
 
   
 
 ```javascript
-import { createApplication } from "@angular/platform-browser";
+import { createApplication } from "@angular/platform-browser"; // Afegir aquest import
 import { PrimariaApi } from "@uxland/primary-shell";
 
 export const initialize = (api: PrimariaApi) => {
-    createApplication().then(() => console.log("Angular application created"));
+    createApplication().then(() => console.log("Angular application created")); // Afegir aquesta linea
     console.log(`Plugin ${api.pluginInfo.pluginId} initialized`);
 
     return Promise.resolve();
 };
-
-export const dispose = (api: PrimariaApi) => {
-    console.log(`Plugin ${api.pluginInfo.pluginId} disposed`);
-    return Promise.resolve();
-};
+//...
 ```
 
-  
-
-### Injectar plugin en les vistes:
 
   
 
+### crear factoria de vista:
 Una vegada creada l'aplicació i el component, ja podem registrar les vistes amb el _regionManager_. Per a ajudar-nos, declararem la funció _viewAngularFactory_ en el plugin.ts que ens farà de factoria:
 
-  
+-Crear arxiu factory.ts a  la carpeta main-view
+-Explicar que estem fent
+- Enseñar aon tenen que clickar ( aon apareix el menu de navegacio screenshot)
 
 ```typescript
+import { ApplicationRef, NgZone, Type } from "@angular/core";
+import { MainViewComponent } from "./main-view.component";
+
 const viewAngularFactory = <C>(app: ApplicationRef, component: Type<C>): () => Promise<HTMLElement> => () => {
-  const host = document.createElement("host-component");
-  app.injector.get(NgZone).run(() => app.bootstrap(component, host));
-  return Promise.resolve(host);
-}
+    const host = document.createElement("host-component");
+    app.injector.get(NgZone).run(() => app.bootstrap(component, host));
+    return Promise.resolve(host);
+  }
+
+  export const viewFactory = (app:ApplicationRef)  => viewAngularFactory(app, MainViewComponent);
 ```
 
-  
+## Injectar la vista a la regio principal
 
 Després, per un costat registrarem un component a la vista principal i per altre costat farem el mateix a la zona per les accions ràpides (a la zona inferior del sidebar).
 
@@ -357,33 +371,24 @@ Per a això, utilitzarem el _regionManager_ que ens proporciona la api i els seu
   
 
 ```typescript
-import { ApplicationRef, NgZone, Type } from "@angular/core";
 import { createApplication } from "@angular/platform-browser";
 import { PrimariaApi, shellRegions } from "@uxland/primary-shell";
-import { AppComponent } from "./app/app.component";
-
-const viewAngularFactory = <C>(app: ApplicationRef, component: Type<C>): () => Promise<HTMLElement> => () => {
-  const host = document.createElement("host-component");
-  app.injector.get(NgZone).run(() => app.bootstrap(component, host));
-  return Promise.resolve(host);
-}
+import { viewFactory } from "./views/main-view/factory";
 
 export const initialize = (api: PrimariaApi) => {
-  console.log(`Plugin ${api.pluginInfo.pluginId} initialized`);
-
-  createApplication().then((app) => {
-    api.regionManager.registerMainView({
-      id: "plugin-main-view", // Aquí declarem la id de la vista
-      factory: viewAngularFactory(app, AppComponent),
-    })
-
-  return Promise.resolve();
-})
-}
+    createApplication().then((app) => {
+        api.regionManager.registerMainView({
+          id: "plugin-main-view", // Aquí declarem la id de la vista
+          factory: viewFactory(app), 
+        }); //Registrem la vista a la regio main amb la factoria declarada
+      });
+    return Promise.resolve();
+};
 
 export const dispose = (api: PrimariaApi) => {
-  api.regionManager.removeView(shellRegions.main, "plugin-main-view"); // Aquí utilitzem la id de la vista del main que volem eliminar
-}
+    api.regionManager.removeView(shellRegions.main, "plugin-main-view"); // Aquí utilitzem la id de la vista del main que volem eliminar
+    return Promise.resolve();
+};
 ```
 
   
@@ -393,39 +398,29 @@ export const dispose = (api: PrimariaApi) => {
   
 
 ```typescript
-import { ApplicationRef, NgZone, Type } from "@angular/core";
 import { createApplication } from "@angular/platform-browser";
 import { PrimariaApi, PrimariaMenuItem, shellRegions } from "@uxland/primary-shell";
-import { AppComponent } from "./app/app.component";
-
-const viewAngularFactory = <C>(app: ApplicationRef, component: Type<C>): () => Promise<HTMLElement> => () => {
-  const host = document.createElement("host-component");
-  app.injector.get(NgZone).run(() => app.bootstrap(component, host));
-  return Promise.resolve(host);
-}
+import { viewFactory } from "./views/main-view/factory";
 
 export const initialize = (api: PrimariaApi) => {
-  console.log(`Plugin ${api.pluginInfo.pluginId} initialized`);
-
-  createApplication().then((app) => {
-    api.regionManager.registerMainView({
-      id: "plugin-main-view",
-      factory: viewAngularFactory(app, AppComponent),
-    } as any)
-
-    api.regionManager.registerQuickAction({
-      id: "plugin-quick-action",
-      factory: () => Promise.resolve(new PrimariaMenuItem("add_circle_outline", "Angular plugin", () => {
-        api.regionManager.activateMainView("plugin-main-view");
-  })),
-    });
-  });
-
-  return Promise.resolve();
+    createApplication().then((app) => {
+        api.regionManager.registerMainView({
+          id: "plugin-main-view", // Aquí declarem la id de la vista
+          factory: viewFactory(app),
+        });
+        api.regionManager.registerView(shellRegions.navigationMenu,{
+            id: "plugin-quick-action",
+            factory: () => Promise.resolve(new PrimariaMenuItem("add_circle_outline", "Angular plugin", () => {
+              api.regionManager.activateMainView("plugin-main-view");
+            })),
+          });
+      });
+    return Promise.resolve();
 };
 
 export const dispose = (api: PrimariaApi) => {
-  api.regionManager.removeView(shellRegions.main, "plugin-main-view");
+    api.regionManager.removeView(shellRegions.main, "plugin-main-view"); // Aquí utilitzem la id de la vista del main que volem eliminar
+    return Promise.resolve();
 };
 ```
 
