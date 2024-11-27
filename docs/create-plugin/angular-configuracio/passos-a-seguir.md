@@ -75,7 +75,7 @@ npm install @uxland/primary-shell
 
 # Inicialitzar el Shell
 
-En inicialitzar el projecte, l'arxiu `main.ts` el tenim d'aquesta manera:
+En inicialitzar el projecte, el fitxer `main.ts` el tenim d'aquesta manera:
 
   
 
@@ -90,7 +90,7 @@ bootstrapApplication(AppComponent, appConfig)
 
   
 
-Per a la inicialització del shell, substituirem l'arxiu `main.ts` que hem vist a dalt pel següent codi:
+Per a la inicialització del shell, substituirem el fitxer `main.ts` que hem vist a dalt pel següent codi:
 
   
 
@@ -177,23 +177,21 @@ Hauries de veure renderitzat el Shell de primària en el navegador.
 
 # Generar projecte de plugin
 
-Els plugins d'Angular seràn realment llibreries d'Angular. Utilitzarem l'Angular CLI per generar el projecte d'Angular.
+Els plugins d'harmonix amb Angular seràn realment llibreries d'Angular. Utilitzarem l'Angular CLI per generarla.
 
 ```bash
 ng generate library my-plugin
 ```
-Això hauria de generar una carpeta nova amb la llibreria d'Angular my-plugin.
+Això hauria de generar una carpeta nova amb el codi my-plugin al carpeta projects.
 
 
-## Borrar arxius
+## Eliminar fitxers de plantilla
 
-S'han d'eliminar els arxius `lib` i `public-api`.
+S'han d'eliminar els fitxer de plantilla. Eliminem la carpta `lib`i el fitxer `public-api`
 
 
-## Declarar arxiu d'entrada del plugin
-S'ha de declarar un arxiu on s'implementen les funcions necessàries per a declarar un plugin.
-
-En aquest tutorial decidim utilitzar un arxiu `projects/my-plugin/src/plugin.ts` dins de la carpeta src:
+## Declarar fitxer d'entrada del plugin
+S'ha de declarar un fitxer on s'implementen les funcions necessàries per a declarar un plugin. Per conveni el fitxer s'anomena `plugin.ts`. Llavors,earem el fitxer `projects/my-plugin/src/plugin.ts`.
 
 ```javascript
 import "@angular/compiler";
@@ -211,16 +209,27 @@ export const dispose = (api: PrimariaApi) => {
 ```
 És important afegir el `import "@angular/compiler";` per poder compilar en temps d'execució en l'aplicació.
 
-En l'arxiu `ng-package.json` s'ha de modificar l'entrada de la llibreria a _entryFile_ i afegir _plugin.ts_. 
+En el fitxer `ng-package.json` s'ha de modificar l'entrada de la llibreria a _entryFile_ i afegir _plugin.ts_. 
+
+```json
+{
+  "$schema": "../../node_modules/ng-packagr/ng-package.schema.json",
+  "dest": "../../dist/plugin",
+  "lib": {
+    "entryFile": "src/plugin.ts"
+  }
+}
+```
 
 
 
-## Declarar importador de plugins
+## Importar plugins en el sandbox
 
-### Declarar la definicio d'importació de Plugin
+### Declarar la definicio d'importació de plugins
 
-
-Crearem un arxiu amb les definicions dels plugins amb els seus importadors. Per a això, crearem l'arxiu `plugins.ts` a la carpeta src amb la següent forma:
+Crearem un fitxer amb les definicions dels plugins amb els seus importadors.
+Aquí li indicarem la id de plugin i el seu metode de carrega.
+Per a això, crearem el fitxer `plugins.ts` a la carpeta src de la arrel:
 
 ```typescript
 import { PluginDefinition, Plugin } from "@uxland/primary-shell";
@@ -229,13 +238,12 @@ const importer: () => Promise<Plugin> = () => import("../projects/my-plugin/src/
 export const plugins: PluginDefinition[] = [{ pluginId: "angular-plugin", importer: importer}]
 ```
 
-Això importarà el plugin via l'arxiu de definició creat prèviament.
+Això importarà el plugin via el fitxer de entrada (`projects/my-plugins/src/plugin`) creat prèviament.
 
 ### Executar l'arrencada de plugins
 
-Ara només queda indicar-li al sandbox que afegeixi el plugin en el procés de càrrega. Aquí li indicarem la id de plugin i el seu metode de carrega. En el nostre cas serà un import a l'arxiu `plugin.ts` creat anteriorment.
-
-Ho farem cridant a la funció _bootstrapPlugins_ en el `main.ts`. 
+Cridarem a la funcio de arrencada de plugins. 
+Ho farem cridant a la funció _bootstrapPlugins_ en el `main.ts` passant com a paremetre les definicion de importacions (`src/plugins.ts`). 
 
 ```javascript
 import { bootstrapPlugins, initializeShell } from "@uxland/primary-shell";
@@ -257,8 +265,7 @@ const initializeSandboxApp = (sandbox: HTMLElement) => {
 //...
 ```
 
-Ara hauríem de veure el log de consola una vegada hagi carregat el mòdul.
-
+Ara hauríem de veure el log de consola una vegada hagi carregat el plugin.
 
 ![](https://t9012015559.p.clickup-attachments.com/t9012015559/f283f009-d22b-4b17-9973-0b5a180bfc71/image.png)
 
@@ -338,7 +345,7 @@ export const initialize = (api: PrimariaApi) => {
 
 Una vegada creada l'aplicació i el component, ja podem registrar les vistes amb el _regionManager_. Per a ajudar-nos, declararem la funció _viewAngularFactory_ en el plugin.ts que ens farà de factoria:
 
-Es crearà una carpeta anomenada `views`, i dins d'ella crearem la carpeta `main-view` amb l'arxiu `factory.ts`.
+Es crearà una carpeta anomenada `views`, i dins d'ella crearem la carpeta `main-view` amb el fitxer `factory.ts`.
 
 
 ```typescript
