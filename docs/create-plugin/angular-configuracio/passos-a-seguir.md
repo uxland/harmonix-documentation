@@ -79,7 +79,7 @@ En inicialitzar el projecte, el fitxer `main.ts` el tenim d'aquesta manera:
 
   
 
-```coffeescript
+```typescript
 import { bootstrapApplication } from '@angular/platform-browser';
 import { appConfig } from './app/app.config';
 import { AppComponent } from './app/app.component';
@@ -177,12 +177,12 @@ Hauries de veure renderitzat el Shell de primària en el navegador.
 
 # Generar projecte de plugin
 
-Els plugins d'harmonix amb Angular seràn realment llibreries d'Angular. Utilitzarem l'Angular CLI per generarla.
+Els plugins d'harmonix amb Angular seràn realment llibreries d'Angular. Utilitzarem l'Angular CLI per generar-la.
 
 ```bash
 ng generate library my-plugin
 ```
-Això hauria de generar una carpeta nova amb el codi my-plugin al carpeta projects.
+Això hauria de generar una carpeta nova amb el codi my-plugin a la carpeta projects.
 
 
 ## Eliminar fitxers de plantilla
@@ -191,7 +191,7 @@ S'han d'eliminar els fitxer de plantilla. Eliminem la carpta `lib`i el fitxer `p
 
 
 ## Declarar fitxer d'entrada del plugin
-S'ha de declarar un fitxer on s'implementen les funcions necessàries per a declarar un plugin. Per conveni el fitxer s'anomena `plugin.ts`. Llavors,earem el fitxer `projects/my-plugin/src/plugin.ts`.
+S'ha de declarar un fitxer on s'implementen les funcions necessàries per a declarar un plugin. Per conveni el fitxer s'anomena `plugin.ts`. Llavors, crearem el fitxer `projects/my-plugin/src/plugin.ts`.
 
 ```javascript
 import "@angular/compiler";
@@ -225,11 +225,11 @@ En el fitxer `ng-package.json` s'ha de modificar l'entrada de la llibreria a _en
 
 ## Importar plugins en el sandbox
 
-### Declarar la definicio d'importació de plugins
+### Declarar la definició d'importació de plugins
 
 Crearem un fitxer amb les definicions dels plugins amb els seus importadors.
-Aquí li indicarem la id de plugin i el seu metode de carrega.
-Per a això, crearem el fitxer `plugins.ts` a la carpeta src de la arrel:
+Aquí li indicarem la id de plugin i el seu mètode de càrrega.
+Per a això, crearem el fitxer `plugins.ts` a la carpeta src de l'arrel:
 
 ```typescript
 import { PluginDefinition, Plugin } from "@uxland/primary-shell";
@@ -238,12 +238,12 @@ const importer: () => Promise<Plugin> = () => import("../projects/my-plugin/src/
 export const plugins: PluginDefinition[] = [{ pluginId: "angular-plugin", importer: importer}]
 ```
 
-Això importarà el plugin via el fitxer de entrada (`projects/my-plugins/src/plugin`) creat prèviament.
+Això importarà el plugin via el fitxer d'entrada (`projects/my-plugins/src/plugin`) creat prèviament.
 
 ### Executar l'arrencada de plugins
 
-Cridarem a la funcio de arrencada de plugins. 
-Ho farem cridant a la funció _bootstrapPlugins_ en el `main.ts`, passant com a paremetre les definicion de importacions (`src/plugins.ts`). 
+Cridarem a la funció d'arrencada de plugins. 
+Ho farem cridant a la funció _bootstrapPlugins_ en el `main.ts`, passant com a paràmetre les definicions d'importacions (`src/plugins.ts`). 
 
 ```javascript
 import { bootstrapPlugins, initializeShell } from "@uxland/primary-shell";
@@ -273,7 +273,7 @@ Ara hauríem de veure el log de consola una vegada hagi carregat el plugin.
 
 # Injectar vistes
 
-Ara que sabem que el plugin està inicialitzat correctament, crearem un component i l'injectarem a la regio principal utilitzant el _regionManager_ que ens proporciona la api.
+Ara que sabem que el plugin està inicialitzat correctament, crearem un component i l'injectarem a la regió principal utilitzant el _regionManager_ que ens proporciona l'api.
   
 
 ### Crear vista:
@@ -309,7 +309,7 @@ export const initialize = (api: PrimariaApi) => {
 
 ### Crear factoria de vista:
 
-Crearem una factoria de vista, per poder registar la vista principal. Crearem un fitxer `factory.ts`a la carpeta de la vista `main-view` on declararem la factoria:
+Crearem una factoria de vista, per poder registrar la vista principal. Crearem un fitxer `factory.ts` a la carpeta de la vista `main-view` on declararem la factoria:
 
 ```typescript
 import { ApplicationRef, NgZone, Type } from "@angular/core";
@@ -326,9 +326,9 @@ const viewAngularFactory = <C>(app: ApplicationRef, component: Type<C>): () => P
 
 ## Injectar la vista a la regio principal
 
-Després, per un costat registrarem una vista a la regio principal i per altre costat farem el mateix a la regio de navegació.
+Després, per un costat registrarem una vista a la regió principal i per altre costat farem el mateix a la regió de navegació.
 
-Per a això, utilitzarem el _regionManager_ que ens proporciona la api.
+Per a això, utilitzarem el _regionManager_ que ens proporciona l'api.
 
 Utilitzarem el mètode _registerMainView_ del _regionManager_ passant-li la factoria de vista. 
 
