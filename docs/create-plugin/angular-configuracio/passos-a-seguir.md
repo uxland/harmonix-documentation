@@ -330,9 +330,9 @@ Després, per un costat registrarem una vista a la regio principal i per altre c
 
 Per a això, utilitzarem el _regionManager_ que ens proporciona la api.
 
-*   Utilitzarem el mètode _registerMainView_ del _regionManager_ passant-li la factoria de vista. 
+Utilitzarem el mètode _registerMainView_ del _regionManager_ passant-li la factoria de vista. 
 
-*   Canviarem també la funció dispose perquè elimini la vista quan es desactivi el plugin. Per a això, importarem shellRegions de "_@uxland/primary-shell_" que ens donarà les regions del shell i utilitzarem la regió main. Com a segon argument li passarem la id de la vista que volem eliminar. Com que voldrem eliminar la vista registrada amb la funció registerMainView, li passarem aquella mateixa id:
+Canviarem també la funció dispose perquè elimini la vista quan es desactivi el plugin. Per a això, importarem shellRegions de "_@uxland/primary-shell_" que ens donarà les regions del shell i utilitzarem la regió main. Com a segon argument li passarem la id de la vista que volem eliminar. Com que voldrem eliminar la vista registrada amb la funció registerMainView, li passarem aquella mateixa id:
 
 
 ```typescript
@@ -358,36 +358,25 @@ export const dispose = (api: PrimariaApi) => {
 
 ### Altres exemples d'injecció de vistes: menú navegació 
   
-
 Per afegir una vista del plugin en el menú ràpid utilitzarem el mètode registerView del regionManager. En aquest cas, a la factoria li passarem una instància de la classe _PrimariaMenuItem_ importada del shell (_@uxland/primary-shell_), a la mateixa vegada, li passarem el literal de la icona a mostrar, el títol que apareixerà en el menú d'accions ràpides i la callback que activarà la vista registrada al main en clicar l'ítem del menú:
 
-  
 
 ```typescript
-import { createApplication } from "@angular/platform-browser";
+//...
 import { PrimariaApi, PrimariaMenuItem, shellRegions } from "@uxland/primary-shell";
-import { viewFactory } from "./views/main-view/factory";
 
 export const initialize = (api: PrimariaApi) => {
-    createApplication().then((app) => {
-        api.regionManager.registerMainView({
-          id: "plugin-main-view", // Aquí declarem la id de la vista
-          factory: viewFactory(app),
-        });
-        api.regionManager.registerView(shellRegions.navigationMenu,{
+  //...
+    api.regionManager.registerView(shellRegions.navigationMenu,{
             id: "plugin-quick-action",
             factory: () => Promise.resolve(new PrimariaMenuItem("add_circle_outline", "Angular plugin", () => {
               api.regionManager.activateMainView("plugin-main-view");
             })),
           });
-      });
-    return Promise.resolve();
+    //...
 };
 
-export const dispose = (api: PrimariaApi) => {
-    api.regionManager.removeView(shellRegions.main, "plugin-main-view"); // Aquí utilitzem la id de la vista del main que volem eliminar
-    return Promise.resolve();
-};
+//...
 ```
 
 Arribats a aquest punt, en el navegador veurem el següent:
@@ -404,10 +393,9 @@ I en clicar en el botó "Angular plugin", veurem el nostre plugin funcionant i m
 ![](/static/img/pluginWorking.png)
 
 
-  
 
 Enhorabona, has implementat el teu primer plugin a Harmonix!
 
-Si vols veure el resultat d'aquesta configuració i creació d'un plugin d'Harmonix amb Angular, aquí es mostra una demo del repositori:
+Pots veure un repositori d'exemple on s'implementa un plugin amb Angular:
 
 [https://stackblitz.com/~/github.com/uxland/harmonix-angular-plugin-demo](https://stackblitz.com/~/github.com/uxland/harmonix-angular-plugin-demo)
