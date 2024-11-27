@@ -1,7 +1,7 @@
 ---
 sidebar_position: 4
 ---
-## Configuracio per produccio
+## Compilació plugin
 
 En el `package.json` del plugin, s'ha d'afegir el primary-shell com a peerDependency.
 

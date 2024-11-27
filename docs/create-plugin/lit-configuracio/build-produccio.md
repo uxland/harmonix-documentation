@@ -2,6 +2,8 @@
 sidebar_position: 3
 ---
 
+## Compilació plugin
+
 # Configuració vite
 
 <br/>

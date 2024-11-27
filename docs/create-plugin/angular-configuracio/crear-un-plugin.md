@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-# Passos a seguir
+# Crear un plugin
 
 # Configura el teu Entorn de Desenvolupament
 

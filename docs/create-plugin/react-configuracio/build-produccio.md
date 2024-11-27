@@ -2,6 +2,8 @@
 sidebar_position: 3
 ---
 
+## Compilació plugin
+
 # Configuració vite
 
 La configuració de l'arxiu `vite.config.ts` defineix com a externes les dependències "react", "react-dom" i "@uxland/primary-shell", indicant que no s'han d'incloure en el paquet final. I s'inclou la definició de `inlineDynamicImports: true`, que força a incloure totes les importacions dinàmiques en un únic arxiu.
@@ -27,6 +29,10 @@ npm run vite build
 <br/>
 
 Seguidament es crea automàticament la carpeta _dist_. Dins aquesta carpeta, l'arxiu `index.js` és el que s'haurà de pujar a la Plugin Store.
+
+
+<br/>
+![dist](image.png)
 
 
 <br/>
