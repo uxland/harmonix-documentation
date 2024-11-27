@@ -276,50 +276,22 @@ Ara hauríem de veure el log de consola una vegada hagi carregat el plugin.
 Ara que sabem que el plugin està inicialitzat correctament, crearem un component i l'injectarem a la regio principal utilitzant el _regionManager_ que ens proporciona la api.
   
 
-### Crear un component:
-Crear un component amb el CLI d'Angular
+### Crear vista:
 
-  
+#### Crear component 
+Crear un component amb el CLI d'Angular
 ```verilog
 ng generate component MainView --project my-plugin --view-encapsulation ShadowDom
 ```
 
-  **Crear la vista **
-  - crear views folder
-  - ficar main-view a views
-  
-  
-
 Això generarà un component d'Angular, amb la vista encapsulada en un ShadowDom, com indica.
 
-  
-
-Per a la demo utilitzarem com a component el _my-plugin_ del boilerplate d'Angular, així que afegirem la propietat _encapsulation_ a la configuració del component:
-
-  
-
-```typescript
-import { Component, ViewEncapsulation } from "@angular/core";
-
-@Component({
-  standalone: true,
-  imports: [],
-  templateUrl: "./my-plugin.html",
-  styleUrl: "./my-plugin.css",
-  encapsulation: ViewEncapsulation.ShadowDom
-})
-export class AppComponent {
-  title = "angular-module";
-}
-
-
-```
-
+#### Convertir en vista
+Es crearà una carpeta anomenada `views`, i mourem el component `main-view` a la carpeta `views`. 
 
 ### Crear aplicació Angular:
 
-A diferència d'altres frameworks com Lit, React... Angular requereix una instància d'aplicació, així que la cridarem en el `plugin.ts`
-
+A diferència d'altres frameworks com Lit, React... Angular requereix una instància d'aplicació, crearem la instància en el  `plugin.ts`
   
 
 ```javascript
@@ -335,15 +307,9 @@ export const initialize = (api: PrimariaApi) => {
 //...
 ```
 
-
-  
-
 ### Crear factoria de vista:
 
-Una vegada creada l'aplicació i el component, ja podem registrar les vistes amb el _regionManager_. Per a ajudar-nos, declararem la funció _viewAngularFactory_ en el plugin.ts que ens farà de factoria:
-
-Es crearà una carpeta anomenada `views`, i dins d'ella crearem la carpeta `main-view` amb el fitxer `factory.ts`.
-
+Crearem una factoria de vista, per poder registar la vista principal. Crearem un fitxer `factory.ts`a la carpeta de la vista `main-view` on declararem la factoria:
 
 ```typescript
 import { ApplicationRef, NgZone, Type } from "@angular/core";
@@ -360,11 +326,9 @@ const viewAngularFactory = <C>(app: ApplicationRef, component: Type<C>): () => P
 
 ## Injectar la vista a la regio principal
 
-Després, per un costat registrarem un component a la vista principal i per altre costat farem el mateix a la zona per les accions ràpides (a la zona inferior del sidebar).
+Després, per un costat registrarem un component a la vista principal i per altre costat farem el mateix a la zona de navegació.
 
-Per a això, utilitzarem el _regionManager_ que ens proporciona la api i els seus mètodes _registerMenu, registerQuickAction o registerMainView_ per escollir en quina regió injectar-los:
-
-  
+Per a això, utilitzarem el _regionManager_ que ens proporciona la api.
 
 *   Utilitzarem el mètode _registerMainView_ del _regionManager_ passant-li la vista.
 
