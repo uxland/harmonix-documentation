@@ -423,23 +423,20 @@ export const dispose = (api: PrimariaApi) => {
     return Promise.resolve();
 };
 ```
-  
 
 Arribats a aquest punt, en el navegador veurem el següent:
 
   
 
-![](https://t9012015559.p.clickup-attachments.com/t9012015559/2c987c5c-a1c1-4858-bb2e-891f6d664164/image.png)
+![](/static//img/pluginSidebar.png)
 
   
 
-I en clicar en el botó "Angular plugin" dins del menú ràpid de "Crear", veurem el nostre plugin funcionant i mostrat a la regió principal:
+I en clicar en el botó "Angular plugin", veurem el nostre plugin funcionant i mostrat a la regió principal:
 
   
+![](/static//img/pluginWorking.png)
 
-![](https://t9012015559.p.clickup-attachments.com/t9012015559/713ae18c-c628-4aa5-8e62-2977f77d34a2/image.png)
-
-![](https://t9012015559.p.clickup-attachments.com/t9012015559/839625e6-edc9-4d94-a7ee-3fb175b8fcb8/image.png)
 
   
 
