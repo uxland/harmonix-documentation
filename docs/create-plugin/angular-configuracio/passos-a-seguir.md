@@ -326,17 +326,14 @@ const viewAngularFactory = <C>(app: ApplicationRef, component: Type<C>): () => P
 
 ## Injectar la vista a la regio principal
 
-Després, per un costat registrarem un component a la vista principal i per altre costat farem el mateix a la zona de navegació.
+Després, per un costat registrarem una vista a la regio principal i per altre costat farem el mateix a la regio de navegació.
 
 Per a això, utilitzarem el _regionManager_ que ens proporciona la api.
 
-*   Utilitzarem el mètode _registerMainView_ del _regionManager_ passant-li la vista.
-
-  
+*   Utilitzarem el mètode _registerMainView_ del _regionManager_ passant-li la factoria de vista. 
 
 *   Canviarem també la funció dispose perquè elimini la vista quan es desactivi el plugin. Per a això, importarem shellRegions de "_@uxland/primary-shell_" que ens donarà les regions del shell i utilitzarem la regió main. Com a segon argument li passarem la id de la vista que volem eliminar. Com que voldrem eliminar la vista registrada amb la funció registerMainView, li passarem aquella mateixa id:
 
-  
 
 ```typescript
 import { createApplication } from "@angular/platform-browser";
@@ -359,9 +356,10 @@ export const dispose = (api: PrimariaApi) => {
 };
 ```
 
+### Altres exemples d'injecció de vistes: menú navegació 
   
 
-*   Per a afegir el plugin en el menú ràpid utilitzarem el mètode registerView del regionManager. En aquest cas, a la factoria li passarem una instància de la classe _PrimariaMenuItem_ importada del shell (_@uxland/primary-shell_), a la mateixa vegada, li passarem el literal de la icona a mostrar, el títol que apareixerà en el menú d'accions ràpides i la callback que activarà la vista registrada al main en clicar l'ítem del menú:
+Per afegir una vista del plugin en el menú ràpid utilitzarem el mètode registerView del regionManager. En aquest cas, a la factoria li passarem una instància de la classe _PrimariaMenuItem_ importada del shell (_@uxland/primary-shell_), a la mateixa vegada, li passarem el literal de la icona a mostrar, el títol que apareixerà en el menú d'accions ràpides i la callback que activarà la vista registrada al main en clicar l'ítem del menú:
 
   
 
@@ -396,14 +394,14 @@ Arribats a aquest punt, en el navegador veurem el següent:
 
   
 
-![](/static//img/pluginSidebar.png)
+![](/static/img/pluginSidebar.png)
 
   
 
 I en clicar en el botó "Angular plugin", veurem el nostre plugin funcionant i mostrat a la regió principal:
 
   
-![](/static//img/pluginWorking.png)
+![](/static/img/pluginWorking.png)
 
 
   
