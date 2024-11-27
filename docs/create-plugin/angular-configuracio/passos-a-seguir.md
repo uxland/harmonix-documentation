@@ -176,12 +176,13 @@ Hauries de veure renderitzat el Shell de primària en el navegador.
 
 
 # Generar projecte de plugin
-Els plugins de angular seran realment llibrerias de angular. Utilizareme el Angular CLI per generar el projecte de angular.
+
+Els plugins d'Angular seràn realment llibreries d'Angular. Utilitzarem l'Angular CLI per generar el projecte d'Angular.
 
 ```bash
 ng generate library my-plugin
 ```
-Aixo hauria de generar una carpeta nova amb la llibreria de angular my-plugin.
+Això hauria de generar una carpeta nova amb la llibreria d'Angular my-plugin.
 
 
 ## Borrar arxius
@@ -216,9 +217,8 @@ En l'arxiu `ng-package.json` s'ha de modificar l'entrada de la llibreria a _entr
 
 ## Declarar importador de plugins
 
-### Declarar la definicio de importacio de Plugin
+### Declarar la definicio d'importació de Plugin
 
-** ha d'estar en el sandbox+**
 
 Crearem un arxiu amb les definicions dels plugins amb els seus importadors. Per a això, crearem l'arxiu `plugins.ts` a la carpeta src amb la següent forma:
 
@@ -229,7 +229,7 @@ const importer: () => Promise<Plugin> = () => import("../projects/my-plugin/src/
 export const plugins: PluginDefinition[] = [{ pluginId: "angular-plugin", importer: importer}]
 ```
 
-Aixo importara al plugin via el arxiu de definicio creat previament.
+Això importarà el plugin via l'arxiu de definició creat prèviament.
 
 ### Executar l'arrencada de plugins
 
@@ -290,7 +290,7 @@ Això generarà un component d'Angular, amb la vista encapsulada en un ShadowDom
 
   
 
-Per a la demo utilitzarem com a component el _app.component_ del boilerplate d'Angular, així que afegirem la propietat _encapsulation_ a la configuració del component:
+Per a la demo utilitzarem com a component el _my-plugin_ del boilerplate d'Angular, així que afegirem la propietat _encapsulation_ a la configuració del component:
 
   
 
@@ -300,8 +300,8 @@ import { Component, ViewEncapsulation } from "@angular/core";
 @Component({
   standalone: true,
   imports: [],
-  templateUrl: "./app.component.html",
-  styleUrl: "./app.component.css",
+  templateUrl: "./my-plugin.html",
+  styleUrl: "./my-plugin.css",
   encapsulation: ViewEncapsulation.ShadowDom
 })
 export class AppComponent {
@@ -334,12 +334,12 @@ export const initialize = (api: PrimariaApi) => {
 
   
 
-### crear factoria de vista:
+### Crear factoria de vista:
+
 Una vegada creada l'aplicació i el component, ja podem registrar les vistes amb el _regionManager_. Per a ajudar-nos, declararem la funció _viewAngularFactory_ en el plugin.ts que ens farà de factoria:
 
--Crear arxiu factory.ts a  la carpeta main-view
--Explicar que estem fent
-- Enseñar aon tenen que clickar ( aon apareix el menu de navegacio screenshot)
+Es crearà una carpeta anomenada `views`, i dins d'ella crearem la carpeta `main-view` amb l'arxiu `factory.ts`.
+
 
 ```typescript
 import { ApplicationRef, NgZone, Type } from "@angular/core";
@@ -423,7 +423,6 @@ export const dispose = (api: PrimariaApi) => {
     return Promise.resolve();
 };
 ```
-
   
 
 Arribats a aquest punt, en el navegador veurem el següent:
