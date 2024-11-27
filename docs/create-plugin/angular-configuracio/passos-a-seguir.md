@@ -383,14 +383,14 @@ Arribats a aquest punt, en el navegador veurem el següent:
 
   
 
-![](/static/img/pluginSidebar.png)
+![](static/img/pluginSidebar.png)
 
   
 
 I en clicar en el botó "Angular plugin", veurem el nostre plugin funcionant i mostrat a la regió principal:
 
   
-![](/static/img/pluginWorking.png)
+![](static/img/pluginWorking.png)
 
 
 
