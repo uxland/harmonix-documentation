@@ -2,7 +2,7 @@
 sidebar_position: 3
 ---
 
-## Compilació plugin
+# Compilació plugin
 
 # Configuració vite
 
