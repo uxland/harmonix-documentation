@@ -177,7 +177,7 @@ S'hauria de veure renderitzat el Shell de primària en el navegador.
 
 # Generar projecte de plugin
 
-Els plugins d'Harmonix amb Angular seràn realment llibreries d'Angular. Utilitzarem l'Angular CLI per generar-la.
+Els plugins d'harmonix amb Angular seràn realment llibreries d'Angular. Utilitzarem l'Angular CLI per generar-la.
 
 ```bash
 ng generate library my-plugin
@@ -273,7 +273,7 @@ Ara hauriem de veure el log de consola una vegada hagi carregat el plugin.
 
 # Injectar vistes
 
-Ara que sabem que el plugin està inicialitzat correctament, crearem un component i l'injectarem a la regio principal utilitzant el _regionManager_ que ens proporciona la api.
+Ara que sabem que el plugin està inicialitzat correctament, crearem un component i l'injectarem a la regió principal utilitzant el _regionManager_ que ens proporciona l'api.
   
 
 ### Crear vista:
@@ -309,7 +309,7 @@ export const initialize = (api: PrimariaApi) => {
 
 ### Crear factoria de vista:
 
-Crearem una factoria de vista, per poder registar la vista principal. Crearem un fitxer `factory.ts`a la carpeta de la vista `main-view` on declararem la factoria:
+Crearem una factoria de vista, per poder registrar la vista principal. Crearem un fitxer `factory.ts` a la carpeta de la vista `main-view` on declararem la factoria:
 
 ```typescript
 import { ApplicationRef, NgZone, Type } from "@angular/core";
@@ -326,9 +326,9 @@ const viewAngularFactory = <C>(app: ApplicationRef, component: Type<C>): () => P
 
 ## Injectar la vista a la regio principal
 
-Després, per un costat registrarem una vista a la regio principal i per altre costat farem el mateix a la regio de navegació.
+Després, per un costat registrarem una vista a la regió principal i per altre costat farem el mateix a la regió de navegació.
 
-Per a això, utilitzarem el _regionManager_ que ens proporciona la api.
+Per a això, utilitzarem el _regionManager_ que ens proporciona l'api.
 
 Utilitzarem el mètode _registerMainView_ del _regionManager_ passant-li la factoria de vista. 
 
