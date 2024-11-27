@@ -243,7 +243,7 @@ Això importarà el plugin via el fitxer de entrada (`projects/my-plugins/src/pl
 ### Executar l'arrencada de plugins
 
 Cridarem a la funcio de arrencada de plugins. 
-Ho farem cridant a la funció _bootstrapPlugins_ en el `main.ts` passant com a paremetre les definicion de importacions (`src/plugins.ts`). 
+Ho farem cridant a la funció _bootstrapPlugins_ en el `main.ts`, passant com a paremetre les definicion de importacions (`src/plugins.ts`). 
 
 ```javascript
 import { bootstrapPlugins, initializeShell } from "@uxland/primary-shell";
@@ -271,15 +271,12 @@ Ara hauríem de veure el log de consola una vegada hagi carregat el plugin.
 
 
 
-# Crear component i injectar el plugin en les vistes
+# Injectar vistes
 
-Ara que sabem que el plugin està inicialitzat correctament, crearem un component i l'injectarem a la vista principal utilitzant el _regionManager_ que ens proporciona la api.
-
+Ara que sabem que el plugin està inicialitzat correctament, crearem un component i l'injectarem a la regio principal utilitzant el _regionManager_ que ens proporciona la api.
   
 
 ### Crear un component:
-
-
 Crear un component amb el CLI d'Angular
 
   
