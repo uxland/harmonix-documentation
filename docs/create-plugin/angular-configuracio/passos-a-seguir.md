@@ -175,29 +175,18 @@ Hauries de veure renderitzat el Shell de primària en el navegador.
 ![](https://t9012015559.p.clickup-attachments.com/t9012015559/d1b3bfcd-ebdc-4eef-85b1-fe6f995e8374/image.png)
 
 
-# Declarar importador de plugins
+# Generar projecte de plugin
+Els plugins de angular seran realment llibrerias de angular. Utilizareme el Angular CLI per generar el projecte de angular.
 
-Crearem un arxiu amb les definicions dels plugins amb els seus importadors. Per a això, crearem l'arxiu `plugins.ts` a la carpeta src amb la següent forma:
-
-  
-
-```typescript
-import { PluginDefinition, Plugin } from "@uxland/primary-shell";
-
-const importer: () => Promise<Plugin> = () => import("./plugin") as any;
-export const plugins: PluginDefinition[] = [{ pluginId: "angular-plugin", importer: importer}]
+```bash
+ng generate library my-plugin
 ```
-
-  
-
-Ens donarà error en l'import al no existir, de moment, la ruta "_./plugin_" que crearem en el punt següent.
+Aixo hauria de generar una carpeta nova amb la llibreria de angular my-plugin.
 
 
-# Declarar arxiu d'entrada del plugin
+## Declarar arxiu d'entrada del plugin
 
 S'ha de declarar un arxiu on s'implementen les funcions necessàries per a declarar un plugin.
-
-  
 
 En aquest tutorial decidim utilitzar un arxiu `plugin.ts` dins de la carpeta src:
 
@@ -217,27 +206,29 @@ export const dispose = (api: PrimariaApi) => {
 };
 ```
 
-  
+## Declarar importador de plugins
 
-Ara només queda indicar-li al shell que afegeixi el plugin en el procés de càrrega. Aquí li indicarem la id de mòdul i com carregar el mòdul. En el nostre cas serà un import a l'arxiu `plugin.ts` creat anteriorment.
+### Declarar la definicio de importacio de Plugin
+Crearem un arxiu amb les definicions dels plugins amb els seus importadors. Per a això, crearem l'arxiu `plugins.ts` a la carpeta src amb la següent forma:
 
-  
+```typescript
+import { PluginDefinition, Plugin } from "@uxland/primary-shell";
 
-Ho farem cridant a la funció _bootstrapPlugins_ en el `main.ts`. Donant com a resultat el següent arxiu:
+const importer: () => Promise<Plugin> = () => import("./plugin") as any;
+export const plugins: PluginDefinition[] = [{ pluginId: "angular-plugin", importer: importer}]
+```
 
-  
+Aixo importara al plugin via el arxiu de definicio creat previament.
+
+### Executar l'arrencada de plugins
+
+Ara només queda indicar-li al sandbox que afegeixi el plugin en el procés de càrrega. Aquí li indicarem la id de plugin i el seu metode de carrega. En el nostre cas serà un import a l'arxiu `plugin.ts` creat anteriorment.
+
+Ho farem cridant a la funció _bootstrapPlugins_ en el `main.ts`. 
 
 ```javascript
 import { bootstrapPlugins, initializeShell } from "@uxland/primary-shell";
-import "@uxland/primary-shell/dist/style.css";
-import { plugins } from "./plugins";
-
-const createAndAppendSandboxApp = () => {
-    const app = document.createElement("sandbox-app");
-    document.body.appendChild(app);
-    const sandbox = document.querySelector("sandbox-app");
-    return sandbox as HTMLElement;
-}
+//...
 
 const initializeSandboxApp = (sandbox: HTMLElement) => {
     try {
@@ -251,15 +242,11 @@ const initializeSandboxApp = (sandbox: HTMLElement) => {
     }
 }
 
-const sandbox = createAndAppendSandboxApp();
-initializeSandboxApp(sandbox);
+//...
 ```
-
-  
 
 Ara hauríem de veure el log de consola una vegada hagi carregat el mòdul.
 
-  
 
 ![](https://t9012015559.p.clickup-attachments.com/t9012015559/f283f009-d22b-4b17-9973-0b5a180bfc71/image.png)
 
@@ -278,9 +265,8 @@ Ara que sabem que el plugin està inicialitzat correctament, crearem un componen
 Crear un component amb el CLI d'Angular
 
   
-
 ```verilog
-ng generate component NewComponent --view-encapsulation ShadowDom
+ng generate component NewComponent --project plugin --view-encapsulation ShadowDom
 ```
 
   
