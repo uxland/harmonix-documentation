@@ -226,11 +226,11 @@ Després d'aquests passos, ja podries veure en consola el missatge que has escri
 
 Una vegada hem creat el plugin, ja podem registrar les vistes. Per una banda registrarem una vista a la regió principal, i per l'altre farem el mateix però a la zona on es troben les accions ràpides (zona inferior del sidebar).
 
-Per a això, utilitzarem el _regionManager_ que ens proporciona l'api i els seus mètodes _registerMenu, registerQuickAction o registerMainView_ per escollir en quina regió injectar-los:
+Per a això, utilitzarem el `regionManager` que ens proporciona l'api i els seus mètodes `registerMenu`, `registerQuickAction` o `registerMainView` per escollir en quina regió injectar-los:
 
   
 
-*   Utilitzarem el mètode _registerMainView_ del _regionManager_ passant-li la vista. En aquest cas aprofitarem el component _MyElement_ del boilerplate de Vite com a exemple. L'arxiu `plugin.ts`:
+*   Utilitzarem el mètode `registerMainView` del `regionManager` passant-li la vista. En aquest cas aprofitarem el component _MyElement_ del boilerplate de Vite com a exemple. L'arxiu `plugin.ts`:
 
   
 
@@ -253,7 +253,7 @@ export const dispose = (api: PrimariaApi) => {
 }
 ```
 
-*   Canviarem també la funció dispose per a que elimini la vista quan es desactivi el plugin. Per a això importarem _shellRegions_ de "_@uxland/primary-shell_" que ens donarà les regions del shell i utilitzarem la regió main, que és on hem registrat la vista prèviament. Com a segon argument, li passarem l'id de la vista que volem eliminar. Com que voldrem eliminar la vista registrada amb la funció _registerMainView_, li passarem aquella mateixa id:
+*   Canviarem també la funció dispose per a que elimini la vista quan es desactivi el plugin. Per a això importarem `shellRegions` de "_@uxland/primary-shell_" que ens donarà les regions del shell i utilitzarem la regió main, que és on hem registrat la vista prèviament. Com a segon argument, li passarem l'id de la vista que volem eliminar. Com que voldrem eliminar la vista registrada amb la funció `registerMainView`, li passarem aquella mateixa id:
 
 ```javascript
 import { PrimariaApi, shellRegions } from "@uxland/primary-shell";
@@ -282,7 +282,7 @@ export const dispose = (api: PrimariaApi) => {
 
   
 
-*   Per a afegir el plugin en el menú ràpid, utilitzarem el mètode _registerQuickAction_ del _regionManager_. En aquest cas, a la factoria li passarem una instància de la classe _PrimariaMenuItem_ importada del shell (_@uxland/primary-shell_), i a la mateixa vegada, li passarem el literal de la icona a mostrar i el títol que es mostrarà en el menú d'accions ràpides i la callback que activarà la vista registrada al main al clicar l'ítem del menú:
+*   Per a afegir el plugin en el menú ràpid, utilitzarem el mètode `registerQuickAction` del `regionManager`. En aquest cas, a la factoria li passarem una instància de la classe `PrimariaMenuItem` importada del shell (_@uxland/primary-shell_), i a la mateixa vegada, li passarem el literal de la icona a mostrar i el títol que es mostrarà en el menú d'accions ràpides i la callback que activarà la vista registrada al main al clicar l'ítem del menú:
 
 ```typescript
 import { PrimariaApi, PrimariaMenuItem, shellRegions } from "@uxland/primary-shell";
