@@ -177,7 +177,7 @@ S'hauria de veure renderitzat el Shell de primària en el navegador.
 
 # Generar projecte de plugin
 
-Els plugins d'harmonix amb Angular seràn realment llibreries d'Angular. Utilitzarem l'Angular CLI per generar-la.
+Els plugins d'Harmonix amb Angular seràn realment llibreries d'Angular. Utilitzarem l'Angular CLI per generar-la.
 
 ```bash
 ng generate library my-plugin
