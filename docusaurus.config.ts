@@ -94,7 +94,7 @@ const config: Config = {
           type: 'docSidebar',
           sidebarId: 'createPluginSidebar',
           position: 'left',
-          label: 'Crear un plugin',
+          label: 'Getting started',
         },
         {
           type: 'docSidebar',

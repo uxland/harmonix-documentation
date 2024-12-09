@@ -2,6 +2,8 @@
 sidebar_position: 3
 ---
 
+# Compilació plugin
+
 # Configuració vite
 
 <br/>
@@ -29,8 +31,8 @@ npm run vite build
 
 Seguidament es crea automàticament la carpeta _dist_. Dins aquesta carpeta, l'arxiu `index.js` és el que s'haurà de pujar a la Plugin Store.
 
-<br/>
-![dist](image.png)
+
+![dist](../../../static/img/directory.png)
 
 
 <br/>

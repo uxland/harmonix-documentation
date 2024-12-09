@@ -2,6 +2,8 @@
 sidebar_position: 12
 ---
 
+# Best practices
+
 # Desconnectar correctament el plugin
 
 En el cicle de vida d'un plugin, passem per 2 fases importants; la **iniciació** (muntatge) i la **desconnexió** (desmuntatge). És important que tot allò que s'hagi fet en el muntatge del plugin (registrar vistes, subscriure's a events del broker de missatges, crear contenidors de dependències interns, etcètera), es **faci una desconnexió neta** per tal de no deixar **cap rastre en memòria** del teu plugin. Tot i que, en la majoria dels casos, l'usuari tancarà el navegador i l'aplicació de Primària morirà en aquell instant, es poden donar casos potencials en què es facin coses com canviar de pacient, renovar sessió, canvis de context, etcètera, que provoquin una nova càrrega de plugins en calent. Si no desconnectem bé els nostres plugins, podem deixar en memòria peces que poden afectar el rendiment **(memory leaks)**, o dades d'altres pacients **(barreja de dades de pacients)**.
@@ -65,7 +67,7 @@ api.regionManager.registerMainView({
 
 # Gestió d'assets estàtics
 
-Cada plugin ha de ser responsable de resoldre els assets estàtics com imatges, fonts, etcètera. El model harmonix no és una aplicació convencional en la que es disposa d'una carpeta public amb els estàtics, ja que el shell no coneix la implementació de les iniciatives que realitzaran plugins.
+Cada plugin ha de ser responsable de resoldre els assets estàtics com imatges, fonts, etcètera. El model Harmonix no és una aplicació convencional en la que es disposa d'una carpeta public amb els estàtics, ja que el shell no coneix la implementació de les iniciatives que realitzaran plugins.
 
 Per tant es recomana que imatges, icones, fonts, etcètera estiguin en el plugin en format codi, o sigui el plugin qui creei una infraestructura pròpia on allotjar aquests assets i consumir-los segons els convingui.
 

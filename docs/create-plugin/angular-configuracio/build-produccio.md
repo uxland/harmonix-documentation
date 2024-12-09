@@ -1,7 +1,7 @@
 ---
 sidebar_position: 4
 ---
-## Configuracio per produccio
+# Compilació plugin
 
 En el `package.json` del plugin, s'ha d'afegir el primary-shell com a peerDependency.
 
@@ -12,7 +12,7 @@ En el `package.json` del plugin, s'ha d'afegir el primary-shell com a peerDepend
   "peerDependencies": {
     "@angular/common": "^19.0.0",
     "@angular/core": "^19.0.0",
-    "@uxland/primay-shell": "^3.2.4" 
+    "@uxland/primary-shell": "^3.2.4" 
   },
   "dependencies": {
     "tslib": "^2.3.0"

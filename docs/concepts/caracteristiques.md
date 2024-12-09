@@ -19,7 +19,7 @@ sidebar_position: 2
 
 # Conceptes
 
-1. **Motor harmonix**: El "core" del framework, l'encarregat d'inicialitzar l'aplicació i tots els plugins, i dotar-los de capacitats especials per ser autocontinguts d'uns d'un shell.
+1. **Motor Harmonix**: El "core" del framework, l'encarregat d'inicialitzar l'aplicació i tots els plugins, i dotar-los de capacitats especials per ser autocontinguts d'uns d'un shell.
 2. **Plugin**: Un plugin és una part independent del sistema que conté tot el necessari per executar una part específica de la funcionalitat de l'aplicació. Els plugins són reutilitzables i poden ser intercanviats entre diferents sistemes o aplicacions.
 3. **Shell:** És un esquelet format per diferents regions sobre el qual els desenvolupadors poden construir i injectar els seus plugins.
 4. **Regió:** És un espai definit al shell on poden injectar-se diferents vistes definides pels plugins. Les regions poden tenir característiques diferents com per exemple la capacitat de mostrar una o més d'una vista alhora, així com diferents adaptadors que alteren el seu comportament.

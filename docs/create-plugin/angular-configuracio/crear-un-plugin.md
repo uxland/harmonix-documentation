@@ -2,7 +2,7 @@
 sidebar_position: 2
 ---
 
-# Passos a seguir
+# Crear un plugin
 
 # Configura el teu Entorn de Desenvolupament
 
@@ -181,7 +181,7 @@ S'hauria de veure renderitzat el Shell de primària en el navegador.
 
 # Generar projecte de plugin
 
-Els plugins d'harmonix amb Angular seràn realment llibreries d'Angular. Utilitzarem l'Angular CLI per generar-la.
+Els plugins d'Harmonix amb Angular seràn realment llibreries d'Angular. Utilitzarem l'Angular CLI per generar-la.
 
 ```bash
 ng generate library my-plugin
@@ -277,7 +277,7 @@ Ara hauriem de veure el log de consola una vegada hagi carregat el plugin.
 
 # Injectar vistes
 
-Ara que sabem que el plugin està inicialitzat correctament, crearem un component i l'injectarem a la regió principal utilitzant el _regionManager_ que ens proporciona l'api.
+Ara que sabem que el plugin està inicialitzat correctament, crearem un component i l'injectarem a la regió principal utilitzant el `regionManager` que ens proporciona l'api.
   
 
 ### Crear vista:
@@ -332,11 +332,11 @@ const viewAngularFactory = <C>(app: ApplicationRef, component: Type<C>): () => P
 
 Després, per un costat registrarem una vista a la regió principal i per altre costat farem el mateix a la regió de navegació.
 
-Per a això, utilitzarem el _regionManager_ que ens proporciona l'api.
+Per a això, utilitzarem el `regionManager` que ens proporciona l'api.
 
-Utilitzarem el mètode _registerMainView_ del _regionManager_ passant-li la factoria de vista. 
+Utilitzarem el mètode `registerMainView` del `regionManager` passant-li la factoria de vista. 
 
-Canviarem també la funció dispose perquè elimini la vista quan es desactivi el plugin. Per a això, importarem shellRegions de "_@uxland/primary-shell_" que ens donarà les regions del shell i utilitzarem la regió main. Com a segon argument li passarem la id de la vista que volem eliminar. Com que voldrem eliminar la vista registrada amb la funció registerMainView, li passarem aquella mateixa id:
+Canviarem també la funció dispose perquè elimini la vista quan es desactivi el plugin. Per a això, importarem `shellRegions` de "_@uxland/primary-shell_" que ens donarà les regions del shell i utilitzarem la regió main. Com a segon argument li passarem la id de la vista que volem eliminar. Com que voldrem eliminar la vista registrada amb la funció `registerMainView`, li passarem aquella mateixa id:
 
 
 ```typescript
@@ -362,7 +362,7 @@ export const dispose = (api: PrimariaApi) => {
 
 ### Altres exemples d'injecció de vistes: menú navegació 
   
-Per afegir una vista del plugin en el menú ràpid utilitzarem el mètode registerView del regionManager. En aquest cas, a la factoria li passarem una instància de la classe _PrimariaMenuItem_ importada del shell (_@uxland/primary-shell_), a la mateixa vegada, li passarem el literal de la icona a mostrar, el títol que apareixerà en el menú d'accions ràpides i la callback que activarà la vista registrada al main en clicar l'ítem del menú:
+Per afegir una vista del plugin en el menú ràpid utilitzarem el mètode registerView del `regionManager`. En aquest cas, a la factoria li passarem una instància de la classe _PrimariaMenuItem_ importada del shell (_@uxland/primary-shell_), a la mateixa vegada, li passarem el literal de la icona a mostrar, el títol que apareixerà en el menú d'accions ràpides i la callback que activarà la vista registrada al main en clicar l'ítem del menú:
 
 
 ```typescript
