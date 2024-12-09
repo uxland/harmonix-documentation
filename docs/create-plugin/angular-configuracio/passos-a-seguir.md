@@ -8,6 +8,10 @@ sidebar_position: 2
 
 Abans de començar, necessites tenir instal·lat Node.js i npm (el gestor de paquets de Node). Pots descarregar-los des de la pàgina oficial de Node.js.
 
+> Nota: Aquesta guia està basada en Angular 18 i cobreix totes les funcionalitats disponibles en aquesta versió. Tot i així, per a versions posteriors d'Angular, la major part de la informació continguda hauria de ser aplicable, tenint en compte les possibles variacions introduïdes en versions més recents. Es recomana revisar les notes de versió oficials per assegurar la compatibilitat completa amb la versió utilitzada.
+
+ 
+
 
 # Instal·la Angular CLI
 
@@ -16,7 +20,7 @@ Angular CLI és una eina que t'ajuda a crear i gestionar projectes Angular. Obre
   
 
 ```git
-npm install -g @angular/cli
+npm install -g @angular/cli@18
 ```
 
 
