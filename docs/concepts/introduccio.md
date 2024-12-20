@@ -10,7 +10,7 @@ En un entorn en constant evolució i d'alta demanda funcional, l'eficiència i l
 
   
 
-El sistema de plugins ofereix una solució **completa i adaptable** que permet als professionals tenir una **visió completa** i **optimitzar** el seu entorn de treball segons les necessitats específiques de la seva pràctica. Aquest sistema proporciona una plataforma **versàtil** i d'alt **rendiment** que impulsa l'eficiència i millora els resultats.
+El sistema de plugins ofereix una solució **completa i adaptable** que permet als professionals tenir una **visió global** i **optimitzar** el seu entorn de treball segons les necessitats específiques de la seva pràctica. Aquest sistema proporciona una plataforma **versàtil** i d'alt **rendiment** que impulsa l'eficiència i millora els resultats.
 
 <br/>
 
