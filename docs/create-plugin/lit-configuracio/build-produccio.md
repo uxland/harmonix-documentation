@@ -16,22 +16,20 @@ import { defineConfig, loadEnv } from "vite";
 import pkg from "./package.json";
 export default ({ mode }) => {
   process.env = { ...process.env, ...loadEnv(mode, process.cwd()) };
-  
 
   return defineConfig({
     define: {
-      'process.env': {},
+      "process.env": {},
     },
     build: {
       lib: {
-        entry: "./src/main.ts",
+        entry: "./src/plugin.ts",
         fileName: "index",
         name: pkg.name,
-        
       },
-      
+
       rollupOptions: {
-        external: ["lit",   "@uxland/primary-shell"],
+        external: ["lit", "@uxland/primary-shell"],
         output: {
           globals: {
             lit: "lit",
@@ -39,7 +37,7 @@ export default ({ mode }) => {
           },
           inlineDynamicImports: true,
           manualChunks: undefined,
-        }
+        },
       },
       minify: true,
       sourcemap: true,

@@ -21,16 +21,15 @@ export default ({ mode }) => {
     },
     build: {
       lib: {
-        entry: "./src/main.ts",
+        entry: "./src/plugin.ts",
         fileName: "index",
         name: pkg.name,
       },
 
       rollupOptions: {
-        external: ["lit", "@uxland/primary-shell", "react", "react-dom"],
+        external: ["@uxland/primary-shell", "react", "react-dom"],
         output: {
           globals: {
-            lit: "lit",
             "@uxland/primary-shell": "@uxland/primary-shell",
           },
           inlineDynamicImports: true,
