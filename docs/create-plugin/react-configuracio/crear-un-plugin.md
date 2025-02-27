@@ -406,9 +406,9 @@ I el seu arxiu d'estils `counter-button.css` següent:
 
 # Injectar el plugin a les vistes
 
-Una vegada hem creat el plugin i preparat les vistes, ja podem registrar-les. Per una banda registrarem una vista a la regió principal amb la seva corresponent acció ràpida del menú lateral (concretament a l'acció ràpida de "Crear"), i per l'altre farem el mateix però a la zona del header.
+Una vegada hem creat el plugin i preparat les vistes, ja podem registrar-les. Per una banda registrarem una vista a la regió principal amb la seva corresponent acció al menú lateral i, per l'altra banda, farem el mateix però a la zona del header.
 
-Per a això, utilitzarem el `regionManager` que ens proporciona l'api i els seus mètodes `registerMenu`, `registerQuickAction` o `registerMainView` per escollir en quina regió injectar-los:
+Per a això, utilitzarem el `regionManager` que ens proporciona l'api i els seus mètodes `registerMainView`, `registerNavigationMenu` per registrar-los directament a la regió o be el mètode registerView on li haurem de passar la regió del Shell on els volem registrar:
 
   
 
@@ -473,12 +473,12 @@ export const dispose = (api: PrimariaApi) => {
 
   
 
-*   Per a afegir el plugin en el menú d'accions ràpides, utilitzarem el mètode `registerQuickAction` del `regionManager`. En aquest cas, a la factoria li passarem una instància de la classe `PrimariaMenuItem` importada del shell (_@uxland/primary-shell_), i a la mateixa vegada, li passarem el literal de la icona a mostrar i el títol que es mostrarà en el menú d'accions ràpides i la callback que activarà la vista registrada al main al clicar l'ítem del menú:
+*   Per a afegir el plugin en el menú lateral, utilitzarem el mètode `registerNavigationMenu` del `regionManager`. En aquest cas, a la factoria li passarem una instància de la classe `PrimariaNavItem` importada del shell (@uxland/primary-shell), i a la mateixa vegada, li passarem un objecte de configuració que tindrá la propietat "icon" amb el literal de la icona a mostrar, "label" amb el títol que es mostrarà en el menú i "callbackFn" amb la callback que activarà la vista registrada en main al clicar l'ítem del menú:
 
   
 
 ```typescript
-import { PrimariaApi, PrimariaMenuItem, shellRegions } from "@uxland/primary-shell";
+import { PrimariaApi, shellRegions, PrimariaNavItem } from "@uxland/primary-shell";
 import { mainFactory } from "./views/main/factory";
 import { headerFactory } from "./views/header/factory";
 
@@ -488,12 +488,15 @@ export const initialize = (api: PrimariaApi) => {
     id: "plugin-main-view",
     factory: mainFactory
   },);
-  // Afegim registerQuickAction
-  api.regionManager.registerQuickAction({
+  // Afegim el component a la regió del menú de navegació
+  api.regionManager.registerNavigationMenu({
     id: "plugin-quick-action",
-    factory: () => Promise.resolve(new PrimariaMenuItem("add_circle_outline", "React plugin", () => {
-      api.regionManager.activateMainView("plugin-main-view");
-  })),
+    factory: () => Promise.resolve(new PrimariaNavItem({
+        icon: "add_circle_outline",
+        label: "React plugin",
+        callbackFn: () => {
+      api.regionManager.activateMainView("plugin-main-view")}
+    })),
   });
 
   api.regionManager.registerView(shellRegions.header,{
@@ -517,7 +520,7 @@ Arribats a aquest punt, en el navegador veurem el següent:
 
   
 
-I quan fem click sobre el botó "Crear" del menú ràpid, veurem el nostre plugin "React plugin" funcionant i mostrat a la regió principal:
+I quan fem clic sobre el botó "React plugin" del menú, veurem el nostre plugin funcionant i mostrat a la regió principal:
 
 ![](https://t9012015559.p.clickup-attachments.com/t9012015559/878b26a8-be82-4d55-a775-e9270fa7861d/image.png)
 
