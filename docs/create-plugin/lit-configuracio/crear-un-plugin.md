@@ -136,7 +136,7 @@ Hauries de veure renderitzat el Shell de primària en el navegador:
 
   
 
-![](https://t9012015559.p.clickup-attachments.com/t9012015559/dc351740-8591-4255-91d7-cc2c063042a8/image.png)
+![](../../../static/img/pluginLit1.png)
 
 
 
@@ -224,9 +224,9 @@ Després d'aquests passos, ja podries veure en consola el missatge que has escri
 
 # Injectar el plugin a les vistes
 
-Una vegada hem creat el plugin, ja podem registrar les vistes. Per una banda registrarem una vista a la regió principal, i per l'altre farem el mateix però a la zona on es troben les accions ràpides (zona inferior del sidebar).
+Una vegada hem creat el plugin, ja podem registrar les vistes. Registrarem una vista a la regió del menú lateral de navegació.
 
-Per a això, utilitzarem el `regionManager` que ens proporciona l'api i els seus mètodes `registerMenu`, `registerQuickAction` o `registerMainView` per escollir en quina regió injectar-los:
+Per a això, utilitzarem el `regionManager` que ens proporciona l'api i els seus mètodes `registerMainView` i `registerNavigationMenu` per escollir en quina regió injectar-los:
 
   
 
@@ -282,7 +282,7 @@ export const dispose = (api: PrimariaApi) => {
 
   
 
-*   Per a afegir el plugin en el menú ràpid, utilitzarem el mètode `registerQuickAction` del `regionManager`. En aquest cas, a la factoria li passarem una instància de la classe `PrimariaMenuItem` importada del shell (_@uxland/primary-shell_), i a la mateixa vegada, li passarem el literal de la icona a mostrar i el títol que es mostrarà en el menú d'accions ràpides i la callback que activarà la vista registrada al main al clicar l'ítem del menú:
+*   Per a afegir el plugin en el menú lateral, utilitzarem el mètode `registerNavigationMenu` del `regionManager`. En aquest cas, a la factoria li passarem una instància de la classe `PrimariaNavItem` importada del shell (_@uxland/primary-shell_), i a la mateixa vegada, li passarem un objecte de configuració que tindrá la propietat "icon" amb el literal de la icona a mostrar, "label" amb el títol que es mostrarà en el menú i "callbackFn" amb la callback que activarà la vista registrada en main al clicar l'ítem del menú:
 
 ```typescript
 import { PrimariaApi, PrimariaMenuItem, shellRegions } from "@uxland/primary-shell";
@@ -296,28 +296,33 @@ export const initialize = (api: PrimariaApi) => {
   },);
   
   api.regionManager.registerView(shellRegions.navigationMenu,{
-    id: "plugin-quick-action",
-    factory: () => Promise.resolve(new PrimariaMenuItem("add_circle_outline", "Lit plugin", () => {
-        api.regionManager.activateMainView("plugin-main-view");
-  })),
+    id: "plugin-sidebar",
+    factory: () => {
+      const menuItem = new PrimariaNavItem({
+        icon: "add_box",
+        label: "Lit plugin",
+        callbackFn: () => {
+          api.regionManager.activateMainView("plugin-main-view")
+        },
+      });
+      return Promise.resolve(menuItem);
+    },
   });
   return Promise.resolve();
 };
 export const dispose = (api: PrimariaApi) => {
   console.log(`Plugin ${api.pluginInfo.pluginId} disposed`);
   api.regionManager.removeView(shellRegions.main, "plugin-main-view"); // Aquí utilitzarem la id de la vista del main que volem eliminar
-api.regionManager.removeView(shellRegions.navigationMenu, "plugin-quick-action");
+api.regionManager.removeView(shellRegions.navigationMenu, "plugin-sidebar");
   return Promise.resolve();
 }
 ```
 
-  
 
 Arribats a aquest punt, en el navegador veurem el següent:
 
   
-
-![](https://t9012015559.p.clickup-attachments.com/t9012015559/7210c360-7360-4a06-a837-0b7f8065985d/image.png)
+![](../../../static/img/pluginLit2.png)
 
   
 
@@ -325,7 +330,7 @@ I quan fem click sobre el botó "Lit plugin" del menú ràpid, veurem el nostre 
 
   
 
-![](https://t9012015559.p.clickup-attachments.com/t9012015559/4b1e7f87-0396-4117-bc0f-62a988f7cdbe/image.png)
+![](../../../static/img/pluginLit3.png)
 
   
 
