@@ -156,8 +156,7 @@ initializeSandboxApp(app);
 Hauries de veure renderitzat el Shell de primària en el navegador:
 
   
-
-![](https://t9012015559.p.clickup-attachments.com/t9012015559/641999dd-e9bf-4adf-97c9-a071a71b8f4a/image.png)
+![](../../../static/img/pluginReact3.png)
 
 
 
@@ -406,20 +405,19 @@ I el seu arxiu d'estils `counter-button.css` següent:
 
 # Injectar el plugin a les vistes
 
-Una vegada hem creat el plugin i preparat les vistes, ja podem registrar-les. Per una banda registrarem una vista a la regió principal amb la seva corresponent acció al menú lateral i, per l'altra banda, farem el mateix però a la zona del header.
+Una vegada hem creat el plugin i preparat les vistes, ja podem registrar-les. Registrarem una vista a la regió principal amb la seva corresponent acció al menú lateral.
 
-Per a això, utilitzarem el `regionManager` que ens proporciona l'api i els seus mètodes `registerMainView`, `registerNavigationMenu` per registrar-los directament a la regió o be el mètode registerView on li haurem de passar la regió del Shell on els volem registrar:
+Per a això, utilitzarem el `regionManager` que ens proporciona l'api i el seu mètode `registerMainView` per registrar directament a la regió o bé el mètode registerView on li haurem de passar la regió del Shell on els volem registrar:
 
   
 
-*   Utilitzarem els mètodes `registerMainView` i `registerView` passant-li la vista, en l'arxiu `plugin.ts`:
+*   Utilitzarem el mètode `registerMainView` passant-li la vista, en l'arxiu `plugin.ts`:
 
   
 
 ```typescript
 import { PrimariaApi, shellRegions } from "@uxland/primary-shell";
 import { mainFactory } from "./views/main/factory";
-import { headerFactory } from "./views/header/factory";
 
 export const initialize = (api: PrimariaApi) => {
   console.log(`Plugin ${api.pluginInfo.pluginId} initialized`);
@@ -427,12 +425,6 @@ export const initialize = (api: PrimariaApi) => {
     id: "plugin-main-view", // Aquí declarem la id de la vista
     factory: mainFactory
   },);
-
-  api.regionManager.registerView(shellRegions.header,{
-    id: "plugin-header-view", // Aquí declarem la id de la vista
-    factory: headerFactory
-  })
-  return Promise.resolve();
 };
 export const dispose = (api: PrimariaApi) => {
   console.log(`Plugin ${api.pluginInfo.pluginId} disposed`);
@@ -457,12 +449,6 @@ export const initialize = (api: PrimariaApi) => {
     id: "plugin-main-view",
     factory: mainFactory
   },);
-
-  api.regionManager.registerView(shellRegions.header,{
-    id: "plugin-header-view",
-    factory: headerFactory
-  })
-  return Promise.resolve();
 };
 export const dispose = (api: PrimariaApi) => {
   console.log(`Plugin ${api.pluginInfo.pluginId} disposed`);
@@ -498,12 +484,6 @@ export const initialize = (api: PrimariaApi) => {
       api.regionManager.activateMainView("plugin-main-view")}
     })),
   });
-
-  api.regionManager.registerView(shellRegions.header,{
-    id: "plugin-header-view",
-    factory: headerFactory
-  })
-  return Promise.resolve();
 };
 export const dispose = (api: PrimariaApi) => {
   console.log(`Plugin ${api.pluginInfo.pluginId} disposed`);
@@ -516,15 +496,13 @@ export const dispose = (api: PrimariaApi) => {
 
 Arribats a aquest punt, en el navegador veurem el següent:
 
-![](https://t9012015559.p.clickup-attachments.com/t9012015559/eba6fa91-d203-4b78-ad34-86c181e3a068/image.png)
+![](../../../static/img/pluginReact.png)
 
-  
+
 
 I quan fem clic sobre el botó "React plugin" del menú, veurem el nostre plugin funcionant i mostrat a la regió principal:
 
-![](https://t9012015559.p.clickup-attachments.com/t9012015559/878b26a8-be82-4d55-a775-e9270fa7861d/image.png)
-
-![](https://t9012015559.p.clickup-attachments.com/t9012015559/9bd3ad34-3993-4913-abd0-3d3e619e0522/image.png)
+![](../../../static/img/pluginReact2.png)
 
   
 

@@ -112,7 +112,7 @@ const config: Config = {
         {
           type: 'html',
           position: 'right',
-          value: '<a  style="padding: 12px;">v1.0.18</a>',
+          value: '<a  style="padding: 12px;">v1.1.0</a>',
         },
         // {
         //   href: 'https://github.com/uxland/harmonix-documentation',
