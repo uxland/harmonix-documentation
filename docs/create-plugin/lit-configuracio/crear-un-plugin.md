@@ -285,7 +285,7 @@ export const dispose = (api: PrimariaApi) => {
 *   Per a afegir el plugin en el menú lateral, utilitzarem el mètode `registerNavigationMenu` del `regionManager`. En aquest cas, a la factoria li passarem una instància de la classe `PrimariaNavItem` importada del shell (_@uxland/primary-shell_), i a la mateixa vegada, li passarem un objecte de configuració que tindrá la propietat "icon" amb el literal de la icona a mostrar, "label" amb el títol que es mostrarà en el menú i "callbackFn" amb la callback que activarà la vista registrada en main al clicar l'ítem del menú:
 
 ```typescript
-import { PrimariaApi, PrimariaMenuItem, shellRegions } from "@uxland/primary-shell";
+import { PrimariaApi, PrimariaNavItem, shellRegions } from "@uxland/primary-shell";
 import { MyElement } from "./my-element";
 
 export const initialize = (api: PrimariaApi) => {

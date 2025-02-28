@@ -367,7 +367,7 @@ Per afegir una vista del plugin en el menú lateral de navegació utilitzarem el
 
 ```typescript
 //...
-import { PrimariaApi, PrimariaMenuItem, shellRegions } from "@uxland/primary-shell";
+import { PrimariaApi, PrimariaNavItem, shellRegions } from "@uxland/primary-shell";
 
 export const initialize = (api: PrimariaApi) => {
   //...
