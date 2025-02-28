@@ -176,7 +176,7 @@ S'hauria de veure renderitzat el Shell de primària en el navegador.
 
   
 
-![](https://t9012015559.p.clickup-attachments.com/t9012015559/d1b3bfcd-ebdc-4eef-85b1-fe6f995e8374/image.png)
+![](../../../static/img/pluginAngular1.png)
 
 
 # Generar projecte de plugin
@@ -362,7 +362,7 @@ export const dispose = (api: PrimariaApi) => {
 
 ### Altres exemples d'injecció de vistes: menú navegació 
   
-Per afegir una vista del plugin en el menú ràpid utilitzarem el mètode registerView del `regionManager`. En aquest cas, a la factoria li passarem una instància de la classe _PrimariaMenuItem_ importada del shell (_@uxland/primary-shell_), a la mateixa vegada, li passarem el literal de la icona a mostrar, el títol que apareixerà en el menú d'accions ràpides i la callback que activarà la vista registrada al main en clicar l'ítem del menú:
+Per afegir una vista del plugin en el menú lateral de navegació utilitzarem el mètode registerView del `regionManager`. En aquest cas, a la factoria li passarem una instància de la classe `PrimariaNavItem` importada del shell (_@uxland/primary-shell_), a la mateixa vegada, li passarem un objecte de configuració que tindrá la propietat "icon" amb el literal de la icona a mostrar, "label" amb el títol que es mostrarà en el menú i "callbackFn" amb la callback que activarà la vista registrada en main al clicar l'ítem del menú:
 
 
 ```typescript
@@ -372,10 +372,17 @@ import { PrimariaApi, PrimariaMenuItem, shellRegions } from "@uxland/primary-she
 export const initialize = (api: PrimariaApi) => {
   //...
     api.regionManager.registerView(shellRegions.navigationMenu,{
-            id: "plugin-quick-action",
-            factory: () => Promise.resolve(new PrimariaMenuItem("add_circle_outline", "Angular plugin", () => {
-              api.regionManager.activateMainView("plugin-main-view");
-            })),
+            id: "plugin-navigation-menu",
+            factory: () => {
+              const menuItem = new PrimariaNavItem({
+                icon: "bolt",
+                label: "Angular plugin",
+                callbackFn: () => {
+                  api.regionManager.activateMainView("plugin-main-view");
+                },
+              });
+              return Promise.resolve(menuItem);
+            },
           });
     //...
 };
@@ -387,14 +394,14 @@ Arribats a aquest punt, en el navegador veurem el següent:
 
   
 
-![](../../../static/img/pluginSidebar.png)
+![](../../../static/img/pluginAngular2.png)
 
   
 
 I en clicar en el botó "Angular plugin", veurem el nostre plugin funcionant i mostrat a la regió principal:
 
   
-![](../../../static/img/pluginWorking.png)
+![](../../../static/img/pluginAngular3.png)
 
 
 
