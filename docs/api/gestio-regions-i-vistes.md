@@ -81,11 +81,11 @@ L'acció més bàsica és **registrar** una vista. Per a això, només hem de cr
 
   
 
-Ara bé, s'han creat algunes funcions "helper" per tal que la injecció sigui més declarativa, com `registerMainView` o `registerQuickAction`, on ja no caldrà passar-li la regió i la pròpia funció de registrar ja explica on s'injectarà, tal com hem explicat abans.
+Ara bé, s'han creat algunes funcions "helper" per tal que la injecció sigui més declarativa, com `registerMainView` o `registerNavigationMenu`, on ja no caldrà passar-li la regió i la pròpia funció de registrar ja explica on s'injectarà, tal com hem explicat abans.
 
   
 
-De la mateixa manera, també injectem el `PrimariaMenuItem` a la regió d'accions ràpides. Aquest `PrimariaMenuItem` tindrà la funció d'activar la vista del component `ExampleComponent` en fer click.
+De la mateixa manera, també injectem el `PrimariaNavItem` a la regió del menú lateral de navegació. Aquest `PrimariaNavItem` tindrà la funció d'activar la vista del component `ExampleComponent` en fer click.
 
   
 
@@ -105,9 +105,9 @@ export const initialize = (api: PrimariaApi) => {
     factory: () =>  Promise.resolve(new ExampleComponent()) ,
   });
   
-  api.regionManager.registerQuickAction({
+  api.regionManager.registerNavigationMenu({
     id: "plugin-quick-action",
-    factory: () => Promise.resolve(new PrimariaMenuItem("add_circle_outline", "Lit plugin", () => {
+    factory: () => Promise.resolve(new PrimariaNavItem("add_circle_outline", "Lit plugin", () => {
       api.regionManager.activateMainView("plugin-main-view")
     })),
   });
