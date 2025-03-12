@@ -17,17 +17,17 @@ export default ({ mode }) => {
 
   return defineConfig({
     define: {
-      "process.env": {},
+      'process.env': {NODE_ENV: "production"},
     },
     build: {
       lib: {
         entry: "./src/plugin.ts",
         fileName: "index",
         name: pkg.name,
+        formats: ["es"]
       },
-
       rollupOptions: {
-        external: ["@uxland/primary-shell", "react", "react-dom"],
+        external: ["react", "react-dom",  "@uxland/primary-shell", "react-dom/client"],
         output: {
           globals: {
             "@uxland/primary-shell": "@uxland/primary-shell",
