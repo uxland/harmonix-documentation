@@ -10,9 +10,9 @@ En el `package.json` del plugin, s'ha d'afegir el primary-shell com a peerDepend
   "name": "my-plugin",
   "version": "0.0.1",
   "peerDependencies": {
-    "@angular/common": "^19.0.0",
-    "@angular/core": "^19.0.0",
-    "@uxland/primary-shell": "^3.2.4" 
+    "@angular/common": "^18.0.0",
+    "@angular/core": "^18.0.0",
+    "@uxland/primary-shell": "^5.3.4" 
   },
   "dependencies": {
     "tslib": "^2.3.0"
