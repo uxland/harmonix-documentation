@@ -213,7 +213,7 @@ export const dispose = (api: PrimariaApi) => {
 ```
 És important afegir el `import "@angular/compiler";` per poder compilar en temps d'execució en l'aplicació.
 
-En el fitxer `ng-package.json` s'ha de modificar l'entrada de la llibreria a _entryFile_. 
+En el fitxer `ng-package.json` s'ha de modificar l'entrada de la llibreria a _entryFile_ i eliminar el camp `dest`. 
 
 ```json
 {
