@@ -8,7 +8,7 @@ El següent document és una guia d'instal·lació de l'entorn de desenvolupamen
 
   
 
-Els plugins d'Harmonix desenvolupats en Angular tenen certes limitacions. Veure [_Annex 2- Limitacions Angular a Harmonix_](https://app.clickup.com/9012015559/v/dc/8cjgwe7-2192/8cjgwe7-6932?block=block-684b2b08-4e4e-4cd7-a83f-57381a91b60d)
+Els plugins d'Harmonix desenvolupats en Angular tenen certes limitacions. Veure la secció `Limitacions Angular a Harmonix`.
 
   
 
