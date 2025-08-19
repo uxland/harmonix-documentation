@@ -335,12 +335,12 @@ Per a això, utilitzarem el `regionManager` que ens proporciona l'api.
 
 Utilitzarem el mètode `registerMainView` del `regionManager` passant-li la factoria de vista. 
 
-Canviarem també la funció dispose perquè elimini la vista quan es desactivi el plugin. Per a això, importarem `shellRegions` de "_@uxland/primary-shell_" que ens donarà les regions del shell i utilitzarem la regió main. Com a segon argument li passarem la id de la vista que volem eliminar. Com que voldrem eliminar la vista registrada amb la funció `registerMainView`, li passarem aquella mateixa id:
+Canviarem també la funció dispose perquè elimini la vista quan es desactivi el plugin. Per a això accedirem a les regions del shell que ens dona l'api i utilitzarem la regió main. Com a segon argument li passarem la id de la vista que volem eliminar. Com que voldrem eliminar la vista registrada amb la funció `registerMainView`, li passarem aquella mateixa id:
 
 
 ```typescript
 import { createApplication } from "@angular/platform-browser";
-import { PrimariaApi, shellRegions } from "@uxland/primary-shell";
+import { PrimariaApi } from "@uxland/primary-shell";
 import { viewFactory } from "./views/main-view/factory";
 
 export const initialize = (api: PrimariaApi) => {
@@ -354,9 +354,10 @@ export const initialize = (api: PrimariaApi) => {
 };
 
 export const dispose = (api: PrimariaApi) => {
-    api.regionManager.removeView(shellRegions.main, "plugin-main-view"); // Aquí utilitzem la id de la vista del main que volem eliminar
-    return Promise.resolve();
-};
+  const main = api.regionManager.regions.shell.main;
+  api.regionManager.removeView(main, "plugin-main-view"); // Aquí utilitzem la id de la vista del main que volem eliminar
+  return Promise.resolve();
+}
 ```
 
 ### Altres exemples d'injecció de vistes: menú navegació 
@@ -366,11 +367,12 @@ Per afegir una vista del plugin en el menú lateral de navegació utilitzarem el
 
 ```typescript
 //...
-import { PrimariaApi, PrimariaNavItem, shellRegions } from "@uxland/primary-shell";
+import { PrimariaApi, PrimariaNavItem } from "@uxland/primary-shell";
 
 export const initialize = (api: PrimariaApi) => {
   //...
-    api.regionManager.registerView(shellRegions.navigationMenu,{
+    const navigationMenu = api.regionManager.regions.shell.navigationMenu;
+    api.regionManager.registerView(navigationMenu,{
             id: "plugin-navigation-menu",
             factory: () => {
               const menuItem = new PrimariaNavItem({
