@@ -253,10 +253,10 @@ export const dispose = (api: PrimariaApi) => {
 }
 ```
 
-*   Canviarem també la funció dispose per a que elimini la vista quan es desactivi el plugin. Per a això importarem `shellRegions` de "_@uxland/primary-shell_" que ens donarà les regions del shell i utilitzarem la regió main, que és on hem registrat la vista prèviament. Com a segon argument, li passarem l'id de la vista que volem eliminar. Com que voldrem eliminar la vista registrada amb la funció `registerMainView`, li passarem aquella mateixa id:
+*   Canviarem també la funció dispose per a que elimini la vista quan es desactivi el plugin. Per a això accedirem a la regió "main" que ens dona l'api, que és on hem registrat la vista prèviament. Com a segon argument, li passarem l'id de la vista que volem eliminar. Com que voldrem eliminar la vista registrada amb la funció `registerMainView`, li passarem aquella mateixa id:
 
 ```javascript
-import { PrimariaApi, shellRegions } from "@uxland/primary-shell";
+import { PrimariaApi } from "@uxland/primary-shell";
 import { MyElement } from "./my-element";
 
 export const initialize = (api: PrimariaApi) => {
@@ -270,22 +270,18 @@ export const initialize = (api: PrimariaApi) => {
 };
 export const dispose = (api: PrimariaApi) => {
   console.log(`Plugin ${api.pluginInfo.pluginId} disposed`);
-```
-
-  
-
-```javascript
-  api.regionManager.removeView(shellRegions.main, "plugin-main-view"); //Aquí utilitzarem la id de la vista del main que volem eliminar
+  const main = api.regionManager.regions.shell.main;
+  api.regionManager.removeView(main, "plugin-main-view"); //Aquí utilitzarem la id de la vista del main que volem eliminar
   return Promise.resolve();
 }
 ```
 
-  
+    
 
 *   Per a afegir el plugin en el menú lateral, utilitzarem el mètode `registerNavigationMenu` del `regionManager`. En aquest cas, a la factoria li passarem una instància de la classe `PrimariaNavItem` importada del shell (_@uxland/primary-shell_), i a la mateixa vegada, li passarem un objecte de configuració que tindrá la propietat "icon" amb el literal de la icona a mostrar, "label" amb el títol que es mostrarà en el menú i "callbackFn" amb la callback que activarà la vista registrada en main al clicar l'ítem del menú:
 
 ```typescript
-import { PrimariaApi, PrimariaNavItem, shellRegions } from "@uxland/primary-shell";
+import { PrimariaApi, PrimariaNavItem } from "@uxland/primary-shell";
 import { MyElement } from "./my-element";
 
 export const initialize = (api: PrimariaApi) => {
@@ -295,7 +291,8 @@ export const initialize = (api: PrimariaApi) => {
     factory: () =>  Promise.resolve(new MyElement()) ,
   },);
   
-  api.regionManager.registerView(shellRegions.navigationMenu,{
+  const navigationMenu = api.regionManager.regions.shell.navigationMenu
+  api.regionManager.registerView(navigationMenu,{
     id: "plugin-sidebar",
     factory: () => {
       const menuItem = new PrimariaNavItem({
@@ -312,8 +309,10 @@ export const initialize = (api: PrimariaApi) => {
 };
 export const dispose = (api: PrimariaApi) => {
   console.log(`Plugin ${api.pluginInfo.pluginId} disposed`);
-  api.regionManager.removeView(shellRegions.main, "plugin-main-view"); // Aquí utilitzarem la id de la vista del main que volem eliminar
-api.regionManager.removeView(shellRegions.navigationMenu, "plugin-sidebar");
+  const main = api.regionManager.regions.shell.main;
+  api.regionManager.removeView(main, "plugin-main-view"); // Aquí utilitzarem la id de la vista del main que volem eliminar
+  const navigationMenu = api.regionManager.regions.shell.main;
+  api.regionManager.removeView(navigationMenu, "plugin-sidebar");
   return Promise.resolve();
 }
 ```
