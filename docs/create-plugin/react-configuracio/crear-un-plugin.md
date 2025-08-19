@@ -416,14 +416,14 @@ Per a això, utilitzarem el `regionManager` que ens proporciona l'api i el seu m
   
 
 ```typescript
-import { PrimariaApi, shellRegions } from "@uxland/primary-shell";
+import { PrimariaApi } from "@uxland/primary-shell";
 import { mainFactory } from "./views/main/factory";
 
 export const initialize = (api: PrimariaApi) => {
   console.log(`Plugin ${api.pluginInfo.pluginId} initialized`);
   api.regionManager.registerMainView({
     id: "plugin-main-view", // Aquí declarem la id de la vista
-    factory: mainFactory
+    factory: ()=> mainFactory({api})
   },);
 };
 export const dispose = (api: PrimariaApi) => {
@@ -434,12 +434,12 @@ export const dispose = (api: PrimariaApi) => {
 
   
 
-*   Canviarem també la funció dispose per a que elimini la vista quan es desactivi el plugin. Per a això importarem `shellRegions` de "_@uxland/primary-shell_" que ens donarà les regions del shell i utilitzarem la regió main, que és on hem registrat la vista prèviament. Com a segon argument, li passarem l'id de la vista que volem eliminar. Com que voldrem eliminar la vista registrada amb la funció `registerMainView`, li passarem aquella mateixa id:
+*   Canviarem també la funció dispose per a que elimini la vista quan es desactivi el plugin. Per a això accedirem a la regió "content" que ens dona l'api, que és on hem registrat la vista prèviament. Com a segon argument, li passarem l'id de la vista que volem eliminar. Com que voldrem eliminar la vista registrada amb la funció `registerMainView`, li passarem aquella mateixa id:
 
   
 
 ```typescript
-import { PrimariaApi, shellRegions } from "@uxland/primary-shell";
+import { PrimariaApi } from "@uxland/primary-shell";
 import { mainFactory } from "./views/main/factory";
 import { headerFactory } from "./views/header/factory";
 
@@ -452,7 +452,8 @@ export const initialize = (api: PrimariaApi) => {
 };
 export const dispose = (api: PrimariaApi) => {
   console.log(`Plugin ${api.pluginInfo.pluginId} disposed`);
-  api.regionManager.removeView(shellRegions.main, "plugin-main-view"); //Aquí utilitzarem la id de la vista del main que volem eliminar
+  const content = api.regionManager.regions.clinicalMonitoring.content;
+  api.regionManager.removeView(content, "plugin-main-view"); //Aquí utilitzarem la id de la vista del main que volem eliminar
   return Promise.resolve();
 }
 ```
@@ -464,7 +465,7 @@ export const dispose = (api: PrimariaApi) => {
   
 
 ```typescript
-import { PrimariaApi, shellRegions, PrimariaNavItem } from "@uxland/primary-shell";
+import { PrimariaApi, PrimariaNavItem } from "@uxland/primary-shell";
 import { mainFactory } from "./views/main/factory";
 import { headerFactory } from "./views/header/factory";
 
@@ -487,7 +488,8 @@ export const initialize = (api: PrimariaApi) => {
 };
 export const dispose = (api: PrimariaApi) => {
   console.log(`Plugin ${api.pluginInfo.pluginId} disposed`);
-  api.regionManager.removeView(shellRegions.main, "plugin-main-view"); //Aquí utilitzarem la id de la vista del main que volem eliminar
+  const content = api.regionManager.regions.clinicalMonitoring.content;
+  api.regionManager.removeView(content, "plugin-main-view"); //Aquí utilitzarem la id de la vista del main que volem eliminar
   return Promise.resolve();
 }
 ```
