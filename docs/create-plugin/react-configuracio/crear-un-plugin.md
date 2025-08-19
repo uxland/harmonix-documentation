@@ -434,7 +434,7 @@ export const dispose = (api: PrimariaApi) => {
 
   
 
-*   Canviarem també la funció dispose per a que elimini la vista quan es desactivi el plugin. Per a això accedirem a la regió "content" que ens dona l'api, que és on hem registrat la vista prèviament. Com a segon argument, li passarem l'id de la vista que volem eliminar. Com que voldrem eliminar la vista registrada amb la funció `registerMainView`, li passarem aquella mateixa id:
+*   Canviarem també la funció dispose per a que elimini la vista quan es desactivi el plugin. Per a això accedirem a la regió "main" que ens dona l'api, que és on hem registrat la vista prèviament. Com a segon argument, li passarem l'id de la vista que volem eliminar. Com que voldrem eliminar la vista registrada amb la funció `registerMainView`, li passarem aquella mateixa id:
 
   
 
@@ -452,8 +452,8 @@ export const initialize = (api: PrimariaApi) => {
 };
 export const dispose = (api: PrimariaApi) => {
   console.log(`Plugin ${api.pluginInfo.pluginId} disposed`);
-  const content = api.regionManager.regions.clinicalMonitoring.content;
-  api.regionManager.removeView(content, "plugin-main-view"); //Aquí utilitzarem la id de la vista del main que volem eliminar
+  const mainRegion = api.regionManager.regions.shell.main;
+  api.regionManager.removeView(mainRegion, "plugin-main-view"); //Aquí utilitzarem la id de la vista del main que volem eliminar
   return Promise.resolve();
 }
 ```
@@ -488,8 +488,8 @@ export const initialize = (api: PrimariaApi) => {
 };
 export const dispose = (api: PrimariaApi) => {
   console.log(`Plugin ${api.pluginInfo.pluginId} disposed`);
-  const content = api.regionManager.regions.clinicalMonitoring.content;
-  api.regionManager.removeView(content, "plugin-main-view"); //Aquí utilitzarem la id de la vista del main que volem eliminar
+  const mainRegion = api.regionManager.regions.shell.main;
+  api.regionManager.removeView(mainRegion, "plugin-main-view"); //Aquí utilitzarem la id de la vista del main que volem eliminar
   return Promise.resolve();
 }
 ```
