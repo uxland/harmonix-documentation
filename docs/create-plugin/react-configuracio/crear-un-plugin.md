@@ -460,7 +460,7 @@ export const dispose = (api: PrimariaApi) => {
 
   
 
-*   Per a afegir el plugin en el menú lateral, utilitzarem el mètode `registerNavigationMenu` del `regionManager`. En aquest cas, a la factoria li passarem una instància de la classe `PrimariaNavItem` importada del shell (@uxland/primary-shell), i a la mateixa vegada, li passarem un objecte de configuració que tindrá la propietat "icon" amb el literal de la icona a mostrar, "label" amb el títol que es mostrarà en el menú i "callbackFn" amb la callback que activarà la vista registrada en main al clicar l'ítem del menú:
+*   Per a afegir el plugin en el menú lateral, utilitzarem el mètode `registerView` del `regionManager`, al qual se li especifica la regió (`navigationMenu`). En aquest cas, a la factoria li passarem una instància de la classe `PrimariaNavItem` importada del shell (@uxland/primary-shell), i a la mateixa vegada, li passarem un objecte de configuració que tindrá la propietat "icon" amb el literal de la icona a mostrar, "label" amb el títol que es mostrarà en el menú i "callbackFn" amb la callback que activarà la vista registrada en main al clicar l'ítem del menú:
 
   
 
@@ -476,7 +476,8 @@ export const initialize = (api: PrimariaApi) => {
     factory: mainFactory
   },);
   // Afegim el component a la regió del menú de navegació
-  api.regionManager.registerNavigationMenu({
+  const navigationMenu = api.regionManager.regions.shell.navigationMenu;
+  api.regionManager.registerView(navigationMenu, {
     id: "plugin-quick-action",
     factory: () => Promise.resolve(new PrimariaNavItem({
         icon: "add_circle_outline",
@@ -490,6 +491,8 @@ export const dispose = (api: PrimariaApi) => {
   console.log(`Plugin ${api.pluginInfo.pluginId} disposed`);
   const mainRegion = api.regionManager.regions.shell.main;
   api.regionManager.removeView(mainRegion, "plugin-main-view"); //Aquí utilitzarem la id de la vista del main que volem eliminar
+  const navigationMenu = api.regionManager.regions.shell.navigationMenu;
+  api.regionManager.removeView(navigationMenu, "plugin-quick-action"); //Aquí utilitzarem la id de la vista de navigationMenu que volem eliminar
   return Promise.resolve();
 }
 ```
