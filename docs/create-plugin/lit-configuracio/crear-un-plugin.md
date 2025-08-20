@@ -311,7 +311,7 @@ export const dispose = (api: PrimariaApi) => {
   console.log(`Plugin ${api.pluginInfo.pluginId} disposed`);
   const main = api.regionManager.regions.shell.main;
   api.regionManager.removeView(main, "plugin-main-view"); // Aquí utilitzarem la id de la vista del main que volem eliminar
-  const navigationMenu = api.regionManager.regions.shell.main;
+  const navigationMenu = api.regionManager.regions.shell.navigationMenu;
   api.regionManager.removeView(navigationMenu, "plugin-sidebar");
   return Promise.resolve();
 }
