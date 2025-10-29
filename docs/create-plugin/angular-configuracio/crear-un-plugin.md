@@ -397,7 +397,10 @@ Arribats a aquest punt, en el navegador veurem el següent:
 
 ![](../../../static/img/pluginAngular2.png)
 
-  
+En aquest punt, si es necessita integrar-se amb qualsevol part del plugin de Seguiment Clínic, es requerirà afegir el plugin en el Sandbox. Per incloure'l, s'ha d'afegir la carpeta del plugin i afegir-lo també a l'arxiu `plugins.ts`. Aquesta carpeta es podrà obtenir directament del repositori de demo que es mostra al final. 
+D'aquesta manera, la vista que es visualitzaria si s'incorpora el plugin de Seguiment Clínic seria la següent:
+
+![](../../../static/img/pluginAngular2.1.png)
 
 I en clicar en el botó "Angular plugin", veurem el nostre plugin funcionant i mostrat a la regió principal:
 
