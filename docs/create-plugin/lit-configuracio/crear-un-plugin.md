@@ -323,7 +323,7 @@ Arribats a aquest punt, en el navegador veurem el següent:
   
 ![](../../../static/img/pluginLit2.1.png)
 
-En aquest punt, si es necessita integrar-se amb qualsevol part del plugin de Seguiment Clínic, es requerirà afegir el plugin en el Sandbox. Per incloure'l, s'ha d'afegir la carpeta del plugin i afegir-lo també a l'arxiu `plugins.ts`. Aquesta carpeta es podrà obtenir directament del repositori de demo que es mostra al final. 
+En aquest punt, si es necessita integrar-se amb qualsevol part del plugin de Seguiment Clínic, es requerirà afegir l'arxiu compilat del plugin en el Sandbox. Per incloure'l, s'ha d'afegir l'import del plugin a l'arxiu `plugins.ts`. Aquest import es podrà obtenir directament del repositori de demo que es mostra al final. 
 D'aquesta manera, la vista que es visualitzaria si s'incorpora el plugin de Seguiment Clínic seria la següent:
 
 ![](../../../static/img/pluginLit2.png)
