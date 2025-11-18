@@ -260,7 +260,7 @@ El _"@uxland/primary-shell"_ conté una funció de utilitat _wrapReactViewFactor
 
   
 
-En el cas del HeaderView crearíem el arxiu `factory.ts` :
+En el cas del HeaderView crearíem l'arxiu `factory.ts` :
 
   
 
@@ -351,15 +351,14 @@ h1{
     color: blue;
 }
 ```
-
-I el seu corresponent arxiu `factory.ts` queda així:
+NOTA: en cas de necessitar un height i un min-height del 100% a la vista, es pot especificar amb el paràmetre "fullHeight". Així quedaria doncs l'arxiu `factory.ts`:
 
 ```typescript
 import { wrapReactViewFactory } from "@uxland/primary-shell";
 import { MainView } from "./view";
 import styles from "./styles.css?inline";
 
-export const mainFactory = wrapReactViewFactory(MainView, styles);
+export const mainFactory = wrapReactViewFactory(MainView, styles, { fullHeight: true });
 ```
 
   
