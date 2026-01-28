@@ -4,54 +4,54 @@ sidebar_position: 12
 
 # Best practices
 
-# Desconnectar correctament el plugin
+# Properly disconnect the plugin
 
-En el cicle de vida d'un plugin, passem per 2 fases importants; la **iniciació** (muntatge) i la **desconnexió** (desmuntatge). És important que tot allò que s'hagi fet en el muntatge del plugin (registrar vistes, subscriure's a events del broker de missatges, crear contenidors de dependències interns, etcètera), es **faci una desconnexió neta** per tal de no deixar **cap rastre en memòria** del teu plugin. Tot i que, en la majoria dels casos, l'usuari tancarà el navegador i l'aplicació de Primària morirà en aquell instant, es poden donar casos potencials en què es facin coses com canviar de pacient, renovar sessió, canvis de context, etcètera, que provoquin una nova càrrega de plugins en calent. Si no desconnectem bé els nostres plugins, podem deixar en memòria peces que poden afectar el rendiment **(memory leaks)**, o dades d'altres pacients **(barreja de dades de pacients)**.
+In the lifecycle of a plugin, we go through 2 important phases; **initialization** (mounting) and **disconnection** (unmounting). It is important that everything that has been done in the plugin mounting (register views, subscribe to message broker events, create internal dependency containers, etc.), a **clean disconnection** is made in order not to leave **any trace in memory** of your plugin. Although, in most cases, the user will close the browser and the Primary application will die at that instant, there may be potential cases where things like changing patient, renewing session, context changes, etc., are done that trigger a hot reload of plugins. If we don't properly disconnect our plugins, we can leave pieces in memory that can affect performance **(memory leaks)**, or data from other patients **(patient data mixing)**.
 
-
-<br/>
-
-# Tractar l'API que es rep en el muntatge, com a singleton
-
-Quan inicialitzem un plugin, rebem per paràmetre l'objecte API. És important no fer gaires tractaments en aquesta API, com clonar l'objecte, afegir referències innecessàries o altres males pràctiques. Hem de tractar aquest objecte API com un **singleton únic** i que serà la font de la veritat i les eines necessàries per treballar. Una bona pràctica seria crear un contenidor de dependències (per exemple el que crea la llibreria **_inversify_**) i afegir l'API com a dependència al contenidor perquè pugui resoldre-la en qualsevol punt del nostre codi en forma de singleton.
 
 <br/>
 
-# Utilitzar la inicialització correctament com a punt d'entrada i inici del cicle de vida del teu plugin
+# Treat the API received at mounting as a singleton
 
-En la funció "_initialize_" que s'ha d'implementar, és un bon punt per fer les primeres configuracions necessàries del teu plugin, així com les primeres crides a serveis i injecció de vistes a regions.
+When we initialize a plugin, we receive the API object as a parameter. It is important not to do much processing on this API, such as cloning the object, adding unnecessary references or other bad practices. We must treat this API object as a **unique singleton** that will be the source of truth and the necessary tools to work. A good practice would be to create a dependency container (for example the one created by the **_inversify_** library) and add the API as a dependency to the container so it can be resolved anywhere in our code as a singleton.
 
-Exemple:
+<br/>
+
+# Use initialization correctly as the entry point and start of your plugin's lifecycle
+
+In the "_initialize_" function that must be implemented, it is a good point to make the first necessary configurations of your plugin, as well as the first service calls and view injection to regions.
+
+Example:
 
 ```typescript
 export const initialize = async (api: PrimariaApi) => {
-  registerViews(api); //registre de vistes a regions
-  await initializeLocalization(api); //inicialització de les traduccions del plugin
-  bootstrapFeatures(api); //inicialització dels casos d'ús del plugin
+  registerViews(api); //view registration to regions
+  await initializeLocalization(api); //plugin translation initialization
+  bootstrapFeatures(api); //plugin use case initialization
   return Promise.resolve();
 };
 ```
 
 <br/>
 
-# No fer un plugin per cada lloc on volem mostrar informació
+# Don't make a plugin for each place where we want to show information
 
-Cal recordar que un plugin és una part independent del sistema capaç de resoldre diferents casos d'ús d'un mateix àmbit. És important entendre que un plugin és capaç d'injectar diferents vistes/web components a diferents regions del Shell, però alhora que les dades que es mostren en aquests components vinguin de la mateixa única font de dades.
+Remember that a plugin is an independent part of the system capable of solving different use cases of the same scope. It is important to understand that a plugin is capable of injecting different views/web components to different Shell regions, but at the same time the data shown in these components comes from the same single data source.
 
-Exemple:
+Example:
 
-Si tenim un plugin d'al·lèrgies del pacient, en el cas de Salut, i necessitem mostrar 3 vistes diferents (un llistat d'al·lèrgies a la vista principal, un comptador d'al·lèrgies a la capçalera i un botó per afegir-ne una al menú d'accions), no és necessari i de fet **NO RECOMENABLE**, crear 3 plugins.
+If we have a patient allergies plugin, in the case of Health, and we need to show 3 different views (an allergy list in the main view, an allergy counter in the header and a button to add one in the actions menu), it is not necessary and in fact **NOT RECOMMENDED**, to create 3 plugins.
 
-Crear 3 plugins implicaria triplicar molt de codi i tenir el cicle de vida independent quan en realitat s'està tractant el mateix àmbit. Amb 1 sol plugin i 1 sol backend d'al·lèrgies, es gestionaran les dades de forma que hi haurà una única font de la veritat que alimentarà aquests 3 components injectats a 3 regions diferents del Shell.
+Creating 3 plugins would mean triplicating a lot of code and having independent lifecycle when in reality we are dealing with the same scope. With 1 single plugin and 1 single allergy backend, data will be managed so that there will be a single source of truth that will feed these 3 components injected into 3 different Shell regions.
 
 
 <br/>
 
-# Prefixar les vistes d'un plugin amb el id del plugin
+# Prefix a plugin's views with the plugin id
 
-Per tal que 2 plugins de 2 iniciatives diferents no col·lisionin, creant una vista amb el mateix id (header-view, main-view) per exemple, és recomanable prefixar els id's de les vistes a injectar amb el pluginId que arriba sempre a la funció "initialize".
+So that 2 plugins from 2 different initiatives don't collide, creating a view with the same id (header-view, main-view) for example, it is advisable to prefix the ids of views to inject with the pluginId that always arrives at the "initialize" function.
 
-Exemple:
+Example:
 
 ```typescript
 const pluginId = api.pluginInfo.pluginId;
@@ -65,15 +65,15 @@ api.regionManager.registerMainView({
 
 <br/>
 
-# Gestió d'assets estàtics
+# Static assets management
 
-Cada plugin ha de ser responsable de resoldre els assets estàtics com imatges, fonts, etcètera. El model Harmonix no és una aplicació convencional en la que es disposa d'una carpeta public amb els estàtics, ja que el shell no coneix la implementació de les iniciatives que realitzaran plugins.
+Each plugin must be responsible for resolving static assets such as images, fonts, etc. The Harmonix model is not a conventional application where there is a public folder with statics, since the shell does not know the implementation of the initiatives that will make plugins.
 
-Per tant es recomana que imatges, icones, fonts, etcètera estiguin en el plugin en format codi, o sigui el plugin qui creei una infraestructura pròpia on allotjar aquests assets i consumir-los segons els convingui.
+Therefore it is recommended that images, icons, fonts, etc. be in the plugin in code format, or that the plugin creates its own infrastructure to host these assets and consume them as it sees fit.
 
 
 <br/>
 
-# Desconnectar correctament el plugin
+# Properly disconnect the plugin
 
-En el cicle de vida d'un plugin, passem per 2 fases importants; la **iniciació** (muntatge) i la **desconnexió** (desmuntatge). És important que tot allò que s'hagi fet en el muntatge del plugin (registrar vistes, subscriure's a events del broker de missatges, crear contenidors de dependències interns, etcètera), es **faci una desconnexió neta** per tal de no deixar **cap rastre en memòria** del teu plugin. Tot i que, en la majoria dels casos, l'usuari tancarà el navegador i l'aplicació de Primària morirà en aquell instant, es poden donar casos potencials en què es facin coses com canviar de pacient, renovar sessió, canvis de context, etcètera, que provoquin una nova càrrega de plugins en calent. Si no desconnectem bé els nostres plugins, podem deixar en memòria peces que poden afectar el rendiment **(memory leaks)**, o dades d'altres pacients **(barreja de dades de pacients)**.
+In the lifecycle of a plugin, we go through 2 important phases; **initialization** (mounting) and **disconnection** (unmounting). It is important that everything that has been done in the plugin mounting (register views, subscribe to message broker events, create internal dependency containers, etc.), a **clean disconnection** is made in order not to leave **any trace in memory** of your plugin. Although, in most cases, the user will close the browser and the Primary application will die at that instant, there may be potential cases where things like changing patient, renewing session, context changes, etc., are done that trigger a hot reload of plugins. If we don't properly disconnect our plugins, we can leave pieces in memory that can affect performance **(memory leaks)**, or data from other patients **(patient data mixing)**.

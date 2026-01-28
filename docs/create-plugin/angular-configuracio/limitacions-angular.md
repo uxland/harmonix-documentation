@@ -2,17 +2,17 @@
 sidebar_position: 3
 ---
 
-# Limitacions Angular a Harmonix
+# Angular Limitations in Harmonix
 
-# Encapsulació ShadowDom
+# ShadowDom Encapsulation
 
-En utilitzar un plugin Angular, has de fer servir tècniques de ShadowDom per a encapsular els estils. En cas contrari, els teus components no mostraran els estils correctament, ja que Harmonix evita que es vegin afectats per estils externs.
+When using an Angular plugin, you must use ShadowDom techniques to encapsulate styles. Otherwise, your components will not display styles correctly, as Harmonix prevents them from being affected by external styles.
 
-  
 
-L'encapsulació ShadowDom et permet separar el CSS i l'HTML d'un component. Així, evites que els estils es barregin amb altres elements del DOM. Aquí tens un exemple de com utilitzar ShadowDom en un component d'Angular:
 
-  
+ShadowDom encapsulation allows you to separate the CSS and HTML of a component. Thus, you avoid styles mixing with other DOM elements. Here is an example of how to use ShadowDom in an Angular component:
+
+
 
 ```typescript
 import { Component, ViewEncapsulation } from '@angular/core';
@@ -20,7 +20,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
 @Component({
   selector: 'el-meu-component',
   template: `
-    <h1>Benvingut al meu component!</h1>
+    <h1>Welcome to my component!</h1>
   `,
   styles: [`
     h1 {
@@ -32,19 +32,19 @@ import { Component, ViewEncapsulation } from '@angular/core';
 export class MiComponente {}
 ```
 
-  
 
-En aquest codi, `ViewEncapsulation.ShadowDom` assegura que els estils definits només afecten al `h1` dins de `el-meu-component`.
 
-<br/>
-
-# Limitacions amb el Routing
-
-Els plugins en Angular no poden interactuar directament amb el sistema d'enrutament de l'aplicació principal. Això significa que no poden modificar les rutes o accedir a la informació de les rutes actives.
-
+In this code, `ViewEncapsulation.ShadowDom` ensures that the defined styles only affect the `h1` inside `el-meu-component`.
 
 <br/>
 
-# Versió d'Angular Fixada pel Shell
+# Routing Limitations
 
-La versió d'Angular que utilitza el teu plugin ha de ser la mateixa que la del shell de l'aplicació principal. Per a assegurar-te que el teu plugin sigui compatible, has de declarar Angular com una dependència externa. Això aplicarà a l'hora de publicar el plugin a producció i no durant el desenvolupament.
+Plugins in Angular cannot directly interact with the main application's routing system. This means they cannot modify routes or access active route information.
+
+
+<br/>
+
+# Angular Version Fixed by the Shell
+
+The Angular version that your plugin uses must be the same as that of the main application shell. To ensure that your plugin is compatible, you must declare Angular as an external dependency. This will apply when publishing the plugin to production and not during development.

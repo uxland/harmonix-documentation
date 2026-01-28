@@ -2,36 +2,36 @@
 sidebar_position: 3
 ---
 
-# Flux de treball
+# Workflow
 
-Harmonix ha estat creat per construir aplicacions on l'**experiència de desenvolupament** esdevé un punt clau, per això la comoditat pel desenvolupador és una prioritat.
+Harmonix has been created to build applications where the **development experience** becomes a key point, so developer comfort is a priority.
 
-  
 
-Això s'aconsegueix gràcies a **l'autonomia** de desenvolupament de plugins, juntament amb el conjunt d'eines de configuració **senzilla i estàndard.**
 
-  
+This is achieved thanks to **plugin development autonomy**, together with the set of **simple and standard** configuration tools.
 
-El **flux de desenvolupament** passa per una **primera fase de creació del Shell** basat en Harmonix, on es declaren les regions principals i es configuren les eines necessàries fins que l'aplicació esdevé en un estat de "**fàbrica de plugins**". És llavors quan els desenvolupadors poden començar a crear plugins amb el sandbox proporcionat i que aniran a parar en aquest Shell.
 
-  
 
-Els plugins són **compilats i desplegats al Plugin Store**, i des d'allà es portarà un control sobre les versions de cada plugin i es configurarà els rols i permisos necessaris. Finalment, l'aplicació amb el motor Harmonix obtindrà aquests plugins i els **executarà asíncronament**, construint així l'aplicació final.
+The **development workflow** goes through a **first phase of creating the Shell** based on Harmonix, where the main regions are declared and the necessary tools are configured until the application becomes a "**plugin factory**" state. It is then when developers can start creating plugins with the provided sandbox that will end up in this Shell.
 
-A continuació, es detalla el **flux d'execució** d'una aplicació Harmonix:
 
-  
 
-0- L'usuari obre l'aplicació al Browser al domini corresponent
+Plugins are **compiled and deployed to the Plugin Store**, and from there control will be maintained over the versions of each plugin and the necessary roles and permissions will be configured. Finally, the application with the Harmonix engine will obtain these plugins and will **execute them asynchronously**, thus building the final application.
 
-1- El shell, mitjançant Harmonix, crea l'esquelet, l'objecte API i inicia el procés principal d'obtenció de plugins
+Below, the **execution flow** of a Harmonix application is detailed:
 
-2- Es descarreguen els fitxers de cada plugin publicats al Plugin Store
 
-3- Es crida la funció d'iniciació de cada plugin de forma paral·lela
 
-4- Cada plugin realitza les tasques que ha definit en el seu punt d'inicialització
+0- The user opens the application in the Browser at the corresponding domain
 
-5- La UI es va component a mesura que es van resolent els registres de components de plugins
+1- The shell, through Harmonix, creates the skeleton, the API object and starts the main process of obtaining plugins
 
-7- L'usuari veu finalment una sola aplicació composta de diferents plugins i Web Components i pot interactuar amb ella.
+2- The files of each plugin published to the Plugin Store are downloaded
+
+3- The initialization function of each plugin is called in parallel
+
+4- Each plugin performs the tasks it has defined at its initialization point
+
+5- The UI is composed as plugin component registrations are resolved
+
+7- The user finally sees a single application composed of different plugins and Web Components and can interact with it.

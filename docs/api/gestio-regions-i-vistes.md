@@ -2,19 +2,19 @@
 sidebar_position: 8
 ---
 
-# Gestió de regions i vistes a Harmonix
+# Region and View Management in Harmonix
 
-# Introducció
+# Introduction
 
-Una de les característiques de les aplicacions d'Harmonix és el concepte de Regió. Qualsevol shell basat en Harmonix, ha de crear les regions pertinents i proporcionar una **api** als plugins per a gestionar les diferents **regions** de l'aplicació. Per dur a terme totes aquestes funcionalitats, Harmonix utilitza la llibreria _@uxland/regions._
+One of the characteristics of Harmonix applications is the Region concept. Any Harmonix-based shell must create the relevant regions and provide an **api** to plugins to manage the different **regions** of the application. To carry out all these functionalities, Harmonix uses the _@uxland/regions_ library.
 
-Nota: algunes funcionalitats, s'hauran d'importar d'aquesta llibreria. En versions futures, Harmonix s'encarregarà d'exportar-les fent que el shell només tingui com a dependència única Harmonix.
+Note: some functionalities will need to be imported from this library. In future versions, Harmonix will take care of exporting them making the shell only have Harmonix as a single dependency.
 
 <br/>
 
-# API HarmonixRegionManager
+# HarmonixRegionManager API
 
-Harmonix té una api per defecte per fer tota aquesta gestió de injecció de vistes a regions.
+Harmonix has a default api to do all this view injection to regions management.
 
 ```typescript
 export interface HarmonixRegionManager {
@@ -28,22 +28,22 @@ export interface HarmonixRegionManager {
 }
 ```
 
-  
 
-Cada plugin pot declarar diferents vistes i injectar-les per les diferents regions.
 
-<br/>
-
-# Extensió API regions i creació api "amigable"
-
-Ara bé, cada Shell pot ampliar aquesta api i crear mètodes més "amigables" pels plugins com per exemple: `registerMainView`, `registerSidebarMenu`, on només demanin l'objecte "view", i ja no faci falta que els plugins coneguin el nom de la regió, ja que el propi mètode ja és explícit de quina regió es tracta "main", "sidebar". Trobareu un exemple d'aquesta extensió en l'apartat 1 del [document d'integració de l'ETC de Primària](https://doc.clickup.com/9012015559/d/h/8cjgwe7-3532/b3a23bc489160e1).
-
+Each plugin can declare different views and inject them to different regions.
 
 <br/>
 
-# Creació regionManager i regionHost
+# API regions extension and "friendly" api creation
 
-El shell ha de crear l'objecte `regionManager`, l'objecte encarregat de la gestió de vistes i el regionHost, un Mixin per Lit necessari per tots aquells WebComponents que necessitin declarar regions i que està associat al `regionManager` anterior.
+However, each Shell can extend this api and create more "friendly" methods for plugins such as: `registerMainView`, `registerSidebarMenu`, where they only ask for the "view" object, and plugins no longer need to know the region name, since the method itself is already explicit about which region it is "main", "sidebar". You will find an example of this extension in section 1 of the [Primary ETC integration document](https://doc.clickup.com/9012015559/d/h/8cjgwe7-3532/b3a23bc489160e1).
+
+
+<br/>
+
+# regionManager and regionHost creation
+
+The shell must create the `regionManager` object, the object in charge of view management and the regionHost, a Mixin for Lit necessary for all those WebComponents that need to declare regions and that is associated with the previous `regionManager`.
 
 ```typescript
 const regionManager: IRegionManager = createRegionManager("hes-cc-conf");
@@ -52,14 +52,14 @@ export const HesCConfRegionHost: any = createRegionHost(regionManager as any);
 
 <br/>
 
-# Creació d'una regió al Shell
+# Creating a region in the Shell
 
-En el component del Shell, hem de fer servir el decorador **_@region_** per tal de declarar una regió, indicant el nom i qui serà el host (quina element HTML serà la capsa on s'injectaran les vistes). Exemple:
+In the Shell component, we must use the **_@region_** decorator to declare a region, indicating the name and who will be the host (which HTML element will be the container where views will be injected). Example:
 
 ```typescript
 @customElement("my-shell")
 export class HesCConfShell extends HesCConfRegionHost(LitElement) {
-  
+
   @region({ targetId: "header-right-region-container", name: shellRegions.headerRight })
   headerRightRegion: IRegion | undefined;
 }
@@ -67,35 +67,35 @@ export class HesCConfShell extends HesCConfRegionHost(LitElement) {
 
 <br/>
 
-# Exemple complet
+# Complete example
 
-Podem crear un nou component per a seguir amb l'exemple, que en aquest cas serà `ExampleComponent`.
+We can create a new component to continue with the example, which in this case will be `ExampleComponent`.
 
-  
 
-En la inicialització del plugin, es rep l'objecte _api_, amb un `regionManager`. Aquest objecte permetrà registrar i injectar vistes, activar-les, desactivar-les, eliminar-les i fer tot el necessari.
 
-  
+In the plugin initialization, the _api_ object is received, with a `regionManager`. This object will allow registering and injecting views, activating them, deactivating them, removing them and doing everything necessary.
 
-L'acció més bàsica és **registrar** una vista. Per a això, només hem de cridar al mètode _registerView_ indicant la regió on volem injectar la vista i l'objecte _View_. Aquest objecte definirà una factoria que retornarà el component que volem injectar.
 
-  
 
-Ara bé, s'han creat algunes funcions "helper" per tal que la injecció sigui més declarativa, com `registerMainView` o `registerNavigationMenu`, on ja no caldrà passar-li la regió i la pròpia funció de registrar ja explica on s'injectarà, tal com hem explicat abans.
+The most basic action is to **register** a view. To do this, we just need to call the _registerView_ method indicating the region where we want to inject the view and the _View_ object. This object will define a factory that will return the component we want to inject.
 
-  
 
-De la mateixa manera, també injectem el `PrimariaNavItem` a la regió del menú lateral de navegació. Aquest `PrimariaNavItem` tindrà la funció d'activar la vista del component `ExampleComponent` en fer click.
 
-  
+However, some "helper" functions have been created so that injection is more declarative, such as `registerMainView` or `registerNavigationMenu`, where it will no longer be necessary to pass the region and the register function itself already explains where it will be injected, as we explained before.
 
-La funció `activateMainView` del `regionManager` és l'encarregada de seleccionar quina és la vista activa a la regió main. Aquesta, necessita com a argument la id del plugin que s'ha registrat anteriorment, en aquest cas, "_plugin-main-view_".
 
-  
 
-Exemple:
+Similarly, we also inject the `PrimariaNavItem` into the side navigation menu region. This `PrimariaNavItem` will have the function of activating the `ExampleComponent` component view when clicked.
 
-  
+
+
+The `activateMainView` function of the `regionManager` is in charge of selecting which is the active view in the main region. It needs as an argument the id of the plugin that was previously registered, in this case, "_plugin-main-view_".
+
+
+
+Example:
+
+
 
 ```typescript
 export const initialize = (api: PrimariaApi) => {
@@ -104,7 +104,7 @@ export const initialize = (api: PrimariaApi) => {
     id: "plugin-main-view",
     factory: () =>  Promise.resolve(new ExampleComponent()) ,
   });
-  
+
   api.regionManager.registerNavigationMenu({
     id: "plugin-quick-action",
     factory: () => Promise.resolve(new PrimariaNavItem("add_circle_outline", "Lit plugin", () => {

@@ -4,142 +4,142 @@ sidebar_position: 13
 
 # FAQ
 
-# Preguntes Freqüents sobre Harmonix Framework
+# Frequently Asked Questions about Harmonix Framework
 
-  
 
-### 1\. Què és Harmonix Framework?
 
-  
+### 1\. What is Harmonix Framework?
 
-Harmonix és un framework de microfrontends dissenyat per facilitar la creació d’aplicacions SPA avançades amb equips independents. Utilitza una arquitectura modular basada en plugins per permetre la integració de components de forma escalable i flexible.
 
-  
 
-### 2\. Per a qui està pensat Harmonix?
+Harmonix is a microfrontend framework designed to facilitate the creation of advanced SPA applications with independent teams. It uses a modular plugin-based architecture to enable the integration of components in a scalable and flexible way.
 
-  
 
-Harmonix és ideal per a empreses grans o projectes amb equips distribuïts, on cada equip pot desenvolupar funcionalitats específiques sense afectar la resta de l’aplicació.
 
-  
+### 2\. Who is Harmonix intended for?
 
-### 3\. Harmonix és compatible amb múltiples frameworks?
 
-  
 
-Sí. És agnòstic pel que fa a la tecnologia, compatible amb React, Angular, Lit, Vanilla JavaScript, i TypeScript, entre altres.
+Harmonix is ideal for large companies or projects with distributed teams, where each team can develop specific functionalities without affecting the rest of the application.
 
-  
 
-### 4\. Com es gestionen les regions?
 
-  
+### 3\. Is Harmonix compatible with multiple frameworks?
 
-Les regions són àrees definides dins l’aplicació Shell on els plugins poden injectar vistes. Aquest sistema assegura la integració visual i funcional de cada component.
 
-  
 
-### 5\. Què és l’aplicació Shell?
+Yes. It is technology agnostic, compatible with React, Angular, Lit, Vanilla JavaScript, and TypeScript, among others.
 
-  
 
-L’aplicació Shell actua com un contenidor principal per a tots els plugins. Gestiona les regions, la navegació i serveis comuns, com autenticació, localització o gestió d’estat.
 
-  
+### 4\. How are regions managed?
 
-### 6\. Què és un plugin a Harmonix?
 
-  
 
-Un plugin és un mòdul independent que proporciona funcionalitats concretes a l’aplicació. Es pot afegir, modificar o eliminar sense afectar el rendiment de l’aplicació.
+Regions are defined areas within the Shell application where plugins can inject views. This system ensures the visual and functional integration of each component.
 
-  
 
-### 7\. Quina és la funció principal de l’API de Harmonix?
 
-  
+### 5\. What is the Shell application?
 
-L’API de Harmonix permet:
 
-• Gestionar regions i injectar components.
 
-• Accedir a informació específica del plugin (com identificadors i metadades).
+The Shell application acts as a main container for all plugins. It manages regions, navigation and common services, such as authentication, localization or state management.
 
-• Crear funcionalitats personalitzades, com traduccions o interaccions visuals.
 
-  
 
-### 8\. Es pot personalitzar l’API?
+### 6\. What is a plugin in Harmonix?
 
-  
 
-Sí, l’API es pot estendre per adaptar-la a les necessitats específiques del projecte. Això inclou la incorporació de funcionalitats com autenticació, gestió d’estat global, traduccions, i serveis d’interacció.
 
-  
+A plugin is an independent module that provides specific functionalities to the application. It can be added, modified or removed without affecting the application's performance.
 
-### 9\. Com es gestiona la localització i traduccions?
 
-Harmonix inclou eines per gestionar missatges localitzats, que es poden administrar a través de la funció createLocaleManager. Això permet integrar fàcilment idiomes múltiples en aplicacions grans.
 
-  
+### 7\. What is the main function of the Harmonix API?
 
-### 10\. És Harmonix adequat per aplicacions petites?
 
-  
 
-Tot i que Harmonix està pensat per escenaris complexos, també pot ser útil en aplicacions més petites si es preveu creixement o si es necessiten múltiples equips.
+The Harmonix API allows:
 
-  
+• Managing regions and injecting components.
 
-### 11\. Harmonix és adequat per a projectes grans?
+• Accessing specific plugin information (such as identifiers and metadata).
 
-  
+• Creating custom functionalities, such as translations or visual interactions.
 
-Sí, gràcies a la seva arquitectura modular i escalable, Harmonix està pensat per aplicacions complexes on treballen múltiples equips i proveïdors.
 
-  
 
-  
+### 8\. Can the API be customized?
 
-### 12\. Com ajuda Harmonix a la unificació d’experiències?
 
-  
 
-Mitjançant un sistema de regions compartides i estils coherents, Harmonix assegura que l’usuari percebi l’aplicació com un tot integrat, encara que hi participin diversos equips.
+Yes, the API can be extended to adapt it to the specific needs of the project. This includes incorporating functionalities such as authentication, global state management, translations, and interaction services.
 
-  
 
-### 13\. Quins beneficis aporta l’agnosticisme tecnològic?
 
-  
+### 9\. How is localization and translations managed?
 
-Permet utilitzar diferents tecnologies dins d’una mateixa aplicació, aprofitant punts forts de frameworks com React per a la interfície i Angular per a funcionalitats específiques.
+Harmonix includes tools to manage localized messages, which can be administered through the createLocaleManager function. This allows easily integrating multiple languages in large applications.
 
-  
 
-### 14\. Harmonix suporta la integració contínua i DevOps?
 
-  
+### 10\. Is Harmonix suitable for small applications?
 
-Sí. Harmonix es pot integrar fàcilment amb pipelines de CI/CD per desplegar plugins de manera independent i mantenir versions actualitzades.
 
-  
 
-### 15\. Quins són els casos d’ús més comuns?
+Although Harmonix is intended for complex scenarios, it can also be useful in smaller applications if growth is expected or if multiple teams are needed.
 
-  
 
-• Aplicacions complexes amb equips independents.
 
-• Plataformes SaaS on els clients poden personalitzar funcionalitats.
+### 11\. Is Harmonix suitable for large projects?
 
-• Integració de productes d’empreses diferents dins una mateixa interfície.
 
-  
 
-### 16\. On puc trobar més recursos i documentació?
+Yes, thanks to its modular and scalable architecture, Harmonix is intended for complex applications where multiple teams and providers work.
 
-  
 
-La documentació completa està disponible a [harmonixframework.dev](https://harmonixframework.dev/), incloent-hi tutorials i bones pràctiques per començar .
+
+
+
+### 12\. How does Harmonix help unify experiences?
+
+
+
+Through a system of shared regions and coherent styles, Harmonix ensures that the user perceives the application as an integrated whole, even though various teams participate.
+
+
+
+### 13\. What benefits does technological agnosticism bring?
+
+
+
+It allows using different technologies within the same application, taking advantage of the strengths of frameworks such as React for the interface and Angular for specific functionalities.
+
+
+
+### 14\. Does Harmonix support continuous integration and DevOps?
+
+
+
+Yes. Harmonix can be easily integrated with CI/CD pipelines to deploy plugins independently and maintain updated versions.
+
+
+
+### 15\. What are the most common use cases?
+
+
+
+• Complex applications with independent teams.
+
+• SaaS platforms where clients can customize functionalities.
+
+• Integration of products from different companies within the same interface.
+
+
+
+### 16\. Where can I find more resources and documentation?
+
+
+
+Complete documentation is available at [harmonixframework.dev](https://harmonixframework.dev/), including tutorials and best practices to get started.

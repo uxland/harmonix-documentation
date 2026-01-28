@@ -2,37 +2,37 @@
 sidebar_position: 1
 ---
 
-# Introducció
+# Introduction
 
-# Visió general
+# Overview
 
-En un entorn en constant evolució i d'alta demanda funcional, l'eficiència i la precisió esdevenen crítics per proporcionar serveis de primera qualitat. Conscients d'aquesta necessitat creixent i de la dificultat de trobar eines capaces de resoldre casos d'ús complexes, es presenta un innovador **framework** basat en un **sistema de plugins modular**, dissenyat específicament per a la construcció d'aplicacions avançades.
+In a constantly evolving environment with high functional demand, efficiency and precision become critical to providing top-quality services. Aware of this growing need and the difficulty of finding tools capable of solving complex use cases, we present an innovative **framework** based on a **modular plugin system**, specifically designed for building advanced applications.
 
-  
 
-El sistema de plugins ofereix una solució **completa i adaptable** que permet als professionals tenir una **visió global** i **optimitzar** el seu entorn de treball segons les necessitats específiques de la seva pràctica. Aquest sistema proporciona una plataforma **versàtil** i d'alt **rendiment** que impulsa l'eficiència i millora els resultats.
 
-<br/>
-
-# Filosofia i principis de disseny
-
-L’estratègia tecnològica basada en **plugins modulars**, a diferència de la tecnologia de microfrontends convencionals i iframes, ens permet que diferents equips de treball desenvolupin aquests plugins de forma **independent** i després cada un d’ells s’injecti visual i funcionalment en les diferents **regions** que la plataforma modular proporciona, de manera que per cada plugin es podran visualitzar **diferents vistes repartides per l’aplicació**, però alhora connectades tècnica i funcionalment entre si, oferint així una **versatilitat i rendiment** que ajudarà al fluxe de treball del professional.
-
-  
-
-A més a més, els plugins, a l’estar injectats i renderitzats per la pròpia plataforma i no ser un simple iframe, tenen **accés directe a funcionalitats i serveis** que ofereix la plataforma, així com la possibilitat d’interactuar amb altres plugins i evitar problemes de incompatibilitats, infraestructura i seguretat.
-
+The plugin system offers a **complete and adaptable** solution that allows professionals to have a **global vision** and **optimize** their work environment according to the specific needs of their practice. This system provides a **versatile** and high-**performance** platform that drives efficiency and improves results.
 
 <br/>
 
-# Casos d'ús principals
+# Philosophy and design principles
 
-L'escenari d'ús principal d'una aplicació basada en el framework **Harmonix**, és tota aquella aplicació estil "**Estació de treball**" i "**Single Page Application**", on l'usuari vol veure el màxim d'informació possible, interconnectada entre si, reactiva i amb una experiència que faci que el procés a realitzar sigui còmode, accessible, dinàmic i efectiu.
+The technological strategy based on **modular plugins**, unlike conventional microfrontend and iframe technology, allows different work teams to develop these plugins **independently** and then each one is injected visually and functionally into the different **regions** that the modular platform provides, so that for each plugin **different views distributed throughout the application** can be displayed, but at the same time connected technically and functionally to each other, thus offering **versatility and performance** that will help the professional's workflow.
 
-  
 
-A més a més, Harmonix prové d'una **sèrie d'eines** perquè aquestes estacions de treball pugui contenir diferents plugins, construïts amb **tecnologies i cicles de vida diferents**, on únicament han de complir unes **normes d'adhesió** amb l'**aplicació principal (shell)**, però alhora dotar de funcionalitats d'interactivitat amb aquests plugins.
 
-  
+Furthermore, the plugins, being injected and rendered by the platform itself and not being a simple iframe, have **direct access to functionalities and services** offered by the platform, as well as the ability to interact with other plugins and avoid compatibility, infrastructure, and security issues.
 
-Cal ressaltar la importància d'aquesta **autonomia** que tenen els plugins que actuen de microfrontends, per ser desenvolupats amb la **tecnologia** que es desitgi (sempre i quan s'encapsulin en un Web Component, que es detallarà en punts posteriors), i de tenir un **cicle de desenvolupament i desplegament** propis totalment agnòstics al framework i al shell, cosa que facilita i soluciona casos d'ús reals on la mateixa aplicació pot contenir plugins i iniciatives creades per **clients diferents**.
+
+<br/>
+
+# Main use cases
+
+The main use case for an application based on the **Harmonix** framework is any "**Workstation**" style application and "**Single Page Application**", where the user wants to see as much information as possible, interconnected with each other, reactive, and with an experience that makes the process to be carried out comfortable, accessible, dynamic, and effective.
+
+
+
+Furthermore, Harmonix provides a **set of tools** so that these workstations can contain different plugins, built with **different technologies and lifecycles**, where they only have to comply with certain **adherence rules** with the **main application (shell)**, but at the same time provide interactivity functionalities with these plugins.
+
+
+
+It is important to highlight the importance of this **autonomy** that plugins acting as microfrontends have, to be developed with the **technology** desired (as long as they are encapsulated in a Web Component, which will be detailed in later sections), and to have their own **development and deployment cycle** totally agnostic to the framework and the shell, which facilitates and solves real use cases where the same application can contain plugins and initiatives created by **different clients**.

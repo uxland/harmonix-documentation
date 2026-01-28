@@ -2,52 +2,52 @@
 sidebar_position: 2
 ---
 
-# Crear un plugin
+# Create a plugin
 
-# Configura el teu Entorn de Desenvolupament
+# Configure your Development Environment
 
-Abans de començar, necessites tenir instal·lat Node.js i npm (el gestor de paquets de Node). Pots descarregar-los des de la pàgina oficial de Node.js.
+Before getting started, you need to have Node.js and npm (Node's package manager) installed. You can download them from the official Node.js website.
 
 
-# Crea un Nou Projecte
+# Create a New Project
 
-Un cop instal·lat Node, pots crear un nou projecte. Recomanem utilitzar Vite i TypeScript fent servir, per exemple, aquesta comanda:
+Once Node is installed, you can create a new project. We recommend using Vite and TypeScript using, for example, this command:
 
-  
+
 
 ```git
 npm create vite@latest lit-plugin-demo -- --template lit-ts
 ```
 
-  
-
-Segueix les instruccions en pantalla per a configurar el teu projecte.
 
 
-# Executa la teva Aplicació
+Follow the on-screen instructions to configure your project.
 
-Per veure la teva aplicació en acció, navega al directori del teu projecte i executa:
 
-  
+# Run your Application
+
+To see your application in action, navigate to your project directory and run:
+
+
 
 ```git
-cd nom-del-teu-projecte
+cd your-project-name
 npm install
 npm run dev
 ```
 
-  
-
-Això iniciarà un servidor local. Obre el teu navegador i dirigeix-te a [`http://localhost:5173`](http://localhost:5173/) (port per defecte de Vite) per veure la teva nova aplicació Lit.
 
 
-# Edita la teva Aplicació
+This will start a local server. Open your browser and go to [`http://localhost:5173`](http://localhost:5173/) (default Vite port) to see your new Lit application.
 
-Pots començar per editar la teva aplicació obrint el directori del teu projecte en el teu editor de codi favorit.
 
-  
+# Edit your Application
 
-*   Substitueix regles d'estil de l'arxiu `index.css` per les següents:
+You can start by editing your application by opening your project directory in your favorite code editor.
+
+
+
+*   Replace the style rules in the `index.css` file with the following:
 
 ```css
 body {
@@ -70,16 +70,16 @@ html {
 }
 ```
 
-*   Crea un arxiu `sandbox.ts` a la carpeta src del projecte
-*   Importa aquest arxiu `sandbox.ts` en el teu `index.html` com script d'entrada. Per a això modifica la ruta de la següent línia per la del sandbox:
+*   Create a `sandbox.ts` file in the src folder of the project
+*   Import this `sandbox.ts` file in your `index.html` as an entry script. To do this, modify the path of the following line to that of the sandbox:
 
 ```xml
-  <script type="module" src="/src/my-element.ts"></script>
+  <script type="module" src="/src/my-element.ts"></script>
 ```
 
-*   Al `index.html` elimina les següents línies:
+*   In the `index.html` remove the following lines:
 
-  
+
 
 ```html
 <my-element>
@@ -88,33 +88,33 @@ html {
 ```
 
 
-# Afegir dependència al Shell
+# Add Shell dependency
 
-Per a afegir la dependència _@uxland/primary-shell_ al teu projecte, executa la següent comanda en l'arrel del teu projecte:
+To add the _@uxland/primary-shell_ dependency to your project, run the following command at the root of your project:
 
-  
+
 
 ```bash
 npm install @uxland/primary-shell
 ```
 
 
-# Inicialitzar el Shell
+# Initialize the Shell
 
-A l'arxiu `sandbox.ts` li afegirem el següent codi, on crearem un element app, l'inserirem al body i cridarem a la funció _initializeSandboxApp_ passant l'element creat. Caldrà també importar l'arxiu dels estils.
+In the `sandbox.ts` file we will add the following code, where we will create an app element, insert it in the body and call the _initializeSandboxApp_ function passing the created element. The styles file will also need to be imported.
 
 ```javascript
 import { initializeShell } from "@uxland/primary-shell";
-import "@uxland/primary-shell/dist/style.css"; // Afegim els estils globals del shell i el Design System
+import "@uxland/primary-shell/dist/style.css"; // Add global shell and Design System styles
 
-// Creem un contenidor HTML on injectarem el shell més endavant
+// Create an HTML container where we will inject the shell later
 const createAndAppendSandboxApp = () => {
   const app = document.createElement("sandbox-app");
   document.body.appendChild(app);
   const sandbox = document.querySelector("sandbox-app");
   return sandbox as HTMLElement;
 }
-// Inicialitzem el sandbox i l'aplicació
+// Initialize the sandbox and the application
 const initializeSandboxApp = (sandbox: HTMLElement) => {
   try {
     if (sandbox) {
@@ -130,23 +130,23 @@ const app = createAndAppendSandboxApp();
 initializeSandboxApp(app);
 ```
 
-  
 
-Hauries de veure renderitzat el Shell de primària en el navegador:
 
-  
+You should see the Primary shell rendered in the browser:
+
+
 
 ![](../../../static/img/pluginLit1.png)
 
 
 
-# Declarar arxiu d'entrada plugin
+# Declare plugin entry file
 
-S'ha de declarar un arxiu on s'implementin les funcions necessàries per a inicialitzar un plugin.
+A file must be declared where the necessary functions to initialize a plugin are implemented.
 
-En aquest exemple crearem l'arxiu `plugin.ts` a la carpeta src amb el següent contingut:
+In this example we will create the `plugin.ts` file in the src folder with the following content:
 
-  
+
 
 ```javascript
 import { PrimariaApi } from "@uxland/primary-shell";
@@ -162,11 +162,11 @@ export const dispose = (api: PrimariaApi) => {
 ```
 
 
-# Declarar una col·lecció de plugins
+# Declare a plugin collection
 
-S'ha de declarar cada plugin que es vulgui inicialitzar en el shell. Per a això, podem crear un arxiu `plugins.ts` on exportarem l'array de les definicions dels plugins. A cada element l'indicarem l'id i una funció per a importar-ho. Exemple:
+Each plugin that you want to initialize in the shell must be declared. To do this, we can create a `plugins.ts` file where we will export the array of plugin definitions. For each element we will indicate the id and a function to import it. Example:
 
-  
+
 
 ```coffeescript
 import { PluginDefinition, Plugin } from "@uxland/primary-shell";
@@ -176,13 +176,13 @@ const importer: () => Promise<Plugin> = () => import("./plugin") as any;
 export const plugins: PluginDefinition[] = [{ pluginId: "lit-plugin", importer: importer }];
 ```
 
-  
 
-Ara s'ha d'indicar al shell que inicialitzi els plugins en el procés d'inicialització de l'app de l'arxiu `sandbox.ts` anterior. Per a això, utilitzarem la funció _bootstrapPlugins_ passant-li la col·lecció de plugins que hem creat abans_._
 
-L'arxiu quedaria d'aquesta manera:
+Now you must tell the shell to initialize the plugins in the app initialization process of the previous `sandbox.ts` file. To do this, we will use the _bootstrapPlugins_ function passing it the plugin collection we created before_._
 
-  
+The file would look like this:
+
+
 
 ```javascript
 import { bootstrapPlugins, initializeShell } from "@uxland/primary-shell";
@@ -200,7 +200,7 @@ const initializeSandboxApp = (sandbox: HTMLElement) => {
   try {
     if (sandbox) {
         initializeShell(sandbox);
-        bootstrapPlugins(plugins); // Cridem a la funció de inicialització de tots els plugins
+        bootstrapPlugins(plugins); // Call the initialization function of all plugins
       }
     }
     catch (error) {
@@ -212,27 +212,27 @@ const app = createAndAppendSandboxApp();
 initializeSandboxApp(app);
 ```
 
-  
 
-Després d'aquests passos, ja podries veure en consola el missatge que has escrit a la funció _initializeSandboxApp_.
 
-  
+After these steps, you should already be able to see in the console the message you wrote in the _initializeSandboxApp_ function.
+
+
 
 ![](https://t9012015559.p.clickup-attachments.com/t9012015559/bf8f57cb-8238-4a24-80e2-f40105da69db/console.png)
 
 
 
-# Injectar el plugin a les vistes
+# Inject the plugin to the views
 
-Una vegada hem creat el plugin, ja podem registrar les vistes. Registrarem una vista a la regió del menú lateral de navegació.
+Once we have created the plugin, we can now register the views. We will register a view to the side navigation menu region.
 
-Per a això, utilitzarem el `regionManager` que ens proporciona l'api i els seus mètodes `registerMainView` i `registerNavigationMenu` per escollir en quina regió injectar-los:
+To do this, we will use the `regionManager` that the api provides us and its `registerMainView` and `registerNavigationMenu` methods to choose which region to inject them to:
 
-  
 
-*   Utilitzarem el mètode `registerMainView` del `regionManager` passant-li la vista. En aquest cas aprofitarem el component _MyElement_ del boilerplate de Vite com a exemple. L'arxiu `plugin.ts`:
 
-  
+*   We will use the `registerMainView` method of the `regionManager` passing it the view. In this case we will take advantage of the _MyElement_ component from the Vite boilerplate as an example. The `plugin.ts` file:
+
+
 
 ```javascript
 import { PrimariaApi } from "@uxland/primary-shell";
@@ -241,10 +241,10 @@ import { MyElement } from "./my-element";
 export const initialize = (api: PrimariaApi) => {
   console.log(`Plugin ${api.pluginInfo.pluginId} initialized`);
   api.regionManager.registerMainView({
-    id: "plugin-main-view", // Aquí declarem la id de la vista
+    id: "plugin-main-view", // Here we declare the view id
     factory: () =>  Promise.resolve(new MyElement()) ,
   });
-  
+
   return Promise.resolve();
 };
 export const dispose = (api: PrimariaApi) => {
@@ -253,7 +253,7 @@ export const dispose = (api: PrimariaApi) => {
 }
 ```
 
-*   Canviarem també la funció dispose per a que elimini la vista quan es desactivi el plugin. Per a això accedirem a la regió "main" que ens dona l'api, que és on hem registrat la vista prèviament. Com a segon argument, li passarem l'id de la vista que volem eliminar. Com que voldrem eliminar la vista registrada amb la funció `registerMainView`, li passarem aquella mateixa id:
+*   We will also change the dispose function so it removes the view when the plugin is deactivated. To do this we will access the "main" region that the api gives us, which is where we previously registered the view. As the second argument, we will pass the id of the view we want to remove. Since we will want to remove the view registered with the `registerMainView` function, we will pass it that same id:
 
 ```javascript
 import { PrimariaApi } from "@uxland/primary-shell";
@@ -262,23 +262,23 @@ import { MyElement } from "./my-element";
 export const initialize = (api: PrimariaApi) => {
   console.log(`Plugin ${api.pluginInfo.pluginId} initialized`);
   api.regionManager.registerMainView({
-    id: "plugin-main-view", // Aquí declarem la id de la vista
+    id: "plugin-main-view", // Here we declare the view id
     factory: () =>  Promise.resolve(new MyElement()) ,
-  }); 
-  
+  });
+
   return Promise.resolve();
 };
 export const dispose = (api: PrimariaApi) => {
   console.log(`Plugin ${api.pluginInfo.pluginId} disposed`);
   const main = api.regionManager.regions.shell.main;
-  api.regionManager.removeView(main, "plugin-main-view"); //Aquí utilitzarem la id de la vista del main que volem eliminar
+  api.regionManager.removeView(main, "plugin-main-view"); //Here we will use the id of the main view we want to remove
   return Promise.resolve();
 }
 ```
 
-    
 
-*   Per a afegir el plugin en el menú lateral, utilitzarem el mètode `registerView` del `regionManager`, al qual se li especifica la regió (`navigationMenu`). En aquest cas, a la factoria li passarem una instància de la classe `PrimariaNavItem` importada del shell (_@uxland/primary-shell_), i a la mateixa vegada, li passarem un objecte de configuració que tindrá la propietat "icon" amb el literal de la icona a mostrar, "label" amb el títol que es mostrarà en el menú i "callbackFn" amb la callback que activarà la vista registrada en main al clicar l'ítem del menú:
+
+*   To add the plugin to the side menu, we will use the `registerView` method of the `regionManager`, which is specified the region (`navigationMenu`). In this case, we will pass the factory an instance of the `PrimariaNavItem` class imported from the shell (_@uxland/primary-shell_), and at the same time, we will pass it a configuration object that will have the "icon" property with the icon literal to display, "label" with the title that will be displayed in the menu and "callbackFn" with the callback that will activate the view registered in main when clicking the menu item:
 
 ```typescript
 import { PrimariaApi, PrimariaNavItem } from "@uxland/primary-shell";
@@ -290,7 +290,7 @@ export const initialize = (api: PrimariaApi) => {
     id: "plugin-main-view",
     factory: () =>  Promise.resolve(new MyElement()) ,
   },);
-  
+
   const navigationMenu = api.regionManager.regions.shell.navigationMenu
   api.regionManager.registerView(navigationMenu,{
     id: "plugin-sidebar",
@@ -310,7 +310,7 @@ export const initialize = (api: PrimariaApi) => {
 export const dispose = (api: PrimariaApi) => {
   console.log(`Plugin ${api.pluginInfo.pluginId} disposed`);
   const main = api.regionManager.regions.shell.main;
-  api.regionManager.removeView(main, "plugin-main-view"); // Aquí utilitzarem la id de la vista del main que volem eliminar
+  api.regionManager.removeView(main, "plugin-main-view"); // Here we will use the id of the main view we want to remove
   const navigationMenu = api.regionManager.regions.shell.navigationMenu;
   api.regionManager.removeView(navigationMenu, "plugin-sidebar");
   return Promise.resolve();
@@ -318,27 +318,27 @@ export const dispose = (api: PrimariaApi) => {
 ```
 
 
-Arribats a aquest punt, en el navegador veurem el següent:
+At this point, in the browser we will see the following:
 
-  
+
 ![](../../../static/img/pluginLit2.1.png)
 
-En aquest punt, si es necessita integrar-se amb qualsevol part del plugin de Seguiment Clínic, es requerirà afegir l'arxiu compilat del plugin en el Sandbox. Per incloure'l, s'ha d'afegir l'import del plugin a l'arxiu `plugins.ts`. Aquest import es podrà obtenir directament del repositori de demo que es mostra al final. 
-D'aquesta manera, la vista que es visualitzaria si s'incorpora el plugin de Seguiment Clínic seria la següent:
+At this point, if integration with any part of the Clinical Follow-up plugin is needed, it will be required to add the compiled plugin file in the Sandbox. To include it, the plugin import must be added to the `plugins.ts` file. This import can be obtained directly from the demo repository shown at the end.
+This way, the view that would be displayed if the Clinical Follow-up plugin is incorporated would be the following:
 
 ![](../../../static/img/pluginLit2.png)
 
 
-I quan fem click sobre el botó "Lit plugin" del menú ràpid, veurem el nostre plugin funcionant i mostrat a la regió principal:
+And when we click on the "Lit plugin" button in the quick menu, we will see our plugin working and displayed in the main region:
 
-  
+
 
 ![](../../../static/img/pluginLit3.png)
 
-  
 
-Enhorabona, has implementat el teu primer plugin a Harmonix!
 
-Si vols veure el resultat d'aquesta configuració i creació d'un plugin d'Harmonix amb Lit, aquí es mostra una demo del repositori:
+Congratulations, you have implemented your first plugin in Harmonix!
+
+If you want to see the result of this configuration and creation of a Harmonix plugin with Lit, here is a demo of the repository:
 
 [https://stackblitz.com/~/github.com/uxland/harmonix-lit-plugin-demo](https://stackblitz.com/~/github.com/uxland/harmonix-lit-plugin-demo)

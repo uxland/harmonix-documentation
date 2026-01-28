@@ -4,7 +4,7 @@ sidebar_position: 7
 
 # API
 
-Harmonix proporciona una **API** als plugins per tal d'**injectar els components en les diferents regions** del Shell i gestionar el seu cicle de vida, així com un objecte d'**informació del plugin**, i algunes funcionalitats més.
+Harmonix provides an **API** to plugins in order to **inject components into the different regions** of the Shell and manage their lifecycle, as well as a **plugin information** object, and some additional functionalities.
 
 ```typescript
 export interface HarmonixApi {
@@ -14,8 +14,8 @@ export interface HarmonixApi {
 }
 ```
 
-  
 
-Ara bé, cada instància d'aplicació Shell, pot tenir les seves **necessitats diferents**. És per això, que el que es recomana fer, és que el **Shell declari una nova API extenent la d'Harmonix**, dotant així als plugins de noves funcionalitats lligades al negoci i necessitats per aquella aplicació en concret.
 
-En aquestes necessitats podem trobar serveis d'interacció, modals, autenticació, traduccions, un gestor d'estat global, etcètera. Podeu veure un exemple d'extensió de l'Api, en el document d'integració de l'ETC de Primària que es proporciona a les diferents inciatives, una aplicació basada en Harmonix.
+Now, each Shell application instance can have its **different needs**. That is why what is recommended is that the **Shell declares a new API extending Harmonix's**, thus providing plugins with new functionalities tied to the business and needs for that specific application.
+
+In these needs we can find interaction services, modals, authentication, translations, a global state manager, etc. You can see an example of API extension in the Primary ETC integration document provided to the different initiatives, an application based on Harmonix.
