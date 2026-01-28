@@ -1,0 +1,30 @@
+{
+  "version.label": {
+    "message": "Next",
+    "description": "The label for version current"
+  },
+  "sidebar.createPluginSidebar.category.Angular": {
+    "message": "Angular",
+    "description": "The label for category Angular in sidebar createPluginSidebar"
+  },
+  "sidebar.createPluginSidebar.category.Angular.link.generated-index.description": {
+    "message": "Configuració Sandbox i creació d'un plugin d'Harmonix.",
+    "description": "The generated-index page description for category Angular in sidebar createPluginSidebar"
+  },
+  "sidebar.createPluginSidebar.category.Lit": {
+    "message": "Lit",
+    "description": "The label for category Lit in sidebar createPluginSidebar"
+  },
+  "sidebar.createPluginSidebar.category.Lit.link.generated-index.description": {
+    "message": "Configuració Sandbox i creació d'un plugin d'Harmonix.",
+    "description": "The generated-index page description for category Lit in sidebar createPluginSidebar"
+  },
+  "sidebar.createPluginSidebar.category.React": {
+    "message": "React",
+    "description": "The label for category React in sidebar createPluginSidebar"
+  },
+  "sidebar.createPluginSidebar.category.React.link.generated-index.description": {
+    "message": "Configuració Sandbox i creació d'un plugin d'Harmonix.",
+    "description": "The generated-index page description for category React in sidebar createPluginSidebar"
+  }
+}

@@ -1,10 +1,15 @@
 import React from 'react';
+import Translate from '@docusaurus/Translate';
 import styles from './styles.module.css';
 
 export const TechStack: React.FC = () => {
   return (
     <section className={styles.techStack}>
-      <div className={styles.title}>Tecnologies suportades</div>
+      <div className={styles.title}>
+        <Translate id="techStack.title" description="Tech stack section title">
+          Tecnologies suportades
+        </Translate>
+      </div>
       <div className={styles.iconsWrapper}>
         <img src="/img/logo-angular.svg" alt="Angular" className={styles.icons} />
         <img src="/img/logo-react.svg" alt="React" className={styles.icons}/>

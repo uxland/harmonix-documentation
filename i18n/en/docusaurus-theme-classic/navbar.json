@@ -1,0 +1,30 @@
+{
+  "title": {
+    "message": "Harmonix",
+    "description": "The title in the navbar"
+  },
+  "logo.alt": {
+    "message": "Harmonix Logo",
+    "description": "The alt text of navbar logo"
+  },
+  "item.label.Conceptes": {
+    "message": "Concepts",
+    "description": "Navbar item with label Conceptes"
+  },
+  "item.label.API": {
+    "message": "API",
+    "description": "Navbar item with label API"
+  },
+  "item.label.Getting started": {
+    "message": "Getting started",
+    "description": "Navbar item with label Getting started"
+  },
+  "item.label.Best practices": {
+    "message": "Best practices",
+    "description": "Navbar item with label Best practices"
+  },
+  "item.label.FAQ": {
+    "message": "FAQ",
+    "description": "Navbar item with label FAQ"
+  }
+}

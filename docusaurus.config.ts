@@ -28,7 +28,24 @@ const config: Config = {
   // may want to replace "en" with "zh-Hans".
   i18n: {
     defaultLocale: 'en',
-    locales: ['en'],
+    locales: ['en', 'es', 'ca'],
+    localeConfigs: {
+      en: {
+        label: 'English',
+        direction: 'ltr',
+        htmlLang: 'en-US',
+      },
+      es: {
+        label: 'Español',
+        direction: 'ltr',
+        htmlLang: 'es-ES',
+      },
+      ca: {
+        label: 'Català',
+        direction: 'ltr',
+        htmlLang: 'ca-ES',
+      },
+    },
   },
 
   presets: [
@@ -107,6 +124,10 @@ const config: Config = {
           sidebarId: 'faqSidebar',
           position: 'left',
           label: 'FAQ',
+        },
+        {
+          type: 'localeDropdown',
+          position: 'right',
         },
         // {to: '/blog', label: 'Blog', position: 'left'},
         {
