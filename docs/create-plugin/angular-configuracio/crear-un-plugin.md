@@ -2,86 +2,86 @@
 sidebar_position: 2
 ---
 
-# Crear un plugin
+# Create a plugin
 
-# Configura el teu Entorn de Desenvolupament
+# Configure your Development Environment
 
-Abans de començar, necessites tenir instal·lat Node.js i npm (el gestor de paquets de Node). Pots descarregar-los des de la pàgina oficial de Node.js.
+Before getting started, you need to have Node.js and npm (Node's package manager) installed. You can download them from the official Node.js website.
 
-> Nota: Aquesta guia està basada en Angular 18 i cobreix totes les funcionalitats disponibles en aquesta versió. Tot i així, per a versions posteriors d'Angular, la major part de la informació continguda hauria de ser aplicable, tenint en compte les possibles variacions introduïdes en versions més recents. Es recomana revisar les notes de versió oficials per assegurar la compatibilitat completa amb la versió utilitzada.
-
- 
+> Note: This guide is based on Angular 18 and covers all features available in this version. However, for later versions of Angular, most of the information contained should be applicable, taking into account possible variations introduced in more recent versions. It is recommended to review the official release notes to ensure full compatibility with the version used.
 
 
-# Instal·la Angular CLI
 
-Angular CLI és una eina que t'ajuda a crear i gestionar projectes Angular. Obre el teu terminal o línia de comandes i instal·la-ho amb la següent comanda:
 
-  
+# Install Angular CLI
+
+Angular CLI is a tool that helps you create and manage Angular projects. Open your terminal or command line and install it with the following command:
+
+
 
 ```git
 npm install -g @angular/cli@18
 ```
 
 
-# Crea un Nou Projecte
+# Create a New Project
 
-Una vegada instal·lat Angular CLI, pots crear un nou projecte amb aquesta comanda:
+Once Angular CLI is installed, you can create a new project with this command:
 
-  
+
 
 ```git
-ng new nom-del-teu-projecte --routing=false --style=css --view-encapsulation=ShadowDom
+ng new your-project-name --routing=false --style=css --view-encapsulation=ShadowDom
 ```
 
-  
 
-Ens farà la següent pregunta:
 
-  
+It will ask us the following question:
+
+
 
 ```git
 ? Do you want to enable Server-Side Rendering (SSR) and Static Site Generation (SSG/Prerendering)? (y/N)
 ```
 
-  
-
-Li contestarem que no, i esperarem que s'instal·lin totes les dependències.
 
 
-# Executa la teva Aplicació
+We will answer no, and wait for all dependencies to be installed.
 
 
-Per veure la teva aplicació en acció, navega al directori del projecte i executa:
+# Run your Application
 
-  
+
+To see your application in action, navigate to the project directory and run:
+
+
 
 ```git
-cd nom-del-teu-projecte
+cd your-project-name
 ng serve
 ```
 
-  
-
-Això iniciarà un servidor local. Obre el teu navegador i dirigeix-te a [`http://localhost:4200`](http://localhost:4200/) per veure la teva nova aplicació Angular.
 
 
-# Afegir dependència al Shell
+This will start a local server. Open your browser and go to [`http://localhost:4200`](http://localhost:4200/) to see your new Angular application.
 
-Per a afegir la dependència "_@uxland/primary-shell"_ al teu projecte, executa la següent comanda a l'arrel del teu projecte:
 
-  
+# Add Shell dependency
+
+To add the "_@uxland/primary-shell"_ dependency to your project, run the following command at the root of your project:
+
+
 
 ```sql
 npm install @uxland/primary-shell
 ```
 
 
-# Inicialitzar el Shell
+# Initialize the Shell
 
-En inicialitzar el projecte, el fitxer `main.ts` el tenim d'aquesta manera:
+When initializing the project, we have the `main.ts` file this way:
 
-  
+
 
 ```typescript
 import { bootstrapApplication } from '@angular/platform-browser';
@@ -92,24 +92,24 @@ bootstrapApplication(AppComponent, appConfig)
   .catch((err) => console.error(err));
 ```
 
-  
 
-Per a la inicialització del shell, substituirem el fitxer `main.ts` que hem vist a dalt pel següent codi:
 
-  
+For shell initialization, we will replace the `main.ts` file we saw above with the following code:
+
+
 
 ```javascript
 import { initializeShell } from "@uxland/primary-shell";
-import "@uxland/primary-shell/dist/style.css"; // Afegim els estils globals del shell i el Design System
+import "@uxland/primary-shell/dist/style.css"; // Add global shell and Design System styles
 
-// Creem un contenidor HTML on injectarem el shell més endavant
+// Create an HTML container where we will inject the shell later
 const createAndAppendSandboxApp = () => {
     const app = document.createElement("sandbox-app");
     document.body.appendChild(app);
     const sandbox = document.querySelector("sandbox-app");
     return sandbox as HTMLElement;
 }
-// Inicialitzem el sandbox i l'aplicació
+// Initialize the sandbox and the application
 const initializeSandboxApp = (sandbox: HTMLElement) => {
     try {
         if (sandbox) {
@@ -125,11 +125,11 @@ const sandbox = createAndAppendSandboxApp();
 initializeSandboxApp(sandbox);
 ```
 
-  
 
-Elimina el contenidor "app-root" i afegeix els estils bàsics del shell a l' `index.html`:
 
-  
+Remove the "app-root" container and add the basic shell styles to the `index.html`:
+
+
 
 ```xml
 <!doctype html>
@@ -170,32 +170,32 @@ Elimina el contenidor "app-root" i afegeix els estils bàsics del shell a l' `in
 </html>
 ```
 
-  
 
-S'hauria de veure renderitzat el Shell de primària en el navegador.
 
-  
+The Primary shell should be rendered in the browser.
+
+
 
 ![](../../../static/img/pluginAngular1.png)
 
 
-# Generar projecte de plugin
+# Generate plugin project
 
-Els plugins d'Harmonix amb Angular seràn realment llibreries d'Angular. Utilitzarem l'Angular CLI per generar-la.
+Harmonix plugins with Angular will really be Angular libraries. We will use Angular CLI to generate it.
 
 ```bash
-ng generate library my-plugin
+ng generate library my-plugin
 ```
-Això hauria de generar una carpeta nova amb el codi my-plugin a la carpeta projects.
+This should generate a new folder with the my-plugin code in the projects folder.
 
 
-## Eliminar fitxers de plantilla
+## Remove template files
 
-S'han d'eliminar els fitxer de plantilla. Eliminem la carpeta `lib` i el fitxer `public-api`
+Template files must be removed. We delete the `lib` folder and the `public-api` file
 
 
-## Declarar fitxer d'entrada del plugin
-S'ha de declarar un fitxer on s'implementen les funcions necessàries per a declarar un plugin. Per conveni el fitxer s'anomena `plugin.ts`. Llavors crearem el fitxer `projects/my-plugin/src/plugin.ts`.
+## Declare plugin entry file
+A file must be declared where the necessary functions to declare a plugin are implemented. By convention the file is named `plugin.ts`. Then we will create the file `projects/my-plugin/src/plugin.ts`.
 
 ```javascript
 import "@angular/compiler";
@@ -211,9 +211,9 @@ export const dispose = (api: PrimariaApi) => {
     return Promise.resolve();
 };
 ```
-És important afegir el `import "@angular/compiler";` per poder compilar en temps d'execució en l'aplicació.
+It is important to add the `import "@angular/compiler";` to be able to compile at runtime in the application.
 
-En el fitxer `ng-package.json` s'ha de modificar l'entrada de la llibreria a _entryFile_ i eliminar el camp `dest`. 
+In the `ng-package.json` file the library entry must be modified to _entryFile_ and remove the `dest` field.
 
 ```json
 {
@@ -226,13 +226,13 @@ En el fitxer `ng-package.json` s'ha de modificar l'entrada de la llibreria a _en
 
 
 
-## Importar plugins en el sandbox
+## Import plugins in the sandbox
 
-### Declarar la definició d'importació de plugins
+### Declare the plugin import definition
 
-Crearem un fitxer amb les definicions dels plugins amb els seus importadors.
-Aquí li indicarem la id de plugin i el seu mètode de càrrega.
-Per a això, crearem el fitxer `plugins.ts` a la carpeta src de l'arrel:
+We will create a file with the plugin definitions with their importers.
+Here we will indicate the plugin id and its loading method.
+For this, we will create the `plugins.ts` file in the src folder of the root:
 
 ```typescript
 import { PluginDefinition, Plugin } from "@uxland/primary-shell";
@@ -241,12 +241,12 @@ const importer: () => Promise<Plugin> = () => import("../projects/my-plugin/src/
 export const plugins: PluginDefinition[] = [{ pluginId: "angular-plugin", importer: importer}]
 ```
 
-Això importarà el plugin via el fitxer d'entrada (`projects/my-plugins/src/plugin`) creat prèviament.
+This will import the plugin via the entry file (`projects/my-plugins/src/plugin`) created previously.
 
-### Executar l'arrencada de plugins
+### Execute plugin bootstrap
 
-Cridarem a la funció d'arrencada de plugins. 
-Ho farem cridant a la funció _bootstrapPlugins_ en el `main.ts`, passant com a paràmetre les definicions de importacions (`src/plugins.ts`). 
+We will call the plugin bootstrap function.
+We will do it by calling the _bootstrapPlugins_ function in `main.ts`, passing as parameter the import definitions (`src/plugins.ts`).
 
 ```javascript
 import { bootstrapPlugins, initializeShell } from "@uxland/primary-shell";
@@ -257,7 +257,7 @@ const initializeSandboxApp = (sandbox: HTMLElement) => {
     try {
         if (sandbox) {
             initializeShell(sandbox);
-            bootstrapPlugins(plugins); // Cridem a la funció d'inicialització de tots els plugins
+            bootstrapPlugins(plugins); // Call the initialization function of all plugins
         }
     }
     catch (error) {
@@ -268,41 +268,41 @@ const initializeSandboxApp = (sandbox: HTMLElement) => {
 //...
 ```
 
-Ara hauriem de veure el log de consola una vegada hagi carregat el plugin.
+Now we should see the console log once the plugin has loaded.
 
 ![](https://t9012015559.p.clickup-attachments.com/t9012015559/f283f009-d22b-4b17-9973-0b5a180bfc71/image.png)
 
 
 
-# Injectar vistes
+# Inject views
 
-Ara que sabem que el plugin està inicialitzat correctament, crearem un component i l'injectarem a la regió principal utilitzant el `regionManager` que ens proporciona l'api.
-  
+Now that we know the plugin is initialized correctly, we will create a component and inject it into the main region using the `regionManager` that the api provides us.
 
-### Crear vista:
 
-#### Crear component 
-Crear un component amb el CLI d'Angular
+### Create view:
+
+#### Create component
+Create a component with Angular CLI
 ```verilog
 ng generate component MainView --project my-plugin --view-encapsulation ShadowDom
 ```
 
-Això generarà un component d'Angular, amb la vista encapsulada en un ShadowDom, com indica.
+This will generate an Angular component, with the view encapsulated in a ShadowDom, as indicated.
 
-#### Convertir en vista
-Es crearà una carpeta anomenada `views`, i mourem el component `main-view` a la carpeta `views`. 
+#### Convert to view
+A folder called `views` will be created, and we will move the `main-view` component to the `views` folder.
 
-### Crear aplicació Angular:
+### Create Angular application:
 
-A diferència d'altres frameworks com Lit, React... Angular requereix una instància d'aplicació, crearem la instància en el  `plugin.ts`
-  
+Unlike other frameworks like Lit, React... Angular requires an application instance, we will create the instance in the `plugin.ts`
+
 
 ```javascript
-import { createApplication } from "@angular/platform-browser"; // Afegir aquest import
+import { createApplication } from "@angular/platform-browser"; // Add this import
 import { PrimariaApi } from "@uxland/primary-shell";
 
 export const initialize = (api: PrimariaApi) => {
-    createApplication().then(() => console.log("Angular application created")); // Afegir aquesta linea
+    createApplication().then(() => console.log("Angular application created")); // Add this line
     console.log(`Plugin ${api.pluginInfo.pluginId} initialized`);
 
     return Promise.resolve();
@@ -310,9 +310,9 @@ export const initialize = (api: PrimariaApi) => {
 //...
 ```
 
-### Crear factoria de vista:
+### Create view factory:
 
-Crearem una factoria de vista, per poder registrar la vista principal. Crearem un fitxer `factory.ts` a la carpeta de la vista `main-view` on declararem la factoria:
+We will create a view factory, to be able to register the main view. We will create a `factory.ts` file in the `main-view` view folder where we will declare the factory:
 
 ```typescript
 import { ApplicationRef, NgZone, Type } from "@angular/core";
@@ -327,15 +327,15 @@ const viewAngularFactory = <C>(app: ApplicationRef, component: Type<C>): () => P
   export const viewFactory = (app:ApplicationRef)  => viewAngularFactory(app, MainViewComponent);
 ```
 
-## Injectar la vista a la regio principal
+## Inject the view to the main region
 
-Després, per un costat registrarem una vista a la regió principal i per altre costat farem el mateix a la regió de navegació.
+Then, on one hand we will register a view to the main region and on the other hand we will do the same to the navigation region.
 
-Per a això, utilitzarem el `regionManager` que ens proporciona l'api.
+To do this, we will use the `regionManager` that the api provides us.
 
-Utilitzarem el mètode `registerMainView` del `regionManager` passant-li la factoria de vista. 
+We will use the `registerMainView` method of the `regionManager` passing it the view factory.
 
-Canviarem també la funció dispose perquè elimini la vista quan es desactivi el plugin. Per a això accedirem a les regions del shell que ens dona l'api i utilitzarem la regió main. Com a segon argument li passarem la id de la vista que volem eliminar. Com que voldrem eliminar la vista registrada amb la funció `registerMainView`, li passarem aquella mateixa id:
+We will also change the dispose function so it removes the view when the plugin is deactivated. To do this we will access the shell regions that the api gives us and use the main region. As the second argument we will pass the id of the view we want to remove. Since we will want to remove the view registered with the `registerMainView` function, we will pass it that same id:
 
 
 ```typescript
@@ -346,23 +346,23 @@ import { viewFactory } from "./views/main-view/factory";
 export const initialize = (api: PrimariaApi) => {
     createApplication().then((app) => {
         api.regionManager.registerMainView({
-          id: "plugin-main-view", // Aquí declarem la id de la vista
-          factory: viewFactory(app), 
-        }); //Registrem la vista a la regio main amb la factoria declarada
+          id: "plugin-main-view", // Here we declare the view id
+          factory: viewFactory(app),
+        }); //Register the view to the main region with the declared factory
       });
     return Promise.resolve();
 };
 
 export const dispose = (api: PrimariaApi) => {
   const main = api.regionManager.regions.shell.main;
-  api.regionManager.removeView(main, "plugin-main-view"); // Aquí utilitzem la id de la vista del main que volem eliminar
+  api.regionManager.removeView(main, "plugin-main-view"); // Here we use the id of the main view we want to remove
   return Promise.resolve();
 }
 ```
 
-### Altres exemples d'injecció de vistes: menú navegació 
-  
-Per afegir una vista del plugin en el menú lateral de navegació utilitzarem el mètode registerView del `regionManager`. En aquest cas, a la factoria li passarem una instància de la classe `PrimariaNavItem` importada del shell (_@uxland/primary-shell_), a la mateixa vegada, li passarem un objecte de configuració que tindrá la propietat "icon" amb el literal de la icona a mostrar, "label" amb el títol que es mostrarà en el menú i "callbackFn" amb la callback que activarà la vista registrada en main al clicar l'ítem del menú:
+### Other view injection examples: navigation menu
+
+To add a plugin view in the side navigation menu we will use the registerView method of the `regionManager`. In this case, we will pass the factory an instance of the `PrimariaNavItem` class imported from the shell (_@uxland/primary-shell_), at the same time, we will pass it a configuration object that will have the "icon" property with the icon literal to display, "label" with the title that will be displayed in the menu and "callbackFn" with the callback that will activate the view registered in main when clicking the menu item:
 
 
 ```typescript
@@ -391,26 +391,26 @@ export const initialize = (api: PrimariaApi) => {
 //...
 ```
 
-Arribats a aquest punt, en el navegador veurem el següent:
+At this point, in the browser we will see the following:
 
-  
+
 
 ![](../../../static/img/pluginAngular2.png)
 
-En aquest punt, si es necessita integrar-se amb qualsevol part del plugin de Seguiment Clínic, es requerirà afegir l'arxiu compilat del plugin en el Sandbox. Per incloure'l, s'ha d'afegir l'import del plugin a l'arxiu `plugins.ts`. Aquest import es podrà obtenir directament del repositori de demo que es mostra al final. 
-D'aquesta manera, la vista que es visualitzaria si s'incorpora el plugin de Seguiment Clínic seria la següent:
+At this point, if integration with any part of the Clinical Follow-up plugin is needed, it will be required to add the compiled plugin file in the Sandbox. To include it, the plugin import must be added to the `plugins.ts` file. This import can be obtained directly from the demo repository shown at the end.
+This way, the view that would be displayed if the Clinical Follow-up plugin is incorporated would be the following:
 
 ![](../../../static/img/pluginAngular2.1.png)
 
-I en clicar en el botó "Angular plugin", veurem el nostre plugin funcionant i mostrat a la regió principal:
+And when clicking the "Angular plugin" button, we will see our plugin working and displayed in the main region:
 
-  
+
 ![](../../../static/img/pluginAngular3.png)
 
 
 
-Enhorabona, has implementat el teu primer plugin a Harmonix!
+Congratulations, you have implemented your first plugin in Harmonix!
 
-Pots veure un repositori d'exemple on s'implementa un plugin amb Angular:
+You can see an example repository where a plugin is implemented with Angular:
 
 [https://stackblitz.com/~/github.com/uxland/harmonix-angular-plugin-demo](https://stackblitz.com/~/github.com/uxland/harmonix-angular-plugin-demo)

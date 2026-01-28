@@ -4,12 +4,12 @@ sidebar_position: 1
 
 # Intro
 
-El següent document és una guia d'instal·lació de l'entorn de desenvolupament d'un plugin d'Harmonix (HxPlugin) en Angular i la inicialització bàsica d'un **HxPlugin**.
+The following document is an installation guide for the development environment of a Harmonix plugin (HxPlugin) in Angular and the basic initialization of an **HxPlugin**.
 
-  
 
-Els plugins d'Harmonix desenvolupats en Angular tenen certes limitacions. Veure la secció `Limitacions Angular a Harmonix`.
 
-  
+Harmonix plugins developed in Angular have certain limitations. See the `Angular Limitations in Harmonix` section.
 
-L'exemple següent s'explicarà fent servir el Shell de l'ETC de Primària com exemple, però és extrapol·lable a qualsevol altre shell. Tot Shell ha de ser publicat i consumible per un plugin.
+
+
+The following example will be explained using the Primary ETC Shell as an example, but it is extrapolatable to any other shell. Every Shell must be published and consumable by a plugin.

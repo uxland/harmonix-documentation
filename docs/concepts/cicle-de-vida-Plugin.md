@@ -2,54 +2,54 @@
 sidebar_position: 4
 ---
 
-# Cicle de vida d'un Plugin
+# Plugin Lifecycle
 
-# Introducció
+# Introduction
 
-Un plugin és una llibreria/paquet de Node.js que exporta almenys una funció `initialize` que rep una API de plugin per a connectar components a una instància de Harmonix Shell que l'allotja.
+A plugin is a Node.js library/package that exports at least one `initialize` function that receives a plugin API to connect components to a Harmonix Shell instance that hosts it.
 
-El cicle de vida d'un plugin existeix en dues categories diferents:
+The lifecycle of a plugin exists in two different categories:
 
-*   **Cicle de vida offline**, és a dir, tot el que fa referència al desenvolupament, manteniment i provisionament d'un plugin.
-*   **Cicle de vida online**, és a dir, tot el que fa referència a carregar i avaluar un plugin dins d'una aplicació shell.
-
-<br/>
-
-# Cicle de Vida Offline
-
-El cicle de vida offline consisteix en:
-
-1. Inicialització/Estructuració
-2. Desenvolupament i proves
-3. Publicació
-4. Manteniment
-5. Actualitzacions
-6. Desaprovació
-7. Desactivació
-
-  
-
-Mentre que les fases (1), (2) i (4) són purament locals, les fases (3), (5), (6) i (7) implicaran el servei de Plugin Store. Un servei de Plugin Store hauria de donar suport a totes aquestes accions. Normalment, a la fase (3) també es pot fer un desplegament progressiu, que implicaria començar només amb un subconjunt d'usuaris fins que el plugin arribi al nivell de maduresa desitjat.
-
+*   **Offline lifecycle**, that is, everything related to the development, maintenance and provisioning of a plugin.
+*   **Online lifecycle**, that is, everything related to loading and evaluating a plugin within a shell application.
 
 <br/>
 
-# Cicle de Vida Online
+# Offline Lifecycle
 
-El cicle de vida online descriu què passa quan un plugin s'ha d'integrar en una aplicació shell. Tenim:
+The offline lifecycle consists of:
 
-1. Carrega
-2. Avaluació
-3. Configuració
-4. Renderització
-5. Desmuntatge
+1. Initialization/Structuring
+2. Development and testing
+3. Publication
+4. Maintenance
+5. Updates
+6. Deprecation
+7. Deactivation
 
-  
 
-En la fase (1) es fa una petició al servei de Plugin Store i es recupera el script.
 
-A la fase (2) s'avalua el script.
+While phases (1), (2) and (4) are purely local, phases (3), (5), (6) and (7) will involve the Plugin Store service. A Plugin Store service should support all these actions. Normally, phase (3) can also involve a progressive deployment, which would mean starting with only a subset of users until the plugin reaches the desired maturity level.
 
-A la fase (3) s'executarà la funció de configuració necessària. En la fase de renderització (4) tots els components registrats de la fase (3) apareixeran a l'aplicació quan siguin necessaris.
 
-A la fase (5) s'executarà la funció opcional de desmuntatge.
+<br/>
+
+# Online Lifecycle
+
+The online lifecycle describes what happens when a plugin needs to be integrated into a shell application. We have:
+
+1. Loading
+2. Evaluation
+3. Configuration
+4. Rendering
+5. Unmounting
+
+
+
+In phase (1) a request is made to the Plugin Store service and the script is retrieved.
+
+In phase (2) the script is evaluated.
+
+In phase (3) the necessary configuration function will be executed. In the rendering phase (4) all registered components from phase (3) will appear in the application when needed.
+
+In phase (5) the optional unmounting function will be executed.

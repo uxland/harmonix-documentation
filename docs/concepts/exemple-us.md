@@ -2,21 +2,21 @@
 sidebar_position: 6
 ---
 
-# Exemple d'ús d'una aplicació basada en Harmonix - Primaria Shell
+# Example use of a Harmonix-based application - Primaria Shell
 
-# Visió ràpida Shell
+# Quick Shell Overview
 
-Per explicar el funcionament d'**Harmonix** i com es pot construir una app composta de diferents plugins desenvolupada en diferents tecnologies i per diferents clients, explicarem un exemple de com funciona l'aplicació de l'Estació de treball de Primària.
+To explain how **Harmonix** works and how you can build an app composed of different plugins developed in different technologies and by different clients, we will explain an example of how the Primary Workstation application works.
 
-  
 
-Primer de tot, existeix **Harmonix**, el motor principal capaç d'obtenir i unir tots aquests plugins, dotar-los amb funcionalitats per interactuar entre ells i composant així l'aplicació final.
 
-  
+First of all, there is **Harmonix**, the main engine capable of obtaining and joining all these plugins, providing them with functionalities to interact with each other and thus composing the final application.
 
-Segon, existeix el "**Shell**", que serà l'aplicació principal i qui mitjançant Harmonix, definirà un esquelet amb regions on els plugins podran injectar diferents Web Components. Cada aplicació ha de construir un Shell diferent, ja que cadascuna tindrà un esquelet i una forma de treballar propis. En el cas de primària, tenim el "Primaria Shell". El shell, per si sol, no és més que un conjunt de contenidors, un esquelet buit. Si veiéssim el shell abans d'iniciar els plugins, veuríem quelcom semblant a això:
 
-  
+
+Second, there is the "**Shell**", which will be the main application and which through Harmonix, will define a skeleton with regions where plugins can inject different Web Components. Each application must build a different Shell, as each one will have its own skeleton and way of working. In the case of primary care, we have the "Primaria Shell". The shell, by itself, is nothing more than a set of containers, an empty skeleton. If we saw the shell before starting the plugins, we would see something similar to this:
+
+
 
 ```typescript
 <primaria-shell>
@@ -29,43 +29,43 @@ Segon, existeix el "**Shell**", que serà l'aplicació principal i qui mitjança
 
 <br/>
 
-# Visió ràpida Plugin
+# Quick Plugin Overview
 
-I per acabar, tenim els "**plugins**", que no són més que paquets que desenvolupa un 3r, que es compilen, i que un cop publicats a un "Plugin Store" , estan llestos per ser consumits pel Shell.
+And finally, we have the "**plugins**", which are nothing more than packages developed by a 3rd party, which are compiled, and once published to a "Plugin Store", are ready to be consumed by the Shell.
 
-  
 
-Cada plugin, necessita compilar-se i fer un bundle, generant un arxiu JavaScript, per exemple:
+
+Each plugin needs to be compiled and bundled, generating a JavaScript file, for example:
 
 **_plugin1-version-23.45.js._**
 
-  
 
-Aquests plugins, en el seu Javascript necessiten definir un **punt d'entrada** per iniciar el seu cicle de vida. En aquest punt d'iniciació, cada plugin rep un objecte provinent del Shell, anomenat **api**. Amb aquesta API, el plugin té tot el necessari per funcionar dins del Shell. Per exemple, té una forma per registrar cada component a cada regió que s'hagi definit (menú, header, main, footer). Té una forma per escoltar events que un altre plugin hagi pogut comunicar, o un client HTTP per fer crides a un backend, o una forma per ensenyar un missatge de notificació en pantalla, entre moltes altres coses. Això serà un exemple de punt d'entrada d'un plugin
 
-  
+These plugins, in their Javascript, need to define an **entry point** to start their lifecycle. At this initialization point, each plugin receives an object from the Shell, called **api**. With this API, the plugin has everything it needs to function within the Shell. For example, it has a way to register each component to each region that has been defined (menu, header, main, footer). It has a way to listen to events that another plugin may have communicated, or an HTTP client to make calls to a backend, or a way to show a notification message on screen, among many other things. This would be an example of a plugin entry point:
+
+
 
 ```typescript
 export const initialize = (api: PrimariaApi) =>{
 
-  //registre de Web Components a l'esquelet del Shell primària
+  //registration of Web Components to the Primaria Shell skeleton
   api.registerView(shellRegions.menu, ())=> new Plugin1MenuWebComponent());
   api.registerView(shellRegions.header, ()=> new Plugin1HeaderWebComponent);
   api.registerView(shellRegions.footer, ()=> new Plugin1FooterWebComponent());
   api.registerView(shellRegions.main, ()=> new Plugin1MainWebComponent());
 
-  //fer una crida per obtenir dades del meu plugin
+  //make a call to get data from my plugin
   api.httpClient.request(`${apiUrl}/get-plugin-data`).then((res: any) => { console.log(res) });
 }
 ```
 
 <br/>
 
-# Visió ràpida Shell + Plugins
+# Quick Shell + Plugins Overview
 
-Un cop el Shell i el framework Harmonix ha donat l'ordre d'iniciar els plugins, l'esquelet del Shell passa d'estar buit, a ser ja una aplicació composta per molts Web Components. Si ara veiem com està el DOM, seria quelcom així:
+Once the Shell and the Harmonix framework have given the order to start the plugins, the Shell skeleton goes from being empty to being an application composed of many Web Components. If we now see how the DOM looks, it would be something like this:
 
-  
+
 
 ```typescript
 <primaria-shell>
@@ -92,10 +92,10 @@ Un cop el Shell i el framework Harmonix ha donat l'ordre d'iniciar els plugins, 
   </primaria-shell>
 ```
 
-  
 
-Com es pot comprovar, el plugin1 i el plugin2, han sigut capaços mitjançant l'API rebuda en el seu punt inicial, de registrar diferents Web Components en diferents regions. Ara l'aplicació Shell ja és plena.
 
-  
+As you can see, plugin1 and plugin2 have been able, through the API received at their initial point, to register different Web Components in different regions. Now the Shell application is full.
 
-En els equips de desenvolupament se'ls hi proporciona un Sandbox per simular una aplicació on s'instal·la el "Primaria Shell", d'aquesta manera poden treballar individualment i veure com quedarà el seu plugin.
+
+
+Development teams are provided with a Sandbox to simulate an application where the "Primaria Shell" is installed, so they can work individually and see how their plugin will look.

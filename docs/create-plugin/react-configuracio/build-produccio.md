@@ -2,12 +2,12 @@
 sidebar_position: 3
 ---
 
-# Compilació plugin
+# Plugin compilation
 
-# Configuració vite
+# Vite configuration
 
-La configuració de l'arxiu `vite.config.ts` defineix com a externes les dependències "react", "react-dom" i "@uxland/primary-shell", indicant que no s'han d'incloure en el paquet final. I s'inclou la definició de `inlineDynamicImports: true`, que força a incloure totes les importacions dinàmiques en un únic arxiu.
-Això és necessari per evitar la duplicitat de dependències grans o comunes en el paquet i reduïr el tamany de l'arxiu final, assegurant que els plugins comparteixin aquestes dependències en comptes d'incloure-les per duplicat. D'aquesta manera es té un sol arxiu de sortida:
+The configuration of the `vite.config.ts` file defines as external the dependencies "react", "react-dom" and "@uxland/primary-shell", indicating that they should not be included in the final package. And the definition of `inlineDynamicImports: true` is included, which forces to include all dynamic imports in a single file.
+This is necessary to avoid duplication of large or common dependencies in the package and reduce the size of the final file, ensuring that plugins share these dependencies instead of including them duplicated. This way you have a single output file:
 
 ```typescript
 import { defineConfig, loadEnv } from "vite";
@@ -43,15 +43,15 @@ export default ({ mode }) => {
 };
 ```
 
-A aquest últim concepte d'unitat d'arxiu, també s'hi suma la definició de `manualChunks: undefined`, que en establir-se com a _undefined_, el que es fa és desactivar la funcionalitat de dividir els mòduls en diferents fragments.
+To this last concept of file unit, we also add the definition of `manualChunks: undefined`, which when set as _undefined_, what it does is disable the functionality of dividing modules into different fragments.
 
 
 <br/>
 
-# Build per producció
+# Production build
 
-Una vegada es té el plugin finalitzat, s'ha de preparar per a poder-lo desplegar a la Plugin Store.
-Per generar el paquet final del plugin, s'han d'executar aquestes dues comandes següents:
+Once the plugin is finished, it must be prepared to be deployed to the Plugin Store.
+To generate the final plugin package, these two following commands must be executed:
 
 <br/>
 
@@ -62,15 +62,10 @@ npm run vite build
 
 <br/>
 
-Seguidament es crea automàticament la carpeta _dist_. Dins aquesta carpeta, l'arxiu `index.js` és el que s'haurà de pujar a la Plugin Store.
+Next, the _dist_ folder is automatically created. Inside this folder, the `index.js` file is the one that must be uploaded to the Plugin Store.
 
 
 ![](../../../static/img/directory.png)
 
 
 <br/>
-
-
-
-
-
