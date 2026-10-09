@@ -1,0 +1,46 @@
+---
+sidebar_position: 5
+---
+
+# Framework notes
+
+A region only receives HTML elements. Each framework has its own way of turning its components into one, and a few things to keep in mind.
+
+## All frameworks
+
+- **Encapsulate the styles.** Views live inside the shell, next to the views of other plugins. Render them in their own shadow DOM so that their styles do not leak out and the shell styles do not leak in. The three templates already do it. CSS custom properties, like the shell's `--hx-*` colors, do go through the shadow DOM: that is how views can use them.
+- **No routing.** A plugin does not own the URL: the shell decides what is shown. To move between views, activate them with the `regionManager` (`activateMainView`, `activateView`).
+- **The framework version is the application's.** The plugin bundle does not include the framework: it uses the one the application provides. Develop with the same major version the application uses.
+- **Clean up in `dispose`.** Remove the views, dispose the broker subscriptions and stop timers, so that the plugin can be unloaded and loaded again without leaving anything behind.
+
+## React
+
+React components are turned into web components with `wrapReactViewFactory`, from [`@uxland/harmonix-adapters`](https://www.npmjs.com/package/@uxland/harmonix-adapters):
+
+```typescript
+wrapReactViewFactory(MainView, styles, { fullHeight: true })({ api });
+```
+
+- The first argument is the component; the second, its CSS as a string (the template imports it with `?inline`), which is applied inside the component's shadow DOM; the third, options (`fullHeight` makes the view take the whole height of the region).
+- The returned function receives the component props. The template passes it the API.
+- Each view is a separate React root. To share state between views of the same plugin, keep it outside the components (a store, a context created in `plugin.ts`…) or use the broker.
+
+## Lit
+
+Lit components are already web components: the factory only has to create one and give it its properties.
+
+```typescript
+factory: async () => Object.assign(new MainView(), { api }),
+```
+
+- The template uses decorators (`@customElement`, `@property`, `@state`), so `tsconfig.json` has `experimentalDecorators` enabled and `useDefineForClassFields` disabled.
+- Use a tag name prefixed with the plugin id (`my-plugin-main-view`): custom element names are global, and two plugins cannot define the same one.
+- In development, the console may show *Multiple versions of Lit loaded*: the region library uses its own version of Lit. It does not affect the plugin.
+
+## Angular
+
+- **One Angular application per plugin.** `plugin.ts` creates it with `createApplication` in `initialize` and destroys it in `dispose`. Its providers are the plugin's.
+- **Components as views.** `angular-view.ts` creates the component in that application, sets its inputs and returns its element. Use it for every view you register.
+- **`ViewEncapsulation.ShadowDom`** in every view component, for the reasons above.
+- **Zoneless.** The template does not use Zone.js (`provideZonelessChangeDetection`), so that the plugin does not depend on what the application loads. Keep the view state in signals (`signal`, `input`): Angular updates the view when they change, also when the change comes from the broker.
+- **Two-step build**: ng-packagr and Vite (see [Build and publish](./build-and-publish.mdx)).

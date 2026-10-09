@@ -25,9 +25,9 @@ export const HeroSection: React.FC = () => {
               </Link>
               <Link
                 className={styles.playgroundButton}
-                to="https://stackblitz.com/~/github.com/uxland/harmonix-react-plugin-demo">
-                <Translate id="hero.playground" description="Playground button in hero">
-                  PLAYGROUND
+                to="/docs/create-plugin/create-a-plugin">
+                <Translate id="hero.createPlugin" description="Create a plugin button in hero">
+                  CREATE A PLUGIN
                 </Translate>
               </Link>
             </div>

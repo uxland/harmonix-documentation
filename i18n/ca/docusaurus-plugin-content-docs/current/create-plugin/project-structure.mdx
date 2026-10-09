@@ -1,0 +1,305 @@
+---
+sidebar_position: 2
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Estructura del projecte
+
+El creador genera un projecte petit amb tres parts, sigui quin sigui el framework:
+
+1. **El plugin** (`plugin.ts`): el que es construeix i es publica. Exporta `initialize` i `dispose`.
+2. **Les seves vistes**: els components que el plugin injecta a les regions del shell.
+3. **El sandbox** (`src/sandbox.ts`): inicia el shell de demostració amb el teu plugin. Només es fa servir en desenvolupament i no forma part del plugin.
+
+<Tabs groupId="framework">
+  <TabItem value="react" label="React" default>
+
+```text
+my-plugin/
+├── index.html                ← development page
+├── src/
+│   ├── plugin.ts             ← initialize and dispose
+│   ├── sandbox.ts            ← starts the shell (dev only)
+│   └── views/
+│       ├── main-view.tsx     ← a React component
+│       └── main-view.css
+├── vite.config.ts            ← npm run dev / npm run build
+├── tsconfig.json
+└── package.json
+```
+
+  </TabItem>
+  <TabItem value="lit" label="Lit">
+
+```text
+my-plugin/
+├── index.html                ← development page
+├── src/
+│   ├── plugin.ts             ← initialize and dispose
+│   ├── sandbox.ts            ← starts the shell (dev only)
+│   └── views/
+│       ├── main-view.ts      ← a Lit component
+│       └── main-view.css
+├── vite.config.ts            ← npm run dev / npm run build
+├── tsconfig.json
+└── package.json
+```
+
+  </TabItem>
+  <TabItem value="angular" label="Angular">
+
+```text
+my-plugin/
+├── src/                      ← dev application
+│   ├── index.html
+│   └── sandbox.ts            ← starts the shell
+├── projects/my-plugin/       ← the plugin (a library)
+│   └── src/
+│       ├── plugin.ts         ← initialize and dispose
+│       └── views/
+│           ├── angular-view.ts  ← component → view
+│           ├── main-view.component.ts
+│           ├── main-view.component.html
+│           └── main-view.component.css
+├── angular.json              ← app and library
+├── vite.config.ts            ← 2nd build step
+├── tsconfig.json, tsconfig.app.json
+└── package.json
+```
+
+La carpeta `projects/my-plugin` conserva aquest nom sigui quin sigui el nom del teu plugin: és un nom intern del projecte. L'id del plugin s'estableix a `src/sandbox.ts` i al `package.json`.
+
+  </TabItem>
+</Tabs>
+
+## El plugin: `plugin.ts`
+
+És el punt d'entrada del plugin, l'únic fitxer que coneix el shell. El shell crida `initialize` quan carrega el plugin i `dispose` quan el descarrega, cada vegada amb una **API** pròpia (consulta [el shell de demostració](./demo-shell.md)).
+
+<Tabs groupId="framework">
+  <TabItem value="react" label="React" default>
+
+```typescript title="src/plugin.ts"
+import { wrapReactViewFactory } from "@uxland/harmonix-adapters";
+import type { DemoShellApi } from "@uxland/harmonix-demo-shell";
+import { MainView } from "./views/main-view";
+import styles from "./views/main-view.css?inline";
+
+export const initialize = async (api: DemoShellApi) => {
+  // A view in the `main` region: a React component rendered inside a web component.
+  await api.regionManager.registerMainView({
+    id: "main",
+    factory: () => wrapReactViewFactory(MainView, styles, { fullHeight: true })({ api }),
+  });
+  // An item in the side menu that activates that view.
+  await api.regionManager.registerNavigationItem({ id: "menu", label: "My plugin", mainViewId: "main" });
+};
+
+export const dispose = async (api: DemoShellApi) => {
+  const { regions } = api.regionManager;
+  await api.regionManager.removeView(regions.sideMenu, "menu");
+  await api.regionManager.removeView(regions.main, "main");
+};
+```
+
+  </TabItem>
+  <TabItem value="lit" label="Lit">
+
+```typescript title="src/plugin.ts"
+import type { DemoShellApi } from "@uxland/harmonix-demo-shell";
+import { MainView } from "./views/main-view";
+
+export const initialize = async (api: DemoShellApi) => {
+  // A view in the `main` region: any HTML element, here a Lit component.
+  await api.regionManager.registerMainView({
+    id: "main",
+    factory: async () => Object.assign(new MainView(), { api }),
+  });
+  // An item in the side menu that activates that view.
+  await api.regionManager.registerNavigationItem({ id: "menu", label: "My plugin", mainViewId: "main" });
+};
+
+export const dispose = async (api: DemoShellApi) => {
+  const { regions } = api.regionManager;
+  await api.regionManager.removeView(regions.sideMenu, "menu");
+  await api.regionManager.removeView(regions.main, "main");
+};
+```
+
+  </TabItem>
+  <TabItem value="angular" label="Angular">
+
+```typescript title="projects/my-plugin/src/plugin.ts"
+import { type ApplicationRef, provideZonelessChangeDetection } from "@angular/core";
+import { createApplication } from "@angular/platform-browser";
+import type { DemoShellApi } from "@uxland/harmonix-demo-shell";
+import { angularView } from "./views/angular-view";
+import { MainViewComponent } from "./views/main-view.component";
+
+/** The Angular application that renders this plugin's views. */
+let app: ApplicationRef | undefined;
+
+export const initialize = async (api: DemoShellApi) => {
+  app = await createApplication({ providers: [provideZonelessChangeDetection()] });
+  // A view in the `main` region: an Angular component rendered as an HTML element.
+  await api.regionManager.registerMainView({ id: "main", factory: angularView(app, MainViewComponent, { api }) });
+  // An item in the side menu that activates that view.
+  await api.regionManager.registerNavigationItem({ id: "menu", label: "My plugin", mainViewId: "main" });
+};
+
+export const dispose = async (api: DemoShellApi) => {
+  const { regions } = api.regionManager;
+  await api.regionManager.removeView(regions.sideMenu, "menu");
+  await api.regionManager.removeView(regions.main, "main");
+  app?.destroy();
+  app = undefined;
+};
+```
+
+  </TabItem>
+</Tabs>
+
+Què fa:
+
+- **Una vista** és un objecte amb un `id` i una `factory`: una funció asíncrona que retorna l'element HTML que s'ha de mostrar. El shell crida la factoria quan cal renderitzar la vista. Sigui quin sigui el framework, el shell només veu un element HTML.
+- `registerMainView` registra la vista a la regió `main`, i `registerNavigationItem` afegeix al menú lateral un element que l'activa. Totes dues són dreceres del shell sobre el genèric `registerView(region, view)`.
+- Els ids (`"main"`, `"menu"`) només han de ser únics dins del plugin: el shell desa les vistes com a `pluginId::viewId`, així que dos plugins poden fer servir els mateixos ids.
+- `dispose` desfà el que ha fet `initialize`. El shell pot descarregar i tornar a carregar plugins sense recarregar la pàgina, així que un plugin no ha de deixar res enrere (consulta les [bones pràctiques](../best-practices/best-practices.md)).
+
+## La vista
+
+La vista principal rep l'API des de `plugin.ts`, com qualsevol altre input, i la fa servir per parlar amb altres plugins a través del **broker**: el botó publica un esdeveniment `my-plugin:greeting` i la vista, que hi està subscrita, compta les salutacions que rep.
+
+<Tabs groupId="framework">
+  <TabItem value="react" label="React" default>
+
+```tsx title="src/views/main-view.tsx"
+const GREETING = "my-plugin:greeting";
+
+export const MainView = ({ api }: { api: DemoShellApi }) => {
+  const [greetings, setGreetings] = useState(0);
+
+  useEffect(() => {
+    const subscription = api.broker.subscribe(GREETING, () => setGreetings((count) => count + 1));
+    return () => subscription.dispose();
+  }, [api]);
+
+  return (
+    <section className="view">
+      {/* … */}
+      <button type="button" onClick={() => api.broker.publish(GREETING, { from: api.pluginInfo.pluginId })}>
+        Publish a greeting
+      </button>
+      <p className="result">Greetings received: {greetings}</p>
+    </section>
+  );
+};
+```
+
+  </TabItem>
+  <TabItem value="lit" label="Lit">
+
+```typescript title="src/views/main-view.ts"
+const GREETING = "my-plugin:greeting";
+
+@customElement("my-plugin-main-view")
+export class MainView extends LitElement {
+  @property({ attribute: false }) api!: DemoShellApi;
+  @state() private greetings = 0;
+  private subscription?: BrokerDisposableHandler;
+
+  connectedCallback() {
+    super.connectedCallback();
+    this.subscription = this.api.broker.subscribe(GREETING, () => {
+      this.greetings++;
+    });
+  }
+
+  disconnectedCallback() {
+    super.disconnectedCallback();
+    this.subscription?.dispose();
+  }
+
+  render() {
+    return html`
+      <!-- … -->
+      <button type="button" @click=${() => this.api.broker.publish(GREETING, { from: this.api.pluginInfo.pluginId })}>
+        Publish a greeting
+      </button>
+      <p class="result">Greetings received: ${this.greetings}</p>
+    `;
+  }
+}
+```
+
+  </TabItem>
+  <TabItem value="angular" label="Angular">
+
+```typescript title="projects/my-plugin/src/views/main-view.component.ts"
+const GREETING = "my-plugin:greeting";
+
+@Component({
+  selector: "my-plugin-main-view",
+  templateUrl: "./main-view.component.html",
+  styleUrl: "./main-view.component.css",
+  encapsulation: ViewEncapsulation.ShadowDom,
+})
+export class MainViewComponent implements OnInit {
+  readonly api = input.required<DemoShellApi>();
+  readonly greetings = signal(0);
+  private readonly destroyRef = inject(DestroyRef);
+
+  ngOnInit() {
+    const subscription = this.api().broker.subscribe(GREETING, () => {
+      this.greetings.update((count) => count + 1);
+    });
+    this.destroyRef.onDestroy(() => subscription.dispose());
+  }
+
+  publishGreeting() {
+    this.api().broker.publish(GREETING, { from: this.api().pluginInfo.pluginId });
+  }
+}
+```
+
+`angular-view.ts` converteix un component en la factoria que espera una regió: crea el component a l'aplicació d'Angular del plugin, n'assigna els inputs i en retorna l'element.
+
+```typescript title="projects/my-plugin/src/views/angular-view.ts"
+export const angularView =
+  <C>(app: ApplicationRef, component: Type<C>, inputs: Record<string, unknown> = {}) =>
+  async (): Promise<HTMLElement> => {
+    const ref = createComponent(component, { environmentInjector: app.injector });
+    for (const [name, value] of Object.entries(inputs)) ref.setInput(name, value);
+    app.attachView(ref.hostView);
+    return ref.location.nativeElement;
+  };
+```
+
+  </TabItem>
+</Tabs>
+
+Els estils de la vista fan servir els colors del shell a través de variables CSS, com ara `var(--hx-primary-text, #00756a)`, amb un valor alternatiu per si un altre shell carrega el plugin.
+
+## El sandbox: `src/sandbox.ts`
+
+Inicia el shell de demostració i carrega el teu plugin **des del codi font**, de manera que cada canvi que desis es recarrega. És l'únic lloc on s'estableix l'id del plugin:
+
+```typescript title="src/sandbox.ts"
+import { bootstrapPlugins, initializeShell } from "@uxland/harmonix-demo-shell";
+
+initializeShell(document.body, { title: "my-plugin" });
+await bootstrapPlugins([{ pluginId: "my-plugin", importer: () => import("./plugin") }]);
+```
+
+`bootstrapPlugins` rep una llista: per provar el teu plugin juntament amb d'altres, afegeix-los-hi. Una aplicació real fa el mateix, però obté la llista de plugins del Plugin Store.
+
+## La configuració
+
+| Fitxer | Què fa |
+| --- | --- |
+| `package.json` | Els scripts (`dev`, `build`, `typecheck`) i les dependències. `name` i `version` identifiquen el plugin quan el publiques, i `module` apunta al fitxer construït. |
+| `vite.config.ts` | React i Lit: `npm run dev` serveix `index.html`, i `npm run build` construeix només `src/plugin.ts`, deixant el framework i el shell fora del bundle. Angular: el segon pas de la construcció (consulta [Construir i publicar](./build-and-publish.mdx)). |
+| `angular.json` | Només Angular: l'aplicació `sandbox`, que serveix `npm run dev`, i la llibreria `my-plugin`. |
+| `tsconfig.json` | TypeScript. Lit hi activa els decoradors que necessita. |

@@ -24,7 +24,7 @@ sidebar_position: 2
 3. **Shell:** It is a skeleton formed by different regions on which developers can build and inject their plugins.
 4. **Region:** It is a defined space in the shell where different views defined by plugins can be injected. Regions can have different characteristics such as the ability to display one or more views simultaneously, as well as different adapters that alter their behavior.
 5. **View:** It is the instance of a component or set of components that on their own have a functional meaning. Views are injected into the different regions of the shell.
-6. **Sandbox.** It is a secure and isolated application for developing and testing plugins independently, separate from other modules. It operates as an application without plugins that mimics the actual Workstation application. It is part of the solution's development tooling.
+6. **Sandbox.** It is an isolated application for developing and testing plugins independently, separate from other modules: a shell with only the plugins being developed. It is part of the solution's development tooling. The [plugin creator](../create-plugin/create-a-plugin.mdx) sets one up with the [Harmonix demo shell](../create-plugin/demo-shell.md).
 7. **SDK (Software Development Kit)**: This is a set of tools that allows developers to create plugins and be able to integrate with the system, as well as interact with it and other plugins, if needed.
 8. **Plugin Store**: It is the place where all available plugins are published and stored for use. It functions as a repository of compiled bundles from which the application will obtain the necessary ones to compose the UI.
 

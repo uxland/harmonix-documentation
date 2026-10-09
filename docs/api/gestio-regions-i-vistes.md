@@ -36,7 +36,7 @@ Each plugin can declare different views and inject them to different regions.
 
 # API regions extension and "friendly" api creation
 
-However, each Shell can extend this api and create more "friendly" methods for plugins such as: `registerMainView`, `registerSidebarMenu`, where they only ask for the "view" object, and plugins no longer need to know the region name, since the method itself is already explicit about which region it is "main", "sidebar". You will find an example of this extension in section 1 of the [Primary ETC integration document](https://doc.clickup.com/9012015559/d/h/8cjgwe7-3532/b3a23bc489160e1).
+However, each Shell can extend this api and create more "friendly" methods for plugins such as: `registerMainView`, `registerSidebarMenu`, where they only ask for the "view" object, and plugins no longer need to know the region name, since the method itself is already explicit about which region it is "main", "sidebar". You will find an example of this extension in the [Harmonix demo shell](../create-plugin/demo-shell.md), with `registerMainView`, `activateMainView` and `registerNavigationItem`.
 
 
 <br/>
@@ -81,36 +81,38 @@ The most basic action is to **register** a view. To do this, we just need to cal
 
 
 
-However, some "helper" functions have been created so that injection is more declarative, such as `registerMainView` or `registerNavigationMenu`, where it will no longer be necessary to pass the region and the register function itself already explains where it will be injected, as we explained before.
+However, the shell can offer "helper" functions so that injection is more declarative. The [Harmonix demo shell](../create-plugin/demo-shell.md), for example, has `registerMainView`, where it is no longer necessary to pass the region, and `registerNavigationItem`, which adds an item to the side menu that activates a view of the `main` region when clicked.
 
 
 
-Similarly, we also inject the `PrimariaNavItem` into the side navigation menu region. This `PrimariaNavItem` will have the function of activating the `ExampleComponent` component view when clicked.
+The `activateMainView` function of the `regionManager` is in charge of selecting which is the active view in the main region. It needs as an argument the id of the view that was previously registered, in this case, "_plugin-main-view_". The ids only have to be unique within the plugin: the shell stores each view as `pluginId::viewId`.
 
 
 
-The `activateMainView` function of the `regionManager` is in charge of selecting which is the active view in the main region. It needs as an argument the id of the plugin that was previously registered, in this case, "_plugin-main-view_".
-
-
-
-Example:
+Example, with the demo shell:
 
 
 
 ```typescript
-export const initialize = (api: PrimariaApi) => {
+import type { DemoShellApi } from "@uxland/harmonix-demo-shell";
+
+export const initialize = async (api: DemoShellApi) => {
   console.log(`Plugin ${api.pluginInfo.pluginId} initialized`);
-  api.regionManager.registerMainView({
+
+  // Generic: a view in any region.
+  await api.regionManager.registerView(api.regionManager.regions.main, {
     id: "plugin-main-view",
-    factory: () =>  Promise.resolve(new ExampleComponent()) ,
+    factory: () => Promise.resolve(new ExampleComponent()),
   });
 
-  api.regionManager.registerNavigationMenu({
-    id: "plugin-quick-action",
-    factory: () => Promise.resolve(new PrimariaNavItem("add_circle_outline", "Lit plugin", () => {
-      api.regionManager.activateMainView("plugin-main-view")
-    })),
+  // Helper: an item in the side menu that activates that view.
+  await api.regionManager.registerNavigationItem({
+    id: "plugin-menu",
+    label: "Example",
+    mainViewId: "plugin-main-view",
   });
-  return Promise.resolve();
+
+  // Show it.
+  await api.regionManager.activateMainView("plugin-main-view");
 };
 ```

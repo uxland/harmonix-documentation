@@ -6,7 +6,7 @@ sidebar_position: 12
 
 # Desconectar correctamente el plugin
 
-En el ciclo de vida de un plugin, pasamos por 2 fases importantes; la **iniciación** (montaje) y la **desconexión** (desmontaje). Es importante que todo aquello que se haya hecho en el montaje del plugin (registrar vistas, suscribirse a eventos del broker de mensajes, crear contenedores de dependencias internos, etcétera), se **haga una desconexión limpia** para no dejar **ningún rastro en memoria** de tu plugin. Aunque, en la mayoría de los casos, el usuario cerrará el navegador y la aplicación de Primaria morirá en aquel instante, se pueden dar casos potenciales en que se hagan cosas como cambiar de paciente, renovar sesión, cambios de contexto, etcétera, que provoquen una nueva carga de plugins en caliente. Si no desconectamos bien nuestros plugins, podemos dejar en memoria piezas que pueden afectar el rendimiento **(memory leaks)**, o datos de otros pacientes **(mezcla de datos de pacientes)**.
+En el ciclo de vida de un plugin, pasamos por 2 fases importantes; la **iniciación** (montaje) y la **desconexión** (desmontaje). Es importante que todo aquello que se haya hecho en el montaje del plugin (registrar vistas, suscribirse a eventos del broker de mensajes, crear contenedores de dependencias internos, etcétera), se **haga una desconexión limpia** para no dejar **ningún rastro en memoria** de tu plugin. Aunque, en la mayoría de los casos, el usuario cerrará el navegador y la aplicación morirá en aquel instante, se pueden dar casos potenciales en que se hagan cosas como cambiar de paciente, renovar sesión, cambios de contexto, etcétera, que provoquen una nueva carga de plugins en caliente. Si no desconectamos bien nuestros plugins, podemos dejar en memoria piezas que pueden afectar el rendimiento **(memory leaks)**, o datos de otros pacientes **(mezcla de datos de pacientes)**.
 
 
 <br/>
@@ -24,7 +24,7 @@ En la función "_initialize_" que se debe implementar, es un buen punto para hac
 Ejemplo:
 
 ```typescript
-export const initialize = async (api: PrimariaApi) => {
+export const initialize = async (api: DemoShellApi) => {
   registerViews(api); //registro de vistas a regiones
   await initializeLocalization(api); //inicialización de las traducciones del plugin
   bootstrapFeatures(api); //inicialización de los casos de uso del plugin
@@ -76,4 +76,4 @@ Por lo tanto se recomienda que imágenes, iconos, fuentes, etcétera estén en e
 
 # Desconectar correctamente el plugin
 
-En el ciclo de vida de un plugin, pasamos por 2 fases importantes; la **iniciación** (montaje) y la **desconexión** (desmontaje). Es importante que todo aquello que se haya hecho en el montaje del plugin (registrar vistas, suscribirse a eventos del broker de mensajes, crear contenedores de dependencias internos, etcétera), se **haga una desconexión limpia** para no dejar **ningún rastro en memoria** de tu plugin. Aunque, en la mayoría de los casos, el usuario cerrará el navegador y la aplicación de Primaria morirá en aquel instante, se pueden dar casos potenciales en que se hagan cosas como cambiar de paciente, renovar sesión, cambios de contexto, etcétera, que provoquen una nueva carga de plugins en caliente. Si no desconectamos bien nuestros plugins, podemos dejar en memoria piezas que pueden afectar el rendimiento **(memory leaks)**, o datos de otros pacientes **(mezcla de datos de pacientes)**.
+En el ciclo de vida de un plugin, pasamos por 2 fases importantes; la **iniciación** (montaje) y la **desconexión** (desmontaje). Es importante que todo aquello que se haya hecho en el montaje del plugin (registrar vistas, suscribirse a eventos del broker de mensajes, crear contenedores de dependencias internos, etcétera), se **haga una desconexión limpia** para no dejar **ningún rastro en memoria** de tu plugin. Aunque, en la mayoría de los casos, el usuario cerrará el navegador y la aplicación morirá en aquel instante, se pueden dar casos potenciales en que se hagan cosas como cambiar de paciente, renovar sesión, cambios de contexto, etcétera, que provoquen una nueva carga de plugins en caliente. Si no desconectamos bien nuestros plugins, podemos dejar en memoria piezas que pueden afectar el rendimiento **(memory leaks)**, o datos de otros pacientes **(mezcla de datos de pacientes)**.

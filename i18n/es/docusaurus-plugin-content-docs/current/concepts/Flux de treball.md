@@ -12,7 +12,7 @@ Esto se consigue gracias a **la autonomía** de desarrollo de plugins, junto con
 
 
 
-El **flujo de desarrollo** pasa por una **primera fase de creación del Shell** basado en Harmonix, donde se declaran las regiones principales y se configuran las herramientas necesarias hasta que la aplicación se convierte en un estado de "**fábrica de plugins**". Es entonces cuando los desarrolladores pueden comenzar a crear plugins con el sandbox proporcionado y que irán a parar en este Shell.
+El **flujo de desarrollo** pasa por una **primera fase de creación del Shell** basado en Harmonix, donde se declaran las regiones principales y se configuran las herramientas necesarias hasta que la aplicación se convierte en un estado de "**fábrica de plugins**". Es entonces cuando los desarrolladores pueden comenzar a crear plugins que irán a parar a este Shell. El [creador de plugins](../create-plugin/create-a-plugin.mdx) les da un proyecto listo para desarrollar, que se ejecuta en el shell de demostración de Harmonix.
 
 
 

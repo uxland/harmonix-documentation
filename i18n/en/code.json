@@ -406,9 +406,9 @@
     "message": "GET STARTED",
     "description": "Get started button in hero"
   },
-  "hero.playground": {
-    "message": "PLAYGROUND",
-    "description": "Playground button in hero"
+  "hero.createPlugin": {
+    "message": "CREATE A PLUGIN",
+    "description": "Create a plugin button in hero"
   },
   "hero.subtitle.line1": {
     "message": "Building Faster,",

@@ -2,11 +2,11 @@
 sidebar_position: 6
 ---
 
-# Example use of a Harmonix-based application - Primaria Shell
+# Example use of a Harmonix-based application
 
 # Quick Shell Overview
 
-To explain how **Harmonix** works and how you can build an app composed of different plugins developed in different technologies and by different clients, we will explain an example of how the Primary Workstation application works.
+To explain how **Harmonix** works and how you can build an app composed of different plugins developed in different technologies and by different clients, we will use the [Harmonix demo shell](../create-plugin/demo-shell.md), the small shell that Harmonix provides to develop and try plugins.
 
 
 
@@ -14,17 +14,22 @@ First of all, there is **Harmonix**, the main engine capable of obtaining and jo
 
 
 
-Second, there is the "**Shell**", which will be the main application and which through Harmonix, will define a skeleton with regions where plugins can inject different Web Components. Each application must build a different Shell, as each one will have its own skeleton and way of working. In the case of primary care, we have the "Primaria Shell". The shell, by itself, is nothing more than a set of containers, an empty skeleton. If we saw the shell before starting the plugins, we would see something similar to this:
+Second, there is the "**Shell**", which will be the main application and which through Harmonix, will define a skeleton with regions where plugins can inject different Web Components. Each application must build a different Shell, as each one will have its own skeleton and way of working. The demo shell has three regions: a header, a side menu and the main content. The shell, by itself, is nothing more than a set of containers, an empty skeleton. If we saw the shell before starting the plugins, we would see something similar to this:
 
 
 
-```typescript
-<primaria-shell>
+```html
+<harmonix-demo-shell>
+  <header>
     <div id="header-region"></div>
-    <div id="menu-region"></div>
-    <div id="footer-region"></div>
+  </header>
+  <nav>
+    <div id="side-menu-region"></div>
+  </nav>
+  <main>
     <div id="main-region"></div>
-  </primaria-shell>
+  </main>
+</harmonix-demo-shell>
 ```
 
 <br/>
@@ -41,22 +46,24 @@ Each plugin needs to be compiled and bundled, generating a JavaScript file, for 
 
 
 
-These plugins, in their Javascript, need to define an **entry point** to start their lifecycle. At this initialization point, each plugin receives an object from the Shell, called **api**. With this API, the plugin has everything it needs to function within the Shell. For example, it has a way to register each component to each region that has been defined (menu, header, main, footer). It has a way to listen to events that another plugin may have communicated, or an HTTP client to make calls to a backend, or a way to show a notification message on screen, among many other things. This would be an example of a plugin entry point:
+These plugins, in their Javascript, need to define an **entry point** to start their lifecycle. At this initialization point, each plugin receives an object from the Shell, called **api**. With this API, the plugin has everything it needs to function within the Shell. For example, it has a way to register each component to each region that has been defined (header, side menu, main), or to publish and listen to events that other plugins may communicate. Each shell can add more services to its API: an HTTP client to make calls to a backend, a way to show a notification message on screen, among many other things. This would be an example of a plugin entry point:
 
 
 
 ```typescript
-export const initialize = (api: PrimariaApi) =>{
+import type { DemoShellApi } from "@uxland/harmonix-demo-shell";
 
-  //registration of Web Components to the Primaria Shell skeleton
-  api.registerView(shellRegions.menu, ())=> new Plugin1MenuWebComponent());
-  api.registerView(shellRegions.header, ()=> new Plugin1HeaderWebComponent);
-  api.registerView(shellRegions.footer, ()=> new Plugin1FooterWebComponent());
-  api.registerView(shellRegions.main, ()=> new Plugin1MainWebComponent());
+export const initialize = async (api: DemoShellApi) => {
+  const { regions } = api.regionManager;
 
-  //make a call to get data from my plugin
-  api.httpClient.request(`${apiUrl}/get-plugin-data`).then((res: any) => { console.log(res) });
-}
+  // registration of Web Components in the regions of the shell skeleton
+  await api.regionManager.registerView(regions.header, { id: "header", factory: async () => new Plugin1HeaderWebComponent() });
+  await api.regionManager.registerView(regions.sideMenu, { id: "menu", factory: async () => new Plugin1MenuWebComponent() });
+  await api.regionManager.registerView(regions.main, { id: "main", factory: async () => new Plugin1MainWebComponent() });
+
+  // tell the other plugins that this one is ready
+  await api.broker.publish("plugin1:ready", { pluginId: api.pluginInfo.pluginId });
+};
 ```
 
 <br/>
@@ -67,35 +74,41 @@ Once the Shell and the Harmonix framework have given the order to start the plug
 
 
 
-```typescript
-<primaria-shell>
+```html
+<harmonix-demo-shell>
+  <header>
     <div id="header-region">
-      <plugin1-header><h1>I'm Plugin 1</h1></plugin1-header>
-      <plugin2-header><h1>I'm Plugin 2</h1></plugin2-header>
+      <plugin1-header><span>I'm Plugin 1</span></plugin1-header>
+      <plugin2-header><span>I'm Plugin 2</span></plugin2-header>
     </div>
-    <div id="menu-region">
-      <plugin1-menu><span>Go to Plugin 1 Menu</span></plugin1-menu>
-      <plugin2-menu><span>Go to Plugin 2 Menu</span></plugin2-menu>
+  </header>
+  <nav>
+    <div id="side-menu-region">
+      <plugin1-menu><span>Go to Plugin 1</span></plugin1-menu>
+      <plugin2-menu><span>Go to Plugin 2</span></plugin2-menu>
     </div>
-    <div id="footer-region">
-      <plugin1-footer>Plugin 1 2024</plugin1-footer>
-      <plugin2-footer><h1>Plugin 2 2024</h1></plugin2-footer>
-    </div>
+  </nav>
+  <main>
     <div id="main-region">
       <plugin1-main>
         <div class="box">Plugin 1 Box main</div>
       </plugin1-main>
-      <plugin2-main>
+      <plugin2-main hidden>
         <div class="box">Plugin 2 Box main</div>
       </plugin2-main>
     </div>
-  </primaria-shell>
+  </main>
+</harmonix-demo-shell>
 ```
 
 
 
-As you can see, plugin1 and plugin2 have been able, through the API received at their initial point, to register different Web Components in different regions. Now the Shell application is full.
+As you can see, plugin1 and plugin2 have been able, through the API received at their initial point, to register different Web Components in different regions. Now the Shell application is full. The main region shows only one view at a time: the other one stays hidden until a menu item activates it.
 
 
 
-Development teams are provided with a Sandbox to simulate an application where the "Primaria Shell" is installed, so they can work individually and see how their plugin will look.
+![Two plugins in the demo shell](/img/create-plugin/demo-shell-regions.png)
+
+
+
+To develop a plugin, teams do not need the final application: the [plugin creator](../create-plugin/create-a-plugin.mdx) gives them a project that runs the plugin in the demo shell, so they can work individually and see how their plugin will look.

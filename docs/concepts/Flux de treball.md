@@ -12,7 +12,7 @@ This is achieved thanks to **plugin development autonomy**, together with the se
 
 
 
-The **development workflow** goes through a **first phase of creating the Shell** based on Harmonix, where the main regions are declared and the necessary tools are configured until the application becomes a "**plugin factory**" state. It is then when developers can start creating plugins with the provided sandbox that will end up in this Shell.
+The **development workflow** goes through a **first phase of creating the Shell** based on Harmonix, where the main regions are declared and the necessary tools are configured until the application becomes a "**plugin factory**" state. It is then when developers can start creating plugins that will end up in this Shell. The [plugin creator](../create-plugin/create-a-plugin.mdx) gives them a project ready to develop, running in the Harmonix demo shell.
 
 
 

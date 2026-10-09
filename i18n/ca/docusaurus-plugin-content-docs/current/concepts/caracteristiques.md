@@ -24,7 +24,7 @@ sidebar_position: 2
 3. **Shell:** És un esquelet format per diferents regions sobre el qual els desenvolupadors poden construir i injectar els seus plugins.
 4. **Regió:** És un espai definit al shell on poden injectar-se diferents vistes definides pels plugins. Les regions poden tenir característiques diferents com per exemple la capacitat de mostrar una o més d'una vista alhora, així com diferents adaptadors que alteren el seu comportament.
 5. **Vista:** És la instància d'un component o conjunt de components que per si sols tenen un sentit funcional. Les vistes s'injecten en les diferents regions del shell.
-6. **Sandbox.** És una aplicació segura i aïllada per desenvolupar i provar plugins de manera independent, separada dels altres mòduls. Opera com una aplicació sense plugins que imita l'aplicació real de l'Estació de Treball. És part del tooling de desenvolupament de la solució.
+6. **Sandbox.** És una aplicació aïllada per desenvolupar i provar plugins de manera independent, separada dels altres mòduls: un shell només amb els plugins que s'estan desenvolupant. És part del tooling de desenvolupament de la solució. El [creador de plugins](../create-plugin/create-a-plugin.mdx) en configura un amb el [shell de demostració d'Harmonix](../create-plugin/demo-shell.md).
 7. **SDK (Software Development Kit)**: Aquest és un conjunt d'eines que permet als desenvolupadors crear plugins i poder-se integrar amb el sistema, així com interactuar amb ell i altres plugins, en cas que ho necessitin.
 8. **Plugin Store**: És el lloc on es publiquen i guarden tots els plugins disponibles per al seu ús. Funciona com un repositori de bundles compilats i del qual l'aplicació n'obtindrà els necessaris per compondre la UI.
 

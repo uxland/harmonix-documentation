@@ -18,4 +18,4 @@ export interface HarmonixApi {
 
 Ahora bien, cada instancia de aplicación Shell puede tener sus **necesidades diferentes**. Es por eso, que lo que se recomienda hacer, es que el **Shell declare una nueva API extendiendo la de Harmonix**, dotando así a los plugins de nuevas funcionalidades ligadas al negocio y necesidades para aquella aplicación en concreto.
 
-En estas necesidades podemos encontrar servicios de interacción, modales, autenticación, traducciones, un gestor de estado global, etcétera. Podéis ver un ejemplo de extensión de la Api, en el documento de integración del ETC de Primaria que se proporciona a las diferentes iniciativas, una aplicación basada en Harmonix.
+En estas necesidades podemos encontrar servicios de interacción, modales, autenticación, traducciones, un gestor de estado global, etcétera. Puedes ver un ejemplo de extensión de la API en el [shell de demostración de Harmonix](../create-plugin/demo-shell.md), que añade un broker, atajos para sus regiones y traducciones.

@@ -6,7 +6,7 @@ sidebar_position: 12
 
 # Properly disconnect the plugin
 
-In the lifecycle of a plugin, we go through 2 important phases; **initialization** (mounting) and **disconnection** (unmounting). It is important that everything that has been done in the plugin mounting (register views, subscribe to message broker events, create internal dependency containers, etc.), a **clean disconnection** is made in order not to leave **any trace in memory** of your plugin. Although, in most cases, the user will close the browser and the Primary application will die at that instant, there may be potential cases where things like changing patient, renewing session, context changes, etc., are done that trigger a hot reload of plugins. If we don't properly disconnect our plugins, we can leave pieces in memory that can affect performance **(memory leaks)**, or data from other patients **(patient data mixing)**.
+In the lifecycle of a plugin, we go through 2 important phases; **initialization** (mounting) and **disconnection** (unmounting). It is important that everything that has been done in the plugin mounting (register views, subscribe to message broker events, create internal dependency containers, etc.), a **clean disconnection** is made in order not to leave **any trace in memory** of your plugin. Although, in most cases, the user will close the browser and the application will die at that instant, there may be potential cases where things like changing patient, renewing session, context changes, etc., are done that trigger a hot reload of plugins. If we don't properly disconnect our plugins, we can leave pieces in memory that can affect performance **(memory leaks)**, or data from other patients **(patient data mixing)**.
 
 
 <br/>
@@ -24,7 +24,7 @@ In the "_initialize_" function that must be implemented, it is a good point to m
 Example:
 
 ```typescript
-export const initialize = async (api: PrimariaApi) => {
+export const initialize = async (api: DemoShellApi) => {
   registerViews(api); //view registration to regions
   await initializeLocalization(api); //plugin translation initialization
   bootstrapFeatures(api); //plugin use case initialization
@@ -76,4 +76,4 @@ Therefore it is recommended that images, icons, fonts, etc. be in the plugin in 
 
 # Properly disconnect the plugin
 
-In the lifecycle of a plugin, we go through 2 important phases; **initialization** (mounting) and **disconnection** (unmounting). It is important that everything that has been done in the plugin mounting (register views, subscribe to message broker events, create internal dependency containers, etc.), a **clean disconnection** is made in order not to leave **any trace in memory** of your plugin. Although, in most cases, the user will close the browser and the Primary application will die at that instant, there may be potential cases where things like changing patient, renewing session, context changes, etc., are done that trigger a hot reload of plugins. If we don't properly disconnect our plugins, we can leave pieces in memory that can affect performance **(memory leaks)**, or data from other patients **(patient data mixing)**.
+In the lifecycle of a plugin, we go through 2 important phases; **initialization** (mounting) and **disconnection** (unmounting). It is important that everything that has been done in the plugin mounting (register views, subscribe to message broker events, create internal dependency containers, etc.), a **clean disconnection** is made in order not to leave **any trace in memory** of your plugin. Although, in most cases, the user will close the browser and the application will die at that instant, there may be potential cases where things like changing patient, renewing session, context changes, etc., are done that trigger a hot reload of plugins. If we don't properly disconnect our plugins, we can leave pieces in memory that can affect performance **(memory leaks)**, or data from other patients **(patient data mixing)**.
