@@ -5,6 +5,8 @@ sidebar_label: CLI
 
 # `@uxland/harmonix-cli`
 
+[![npm](https://img.shields.io/npm/v/@uxland/harmonix-cli?label=npm&color=4bcbb6)](https://www.npmjs.com/package/@uxland/harmonix-cli)
+
 The Harmonix command-line tool. It has one command, `harmonix publish`, which uploads a built plugin to a Plugin Store. It does not build the plugin or change its version: run your build first and set `version` in `package.json` yourself.
 
 ## Install
@@ -96,7 +98,7 @@ The last three cases print the error but exit with code 0. In a CI pipeline, che
 
 ## Versions
 
-The current version is 0.0.5. It depends on `axios`, `commander` and `form-data`.
+It depends on `axios`, `commander` and `form-data`.
 
 ## Links
 

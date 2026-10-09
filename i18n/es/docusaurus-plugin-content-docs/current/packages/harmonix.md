@@ -5,6 +5,8 @@ sidebar_label: Núcleo
 
 # `@uxland/harmonix`
 
+[![npm](https://img.shields.io/npm/v/@uxland/harmonix?label=npm&color=4bcbb6)](https://www.npmjs.com/package/@uxland/harmonix)
+
 El núcleo de Harmonix. Define el contrato entre un shell y sus plugins (`Plugin`, `HarmonixApi` y los tipos relacionados), carga los plugins (`bootstrapPlugins`) y proporciona el gestor de regiones que los shells usan para crear regiones y registrar vistas. No pinta nada ni tiene shell propio: cada aplicación construye uno encima. Normalmente los plugins solo importan sus tipos.
 
 ## Instalación
@@ -65,7 +67,7 @@ La referencia completa está en [Referencia de la API](../api/Api.md), [Regiones
 
 ## Versiones
 
-La versión actual es la 1.1.6. El [shell de demostración](./demo-shell.md) depende de `^1.1.6`.
+El [shell de demostración](./demo-shell.md) depende de `^1.1.6`.
 
 ## Enlaces
 

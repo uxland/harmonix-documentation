@@ -5,6 +5,8 @@ sidebar_label: CLI
 
 # `@uxland/harmonix-cli`
 
+[![npm](https://img.shields.io/npm/v/@uxland/harmonix-cli?label=npm&color=4bcbb6)](https://www.npmjs.com/package/@uxland/harmonix-cli)
+
 La herramienta de línea de comandos de Harmonix. Tiene un solo comando, `harmonix publish`, que sube un plugin compilado a un Plugin Store. No hace el build del plugin ni cambia su versión: haz el build antes y pon tú mismo la `version` en `package.json`.
 
 ## Instalación
@@ -96,7 +98,7 @@ Los tres últimos casos muestran el error pero terminan con código 0. En un pip
 
 ## Versiones
 
-La versión actual es la 0.0.5. Depende de `axios`, `commander` y `form-data`.
+Depende de `axios`, `commander` y `form-data`.
 
 ## Enlaces
 

@@ -5,6 +5,8 @@ sidebar_label: Nucli
 
 # `@uxland/harmonix`
 
+[![npm](https://img.shields.io/npm/v/@uxland/harmonix?label=npm&color=4bcbb6)](https://www.npmjs.com/package/@uxland/harmonix)
+
 El nucli d'Harmonix. Defineix el contracte entre un shell i els seus plugins (`Plugin`, `HarmonixApi` i els tipus relacionats), carrega els plugins (`bootstrapPlugins`) i proporciona el gestor de regions que els shells fan servir per crear regions i registrar vistes. No renderitza res i no té cap shell propi: cada aplicació en construeix un a sobre. Normalment els plugins només n'importen els tipus.
 
 ## Instal·lació
@@ -65,7 +67,7 @@ La referència completa és a [Referència de l'API](../api/Api.md), [Regions i 
 
 ## Versions
 
-La versió actual és la 1.1.6. El [shell de demostració](./demo-shell.md) depèn de `^1.1.6`.
+El [shell de demostració](./demo-shell.md) depèn de `^1.1.6`.
 
 ## Enllaços
 

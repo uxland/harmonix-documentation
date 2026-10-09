@@ -5,6 +5,8 @@ sidebar_label: Shell de demostració
 
 # `@uxland/harmonix-demo-shell`
 
+[![npm](https://img.shields.io/npm/v/@uxland/harmonix-demo-shell?label=npm&color=4bcbb6)](https://www.npmjs.com/package/@uxland/harmonix-demo-shell)
+
 Un shell d'Harmonix mínim i independent del framework per desenvolupar i provar plugins. Té una capçalera, un menú lateral i una àrea de contingut, cadascun una regió, i res més: ni lògica de negoci ni vistes pròpies. Els projectes creats amb el [creador de plugins](./create-harmonix-plugin.md) hi executen el plugin amb `npm run dev`. Està pensat per al desenvolupament; les aplicacions de producció construeixen el seu propi shell.
 
 ## Instal·lació
@@ -58,7 +60,7 @@ Les regions, l'API, el broker, les traduccions i el tema es descriuen a [El shel
 
 ## Versions
 
-La versió actual és la 0.1.0. Depèn d'`@uxland/harmonix` `^1.1.6`, `@uxland/regions` `^1.0.0` i `lit` `^3.2.1`. Només es publica com a mòdul ES.
+Depèn d'`@uxland/harmonix` `^1.1.6`, `@uxland/regions` `^1.0.0` i `lit` `^3.2.1`. Només es publica com a mòdul ES.
 
 ## Enllaços
 

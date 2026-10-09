@@ -5,6 +5,8 @@ sidebar_label: Shell de demostración
 
 # `@uxland/harmonix-demo-shell`
 
+[![npm](https://img.shields.io/npm/v/@uxland/harmonix-demo-shell?label=npm&color=4bcbb6)](https://www.npmjs.com/package/@uxland/harmonix-demo-shell)
+
 Un shell de Harmonix mínimo e independiente de cualquier framework para desarrollar y probar plugins. Tiene una cabecera, un menú lateral y un área de contenido, cada uno una región, y nada más: ni lógica de negocio ni vistas propias. Los proyectos hechos con el [creador de plugins](./create-harmonix-plugin.md) arrancan su plugin dentro de él con `npm run dev`. Está pensado para el desarrollo; las aplicaciones en producción construyen su propio shell.
 
 ## Instalación
@@ -58,7 +60,7 @@ Las regiones, la API, el broker, las traducciones y el tema se describen en [El 
 
 ## Versiones
 
-La versión actual es la 0.1.0. Depende de `@uxland/harmonix` `^1.1.6`, `@uxland/regions` `^1.0.0` y `lit` `^3.2.1`. Se publica solo como módulo ES.
+Depende de `@uxland/harmonix` `^1.1.6`, `@uxland/regions` `^1.0.0` y `lit` `^3.2.1`. Se publica solo como módulo ES.
 
 ## Enlaces
 

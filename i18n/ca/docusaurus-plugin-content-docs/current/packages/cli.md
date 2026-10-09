@@ -5,6 +5,8 @@ sidebar_label: CLI
 
 # `@uxland/harmonix-cli`
 
+[![npm](https://img.shields.io/npm/v/@uxland/harmonix-cli?label=npm&color=4bcbb6)](https://www.npmjs.com/package/@uxland/harmonix-cli)
+
 L'eina de línia d'ordres d'Harmonix. Té una sola ordre, `harmonix publish`, que puja un plugin construït a un Plugin Store. No construeix el plugin ni en canvia la versió: executa primer la construcció i posa tu mateix la `version` a `package.json`.
 
 ## Instal·lació
@@ -96,7 +98,7 @@ Els tres darrers casos mostren l'error però surten amb el codi 0. En un pipelin
 
 ## Versions
 
-La versió actual és la 0.0.5. Depèn d'`axios`, `commander` i `form-data`.
+Depèn d'`axios`, `commander` i `form-data`.
 
 ## Enllaços
 
