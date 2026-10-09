@@ -2,6 +2,8 @@
 sidebar_position: 5
 ---
 
+import { PluginLifecycle } from '@site/src/components/Diagrams/PluginLifecycle';
+
 # Ciclo de vida de un plugin
 
 Un plugin es un módulo ES, normalmente empaquetado en un único fichero JavaScript. Exporta dos funciones, y las dos devuelven una `Promise`:
@@ -46,6 +48,8 @@ El ciclo de vida de un plugin tiene dos partes:
 Las fases 1, 2 y 4 se hacen en local. Las fases 3, 5, 6 y 7 implican al Plugin Store, que debería dar soporte a todas ellas. Algunos Plugin Store también permiten un despliegue progresivo en la fase 3: una versión nueva empieza con una parte de los usuarios hasta que está lo bastante madura. Es una capacidad del Plugin Store, no de Harmonix.
 
 ## Ciclo de vida online
+
+<PluginLifecycle />
 
 1. **Carga.** El shell llama al `importer()` del `PluginDefinition` del plugin. Normalmente es un `import()` dinámico de la URL del plugin en el Plugin Store, o de un módulo local durante el desarrollo.
 2. **Evaluación.** El navegador evalúa el módulo, que expone `initialize` y `dispose`.

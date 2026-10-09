@@ -2,6 +2,8 @@
 sidebar_position: 3
 ---
 
+import { ShellAnatomy } from '@site/src/components/Diagrams/ShellAnatomy';
+
 # Características
 
 ## Características principales
@@ -36,7 +38,7 @@ Harmonix se distribuye en estos paquetes:
 | `@uxland/harmonix-cli` | Publica plugins en un Plugin Store (`harmonix publish`) |
 | `@uxland/harmonix-adapters` | Convierte componentes React en Web Components |
 
-![Un shell con sus regiones, cuyas vistas provienen de plugins del Plugin Store](/img/concepts/shell-plugin-store.png)
+<ShellAnatomy />
 
 ## Comparación con otros enfoques
 

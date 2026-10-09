@@ -2,11 +2,15 @@
 sidebar_position: 4
 ---
 
+import { Workflow } from '@site/src/components/Diagrams/Workflow';
+
 # Workflow
 
 Harmonix is designed so that teams can develop plugins on their own, with simple and standard tools.
 
 ## Development workflow
+
+<Workflow />
 
 1. **Build the shell.** The application team creates the shell on top of Harmonix: it declares the regions and the API, until the application is ready to host plugins. See [Building a shell](../api/building-a-shell.md).
 2. **Develop the plugins.** Plugin teams start with the [plugin creator](../create-plugin/create-a-plugin.mdx). It gives them a project that runs in the Harmonix demo shell.

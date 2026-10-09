@@ -1,0 +1,172 @@
+/* Animated diagrams for the documentation pages. Same palette as the home page:
+   periwinkle #8093ff, mint #66ffe5, and one accent per plugin through --c. */
+
+.diagram {
+  margin: 28px 0 32px;
+  padding: 20px;
+  border: 1px solid #30363a;
+  border-radius: 16px;
+  background: radial-gradient(120% 90% at 0% 0%, rgb(128 147 255 / 0.07), transparent 60%), #18191a;
+  color: #f4f4f4;
+}
+.svg {
+  display: block;
+  width: 100%;
+  height: auto;
+  font-family: 'Gilroy-Regular', system-ui, sans-serif;
+}
+
+/* ---------- Shell anatomy ---------- */
+
+.partShell rect {
+  fill: #1f2123;
+  stroke: #66ffe5;
+  stroke-width: 2;
+}
+.partRegion rect {
+  fill: #232526;
+  stroke: rgb(128 147 255 / 0.4);
+  stroke-dasharray: 5 4;
+}
+.partRegion text {
+  fill: rgb(128 147 255 / 0.85);
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 12px;
+}
+.partView rect,
+.partView circle {
+  fill: #2c2f31;
+  stroke: transparent;
+  stroke-width: 2;
+  transition: fill 0.6s ease, stroke 0.6s ease;
+}
+.partView .filled {
+  fill: color-mix(in srgb, var(--c) 30%, #232526);
+  stroke: var(--c);
+}
+.store {
+  fill: rgb(128 147 255 / 0.06);
+  stroke: rgb(128 147 255 / 0.35);
+}
+.storeTitle {
+  fill: #b8b8b8;
+  font-family: 'GinoraSans', system-ui, sans-serif;
+  font-size: 15px;
+}
+.tile rect,
+.tileIdle rect {
+  fill: #232526;
+  stroke: #3a3f44;
+  stroke-width: 1.5;
+  transition: fill 0.4s ease, stroke 0.4s ease, filter 0.4s ease;
+}
+.tileIdle rect {
+  stroke-dasharray: 4 4;
+}
+.tile text,
+.tileIdle text {
+  fill: #f4f4f4;
+  font-family: 'GinoraSans', system-ui, sans-serif;
+  font-size: 14px;
+}
+.tileIdle text {
+  fill: #7a7f84;
+}
+.tile .version,
+.tileIdle .version {
+  fill: #7a7f84;
+  font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+  font-size: 11px;
+}
+.tileUsed rect {
+  stroke: color-mix(in srgb, var(--c) 60%, transparent);
+}
+.tileActive rect {
+  fill: color-mix(in srgb, var(--c) 22%, #232526);
+  stroke: var(--c);
+  filter: drop-shadow(0 0 10px color-mix(in srgb, var(--c) 60%, transparent));
+}
+.link {
+  fill: none;
+  stroke: var(--c);
+  stroke-width: 2;
+  stroke-linecap: round;
+  stroke-dasharray: 1;
+  stroke-dashoffset: 1;
+  opacity: 0;
+  transition: stroke-dashoffset 0.9s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.5s ease;
+}
+.linkDrawn {
+  stroke-dashoffset: 0;
+  opacity: 0.9;
+}
+
+/* Legend: hovering an item highlights that kind of part and dims the rest. */
+.legend {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 16px 0 0;
+  padding: 0;
+  list-style: none;
+}
+.diagram .legend > li {
+  margin: 0;
+}
+.legend button {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px 12px 6px 8px;
+  border: 1px solid #30363a;
+  border-radius: 999px;
+  background: #1f2123;
+  color: #b8b8b8;
+  font: 14px 'Gilroy-Regular', system-ui, sans-serif;
+  cursor: default;
+}
+.legend button:focus-visible {
+  outline: 2px solid #66ffe5;
+  outline-offset: 2px;
+}
+.legend button.legendActive {
+  border-color: #66ffe5;
+  color: #f4f4f4;
+}
+.swatch {
+  width: 14px;
+  height: 14px;
+  border-radius: 4px;
+}
+.swatch_shell {
+  border: 2px solid #66ffe5;
+}
+.swatch_region {
+  border: 1.5px dashed #8093ff;
+}
+.swatch_view {
+  background: color-mix(in srgb, #61dafb 30%, #232526);
+  border: 1.5px solid #61dafb;
+}
+.swatch_plugin {
+  background: #232526;
+  border: 1.5px solid #ff5c7a;
+  border-radius: 6px;
+}
+.diagram[data-focus] svg > g {
+  opacity: 0.25;
+  transition: opacity 0.3s ease;
+}
+.diagram[data-focus='shell'] .partShell,
+.diagram[data-focus='region'] .partRegion,
+.diagram[data-focus='view'] .partView,
+.diagram[data-focus='plugin'] .partPlugin {
+  opacity: 1;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .diagram * {
+    transition: none !important;
+    animation: none !important;
+  }
+}

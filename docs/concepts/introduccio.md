@@ -2,9 +2,13 @@
 sidebar_position: 1
 ---
 
+import { HeroStage } from '@site/src/components/Composition/HeroStage';
+
 # Introduction
 
 Harmonix is a framework for composing a single-page application from independently developed and deployed plugins. A shell defines regions. Each plugin is a JavaScript module whose `initialize(api)` registers Web Components as views in those regions and talks to other plugins through a broker.
+
+<HeroStage />
 
 ```typescript
 import type { DemoShellApi } from "@uxland/harmonix-demo-shell";

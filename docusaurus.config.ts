@@ -133,6 +133,12 @@ export default async function createConfig(): Promise<Config> {
           },
           {
             type: 'docSidebar',
+            sidebarId: 'packagesSidebar',
+            position: 'left',
+            label: 'Packages',
+          },
+          {
+            type: 'docSidebar',
             sidebarId: 'bestPracticesSidebar',
             position: 'left',
             label: 'Best practices',

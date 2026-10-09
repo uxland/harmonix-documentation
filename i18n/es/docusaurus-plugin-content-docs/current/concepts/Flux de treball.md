@@ -2,11 +2,15 @@
 sidebar_position: 4
 ---
 
+import { Workflow } from '@site/src/components/Diagrams/Workflow';
+
 # Flujo de trabajo
 
 Harmonix está pensado para que los equipos puedan desarrollar plugins por su cuenta, con herramientas sencillas y estándar.
 
 ## Flujo de desarrollo
+
+<Workflow />
 
 1. **Construir el shell.** El equipo de la aplicación crea el shell sobre Harmonix: declara las regiones y la API, hasta que la aplicación está lista para alojar plugins. Consulta [Construir un shell](../api/building-a-shell.md).
 2. **Desarrollar los plugins.** Los equipos de los plugins empiezan con el [creador de plugins](../create-plugin/create-a-plugin.mdx). Les da un proyecto que se ejecuta en el shell de demostración de Harmonix.

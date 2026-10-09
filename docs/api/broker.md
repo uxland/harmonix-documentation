@@ -2,11 +2,15 @@
 sidebar_position: 3
 ---
 
+import { BrokerFlow } from '@site/src/components/Diagrams/BrokerFlow';
+
 # Broker
 
 Plugins do not import each other. They communicate through a **broker**: a message bus that the shell exposes in its API.
 
 The core, `@uxland/harmonix`, defines the `HarmonixBroker` interface. Each shell implements it and decides whether to expose it. The [demo shell](../create-plugin/demo-shell.md) exposes it as `api.broker`, with an in-memory implementation shared by all plugins.
+
+<BrokerFlow />
 
 The broker has two kinds of messages:
 

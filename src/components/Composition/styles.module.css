@@ -373,6 +373,9 @@ button.action:focus-visible {
   list-style: none;
   counter-reset: step;
 }
+.stage .steps ol > li {
+  margin: 0;
+}
 .steps li {
   position: relative;
   padding-top: 14px;
@@ -423,6 +426,9 @@ button.action:focus-visible {
   color: #b8b8b8;
   font-family: 'Gilroy-Regular';
   font-size: 15px;
+}
+.toggles > .toggle {
+  margin: 0;
 }
 .toggle {
   display: grid;

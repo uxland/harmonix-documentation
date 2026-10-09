@@ -1,0 +1,143 @@
+.diagram {
+  margin: 28px 0 32px;
+  padding: 20px;
+  border: 1px solid #30363a;
+  border-radius: 16px;
+  background: radial-gradient(120% 90% at 0% 100%, rgb(128 147 255 / 0.08), transparent 60%), #18191a;
+  color: #f4f4f4;
+  font-family: 'Gilroy-Regular', system-ui, sans-serif;
+}
+.stages {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 14px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  counter-reset: stage;
+}
+.stages > .stage {
+  margin: 0;
+}
+.stage {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  counter-increment: stage;
+}
+.stageTitle {
+  padding-top: 10px;
+  border-top: 2px solid #30363a;
+  color: #7a7f84;
+  font-family: 'GinoraSans', system-ui, sans-serif;
+  font-size: 15px;
+  transition: color 0.4s ease, border-color 0.4s ease;
+}
+.stageTitle::before {
+  content: counter(stage) '  ';
+  color: #8093ff;
+}
+.card,
+.core {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  padding: 14px;
+  border: 1px solid #30363a;
+  border-radius: 12px;
+  background: #1f2123;
+  color: #f4f4f4;
+  text-decoration: none;
+  transition: border-color 0.4s ease, box-shadow 0.4s ease, transform 0.4s ease, opacity 0.4s ease;
+}
+.card {
+  flex: 1;
+  opacity: 0.55;
+}
+.card:hover,
+.core:hover {
+  color: #f4f4f4;
+  text-decoration: none;
+  border-color: #66ffe5;
+}
+.card:focus-visible,
+.core:focus-visible {
+  outline: 2px solid #66ffe5;
+  outline-offset: 2px;
+}
+.card strong,
+.core strong {
+  font-family: 'GinoraSans', system-ui, sans-serif;
+  font-size: 15px;
+  font-weight: normal;
+  overflow-wrap: anywhere;
+}
+.scope {
+  color: #7a7f84;
+  font-size: 12px;
+}
+.card code {
+  align-self: flex-start;
+  margin-top: 6px;
+  padding: 1px 6px;
+  border: 0;
+  border-radius: 4px;
+  background: #232526;
+  color: #66ffe5;
+  font-size: 10.5px;
+  overflow-wrap: anywhere;
+}
+.stageLit .stageTitle {
+  border-top-color: #66ffe5;
+  color: #f4f4f4;
+}
+.stageLit .card {
+  opacity: 1;
+  border-color: rgb(102 255 229 / 0.6);
+  box-shadow: 0 0 24px rgb(102 255 229 / 0.14);
+  transform: translateY(-3px);
+}
+.core {
+  position: relative;
+  margin-top: 26px;
+  padding: 16px 18px;
+  border-color: rgb(128 147 255 / 0.45);
+  background: linear-gradient(90deg, rgb(128 147 255 / 0.12), rgb(102 255 229 / 0.1));
+}
+/* The lines that tie every stage to the core. */
+.core::before {
+  content: '';
+  position: absolute;
+  inset: -27px 12.5% auto;
+  height: 26px;
+  background: repeating-linear-gradient(90deg, rgb(128 147 255 / 0.5) 0 1.5px, transparent 1.5px calc(100% / 3 - 0.5px));
+  background-size: 100% 100%;
+  opacity: 0.6;
+}
+.coreLit {
+  box-shadow: 0 0 30px rgb(128 147 255 / 0.25);
+}
+.coreText {
+  color: #b8b8b8;
+  font-size: 13px;
+  line-height: 1.5;
+}
+.caption {
+  min-height: 1.5em;
+  margin-top: 16px;
+  color: #b8b8b8;
+  font-size: 14px;
+}
+@media (max-width: 760px) {
+  .stages {
+    grid-template-columns: 1fr 1fr;
+  }
+  .core::before {
+    display: none;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .diagram * {
+    transition: none !important;
+  }
+}

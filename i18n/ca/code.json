@@ -500,5 +500,116 @@
   },
   "getStarted.copied": {
     "message": "Copiat"
+  },
+  "diagram.anatomy.aria": {
+    "message": "Un shell amb tres regions; tres plugins del Plugin Store hi injecten vistes, alguns en més d’una regió."
+  },
+  "diagram.anatomy.shell": {
+    "message": "Shell: l'aplicació principal"
+  },
+  "diagram.anatomy.region": {
+    "message": "Regió: un espai on es poden injectar vistes"
+  },
+  "diagram.anatomy.view": {
+    "message": "Vista: un Web Component d'un plugin"
+  },
+  "diagram.anatomy.plugin": {
+    "message": "Plugin: es publica al Plugin Store"
+  },
+  "diagram.broker.aria": {
+    "message": "Un esdeveniment arriba a tots els subscriptors, i si un falla els altres el reben igualment. Una petició arriba al seu únic handler i la resposta torna a qui l'ha enviada."
+  },
+  "diagram.broker.events": {
+    "message": "Esdeveniments"
+  },
+  "diagram.broker.events.caption": {
+    "message": "Tots els subscriptors el reben. Si un falla, els altres no se n'assabenten."
+  },
+  "diagram.broker.requests": {
+    "message": "Peticions"
+  },
+  "diagram.broker.requests.caption": {
+    "message": "Un sol handler respon, i la resposta torna a qui ha preguntat."
+  },
+  "diagram.lifecycle.active": {
+    "message": "vistes a les regions"
+  },
+  "diagram.lifecycle.aria": {
+    "message": "Tres plugins passen en paral·lel per la càrrega, l’avaluació, la inicialització, el renderitzat i l’alliberament. Un falla a la inicialització i els altres continuen."
+  },
+  "diagram.lifecycle.loading": {
+    "message": "Càrrega"
+  },
+  "diagram.lifecycle.evaluation": {
+    "message": "Avaluació"
+  },
+  "diagram.lifecycle.initialization": {
+    "message": "Inicialització"
+  },
+  "diagram.lifecycle.rendering": {
+    "message": "Renderitzat"
+  },
+  "diagram.lifecycle.disposal": {
+    "message": "Alliberament"
+  },
+  "diagram.lifecycle.isolated": {
+    "message": "// insights ha fallat i queda aïllat: orders i alerts continuen"
+  },
+  "diagram.packages.all": {
+    "message": "Cada paquet té el seu moment, i tots s'assenten sobre el nucli."
+  },
+  "diagram.packages.core": {
+    "message": "El nucli: el contracte dels plugins, bootstrapPlugins i les regions. Tota aplicació s'hi basa."
+  },
+  "diagram.packages.create": {
+    "message": "Crear"
+  },
+  "diagram.packages.create.caption": {
+    "message": "npm create genera el projecte, amb el framework que triïs."
+  },
+  "diagram.packages.develop": {
+    "message": "Desenvolupar"
+  },
+  "diagram.packages.develop.caption": {
+    "message": "npm run dev arrenca el plugin dins del shell de demostració."
+  },
+  "diagram.packages.publish": {
+    "message": "Publicar"
+  },
+  "diagram.packages.publish.caption": {
+    "message": "harmonix publish puja el bundle al Plugin Store."
+  },
+  "diagram.packages.run": {
+    "message": "Executar"
+  },
+  "diagram.packages.run.caption": {
+    "message": "Les vistes de React es converteixen en Web Components dins de l'aplicació."
+  },
+  "diagram.workflow.aria": {
+    "message": "L'equip de l'aplicació construeix el shell; els equips de plugins els desenvolupen, els publiquen al Plugin Store i l'aplicació els carrega en executar-se."
+  },
+  "diagram.workflow.shell": {
+    "message": "Construir el shell"
+  },
+  "diagram.workflow.shell.who": {
+    "message": "Equip de l'aplicació"
+  },
+  "diagram.workflow.shell.done": {
+    "message": "Shell a punt"
+  },
+  "diagram.workflow.develop": {
+    "message": "Desenvolupar els plugins"
+  },
+  "diagram.workflow.develop.who": {
+    "message": "Equips de plugins"
+  },
+  "diagram.workflow.publish": {
+    "message": "Publicar"
+  },
+  "diagram.workflow.run": {
+    "message": "Executar"
+  },
+  "diagram.workflow.run.who": {
+    "message": "Al navegador"
   }
 }

@@ -2,6 +2,8 @@
 sidebar_position: 3
 ---
 
+import { ShellAnatomy } from '@site/src/components/Diagrams/ShellAnatomy';
+
 # Features
 
 ## Main features
@@ -36,7 +38,7 @@ Harmonix is distributed as these packages:
 | `@uxland/harmonix-cli` | Publishes plugins to a Plugin Store (`harmonix publish`) |
 | `@uxland/harmonix-adapters` | Turns React components into Web Components |
 
-![A shell with its regions, whose views come from plugins in the Plugin Store](/img/concepts/shell-plugin-store.png)
+<ShellAnatomy />
 
 ## Comparison with other approaches
 
