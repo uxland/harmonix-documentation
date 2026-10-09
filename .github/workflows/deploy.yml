@@ -40,15 +40,38 @@ jobs:
             sftp_only: true
             password: ${{ secrets.SFTP_PASS }}
 
-      # Step 5: The sftp glob above skips dotfiles, so .htaccess (the headers of the Sandbox page)
-      # is uploaded on its own.
-      - name: Deploy .htaccess
+      # Step 5: The sftp glob above skips dotfiles, so the .htaccess of the Sandbox page (the
+      # cross-origin isolation headers StackBlitz needs) is uploaded on its own. It lives inside
+      # the sandbox folders, which only contain that page: nothing outside them is touched.
+      - name: Deploy Sandbox headers (en)
         uses: wlixcc/SFTP-Deploy-Action@v1.2.4
         with:
             username: acc1804162827
             server: home669771443.1and1-data.host
             port: 22
-            local_path: './build/.htaccess'
-            remote_path: '/harmonixframework/'
+            local_path: './build/sandbox/.htaccess'
+            remote_path: '/harmonixframework/sandbox/'
+            sftp_only: true
+            password: ${{ secrets.SFTP_PASS }}
+
+      - name: Deploy Sandbox headers (ca)
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+        with:
+            username: acc1804162827
+            server: home669771443.1and1-data.host
+            port: 22
+            local_path: './build/ca/sandbox/.htaccess'
+            remote_path: '/harmonixframework/ca/sandbox/'
+            sftp_only: true
+            password: ${{ secrets.SFTP_PASS }}
+
+      - name: Deploy Sandbox headers (es)
+        uses: wlixcc/SFTP-Deploy-Action@v1.2.4
+        with:
+            username: acc1804162827
+            server: home669771443.1and1-data.host
+            port: 22
+            local_path: './build/es/sandbox/.htaccess'
+            remote_path: '/harmonixframework/es/sandbox/'
             sftp_only: true
             password: ${{ secrets.SFTP_PASS }}
