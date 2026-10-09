@@ -128,7 +128,7 @@
     height: auto;
   }
   .line {
-    width: 360px;
+    width: min(360px, calc(100% - 40px));
   }
 }
   

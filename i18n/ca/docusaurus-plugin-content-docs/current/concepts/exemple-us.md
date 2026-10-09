@@ -1,22 +1,22 @@
 ---
-sidebar_position: 6
+sidebar_position: 2
 ---
 
-# Exemple d'ús d'una aplicació basada en Harmonix
+# Exemple d'ús
 
-# Visió ràpida del shell
+Aquesta pàgina mostra com s'organitza una aplicació Harmonix. Fa servir el [shell de demostració d'Harmonix](../create-plugin/demo-shell.md), el shell petit que proporciona Harmonix per desenvolupar i provar plugins.
 
-Per explicar com funciona **Harmonix** i com pots construir una app composta de diferents plugins desenvolupats amb diferents tecnologies i per diferents clients, farem servir el [shell de demostració d'Harmonix](../create-plugin/demo-shell.md), el shell petit que proporciona Harmonix per desenvolupar i provar plugins.
+## Les peces
 
-  
+Hi ha tres peces:
 
-Primer de tot, hi ha **Harmonix**, el motor principal capaç d'obtenir i unir tots aquests plugins, donar-los funcionalitats per interactuar entre ells i compondre així l'aplicació final.
+- **Harmonix** (`@uxland/harmonix`). El nucli que carrega els plugins, dona una API a cadascun i gestiona les regions.
+- **El shell.** L'aplicació principal. Defineix un esquelet amb regions on els plugins injecten Web Components. Cada aplicació construeix el seu propi shell, amb la seva disposició i els seus serveis.
+- **Els plugins.** Paquets que desenvolupen altres equips. Es construeixen i es publiquen, normalment en un Plugin Store, i el shell els carrega.
 
-  
+## El shell
 
-En segon lloc, hi ha el "**Shell**", que serà l'aplicació principal i que, mitjançant Harmonix, definirà un esquelet amb regions on els plugins podran injectar diferents Web Components. Cada aplicació ha de construir un Shell diferent, ja que cadascuna tindrà un esquelet i una manera de treballar propis. El shell de demostració té tres regions: una capçalera, un menú lateral i el contingut principal. El shell, per si sol, no és més que un conjunt de contenidors, un esquelet buit. Si veiéssim el shell abans d'iniciar els plugins, veuríem una cosa semblant a aquesta:
-
-  
+El shell de demostració té tres regions: una capçalera, un menú lateral i el contingut principal. Per si sol, el shell és un esquelet buit. Abans que s'iniciï cap plugin, el seu DOM és així:
 
 ```html
 <harmonix-demo-shell>
@@ -32,23 +32,14 @@ En segon lloc, hi ha el "**Shell**", que serà l'aplicació principal i que, mit
 </harmonix-demo-shell>
 ```
 
-<br/>
+## Un plugin
 
-# Visió ràpida dels plugins
+Cada plugin es construeix i s'empaqueta en un fitxer JavaScript, per exemple `plugin1-1.2.0.js`.
 
-I per acabar, hi ha els "**plugins**", que no són més que paquets desenvolupats per tercers, que es compilen i que, un cop publicats en un "Plugin Store", estan a punt per ser consumits pel Shell.
+El fitxer és un mòdul ES que exporta dues funcions:
 
-  
-
-Cada plugin s'ha de compilar i empaquetar en un bundle, i genera un fitxer JavaScript, per exemple:
-
-**_plugin1-version-23.45.js._**
-
-  
-
-Aquests plugins, en el seu JavaScript, han de definir un **punt d'entrada** per iniciar el seu cicle de vida. En aquest punt d'inicialització, cada plugin rep del Shell un objecte anomenat **api**. Amb aquesta API, el plugin té tot el necessari per funcionar dins del Shell. Per exemple, té una manera de registrar cada component a cada regió que s'hagi definit (capçalera, menú lateral, contingut principal), o de publicar i escoltar esdeveniments que altres plugins puguin comunicar. Cada shell pot afegir més serveis a la seva API: un client HTTP per fer crides a un backend, una manera de mostrar un missatge de notificació en pantalla, entre moltes altres coses. Aquest seria un exemple de punt d'entrada d'un plugin:
-
-  
+- `initialize(api)` inicia el plugin. El shell la crida amb un objecte **API**. Amb l'API, el plugin registra les seves vistes a les regions (capçalera, menú lateral, principal) i publica esdeveniments o escolta els d'altres plugins. Cada shell pot afegir més serveis a la seva API, com un client HTTP o notificacions.
+- `dispose(api)` atura el plugin. Ha de desfer tot el que ha fet `initialize`.
 
 ```typescript
 import type { DemoShellApi } from "@uxland/harmonix-demo-shell";
@@ -56,23 +47,28 @@ import type { DemoShellApi } from "@uxland/harmonix-demo-shell";
 export const initialize = async (api: DemoShellApi) => {
   const { regions } = api.regionManager;
 
-  // registration of Web Components in the regions of the shell skeleton
+  // Register Web Components in the regions of the shell
   await api.regionManager.registerView(regions.header, { id: "header", factory: async () => new Plugin1HeaderWebComponent() });
   await api.regionManager.registerView(regions.sideMenu, { id: "menu", factory: async () => new Plugin1MenuWebComponent() });
   await api.regionManager.registerView(regions.main, { id: "main", factory: async () => new Plugin1MainWebComponent() });
 
-  // tell the other plugins that this one is ready
+  // Tell the other plugins that this one is ready
   await api.broker.publish("plugin1:ready", { pluginId: api.pluginInfo.pluginId });
+};
+
+export const dispose = async (api: DemoShellApi) => {
+  const { regions } = api.regionManager;
+  await api.regionManager.removeView(regions.header, "header");
+  await api.regionManager.removeView(regions.sideMenu, "menu");
+  await api.regionManager.removeView(regions.main, "main");
 };
 ```
 
-<br/>
+`Plugin1HeaderWebComponent` i els altres són elements personalitzats que defineix el plugin.
 
-# Visió ràpida del shell amb plugins
+## El shell amb plugins
 
-Un cop el Shell i el framework Harmonix han donat l'ordre d'iniciar els plugins, l'esquelet del Shell passa d'estar buit a ser una aplicació composta per molts Web Components. Si ara mirem com és el DOM, seria una cosa així:
-
-  
+Quan els plugins s'han iniciat, l'esquelet s'omple amb els seus Web Components. Amb dos plugins, el DOM és així:
 
 ```html
 <harmonix-demo-shell>
@@ -101,14 +97,8 @@ Un cop el Shell i el framework Harmonix han donat l'ordre d'iniciar els plugins,
 </harmonix-demo-shell>
 ```
 
-  
-
-Com pots veure, el plugin1 i el plugin2 han pogut registrar, mitjançant l'API rebuda al seu punt d'entrada, diferents Web Components en diferents regions. Ara l'aplicació Shell ja és plena. La regió principal només mostra una vista alhora: l'altra queda amagada fins que un element del menú l'activa.
-
-  
+La capçalera i el menú lateral són regions **de diverses vistes actives**: totes les seves vistes es mostren alhora. La regió principal és **d'una sola vista activa**: només es mostra una vista alhora. Quan tots els plugins s'han iniciat, si cap plugin no ha activat una vista principal, el shell de demostració activa la primera que s'ha registrat. L'altra vista continua `hidden` fins que un element del menú l'activa.
 
 ![Dos plugins al shell de demostració](/img/create-plugin/demo-shell-regions.png)
 
-  
-
-Per desenvolupar un plugin, els equips no necessiten l'aplicació final: el [creador de plugins](../create-plugin/create-a-plugin.mdx) els dona un projecte que executa el plugin al shell de demostració, de manera que poden treballar individualment i veure com quedarà el seu plugin.
+Per desenvolupar un plugin, els equips no necessiten l'aplicació final. El [creador de plugins](../create-plugin/create-a-plugin.mdx) els dona un projecte que executa el plugin al shell de demostració, de manera que poden treballar pel seu compte i veure com quedarà el plugin.

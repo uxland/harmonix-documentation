@@ -1,37 +1,24 @@
 ---
-sidebar_position: 3
+sidebar_position: 4
 ---
 
 # Workflow
 
-Harmonix has been created to build applications where the **development experience** becomes a key point, so developer comfort is a priority.
+Harmonix is designed so that teams can develop plugins on their own, with simple and standard tools.
 
+## Development workflow
 
+1. **Build the shell.** The application team creates the shell on top of Harmonix: it declares the regions and the API, until the application is ready to host plugins. See [Building a shell](../api/building-a-shell.md).
+2. **Develop the plugins.** Plugin teams start with the [plugin creator](../create-plugin/create-a-plugin.mdx). It gives them a project that runs in the Harmonix demo shell.
+3. **Publish.** Plugins are built and published, typically to a Plugin Store. The store keeps track of the versions of each plugin and of who can use them.
+4. **Run.** The application loads the plugins and initializes them in parallel, building the final application.
 
-This is achieved thanks to **plugin development autonomy**, together with the set of **simple and standard** configuration tools.
+## Execution flow
 
-
-
-The **development workflow** goes through a **first phase of creating the Shell** based on Harmonix, where the main regions are declared and the necessary tools are configured until the application becomes a "**plugin factory**" state. It is then when developers can start creating plugins that will end up in this Shell. The [plugin creator](../create-plugin/create-a-plugin.mdx) gives them a project ready to develop, running in the Harmonix demo shell.
-
-
-
-Plugins are **compiled and deployed to the Plugin Store**, and from there control will be maintained over the versions of each plugin and the necessary roles and permissions will be configured. Finally, the application with the Harmonix engine will obtain these plugins and will **execute them asynchronously**, thus building the final application.
-
-Below, the **execution flow** of a Harmonix application is detailed:
-
-
-
-0- The user opens the application in the Browser at the corresponding domain
-
-1- The shell, through Harmonix, creates the skeleton, the API object and starts the main process of obtaining plugins
-
-2- The files of each plugin published to the Plugin Store are downloaded
-
-3- The initialization function of each plugin is called in parallel
-
-4- Each plugin performs the tasks it has defined at its initialization point
-
-5- The UI is composed as plugin component registrations are resolved
-
-7- The user finally sees a single application composed of different plugins and Web Components and can interact with it.
+1. The user opens the application in the browser.
+2. The shell renders its skeleton, creates its regions and starts loading the plugins.
+3. Each plugin is loaded, typically from the Plugin Store.
+4. The `initialize` function of each plugin is called in parallel, each with its own API instance. If one plugin fails, the others still load.
+5. Each plugin performs its initialization tasks: registering views, subscribing to events, loading data.
+6. The UI is composed as the views are registered in the regions.
+7. The user sees a single application made of different plugins and can interact with it.

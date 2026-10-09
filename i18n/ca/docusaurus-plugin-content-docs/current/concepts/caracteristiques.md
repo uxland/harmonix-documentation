@@ -1,63 +1,56 @@
 ---
-sidebar_position: 2
+sidebar_position: 3
 ---
 
 # Característiques
 
-# Característiques principals
+## Característiques principals
 
-1. **Desenvolupament Independent:** Els equips de desenvolupament poden treballar de manera independent en diferents plugins, la qual cosa permet una major agilitat i facilita la implementació de canvis i noves característiques.
-2. **Escalabilitat:** L'arquitectura basada en plugins modulars facilita l'escalabilitat horitzontal, ja que cada plugin es pot escalar per separat. Això és particularment beneficiós en entorns on certes parts de la interfície d'usuari poden experimentar una càrrega major que altres.
-3. **Reutilització de Components:** Els components de la interfície d'usuari poden ser reutilitzats en diferents parts de l'aplicació, la qual cosa pot conduir a un desenvolupament més eficient i a la consistència en l'aparença i el comportament de la interfície d'usuari.
-4. **Tecnologia Heterogènia:** Els equips poden triar les tecnologies més adients per a cada plugin, la qual cosa permet la utilització de diferents marcs de treball i llibreries segons els requisits específics de cada part de la interfície d'usuari.
-5. **Resistència a Fallades:** L'arquitectura basada en plugins modulars pot fer que l'aplicació sigui més resistent a fallades, ja que un error en un plugin no afectarà necessàriament a tota l'aplicació.
-6. **Interactivitat:** Els plugins poden interactuar via comandes i events entre ells, això com amb els serveis que proporcioni el shell (modals, traduccions, events de negoci, etcètera)
-7. **Autenticació i seguretat**: El sistema proporciona un client http per gestionar de forma més fàcil l'autenticació, conservar i refrescar la sessió i preservar la seguretat i evitar errors de creuament de dades.
-8. **Millora l'Experiència de l'Usuari:** Al permetre actualitzacions incrementals i ràpides en parts específiques de la interfície d'usuari, es pot millorar l'experiència de l'usuari a l'introduir noves característiques o corregir problemes de manera més ràpida.
+1. **Desenvolupament independent.** Els equips treballen en plugins diferents de manera independent. Cada plugin té el seu repositori, la seva construcció i el seu cicle de publicació.
+2. **Creix afegint plugins.** Les funcionalitats noves s'afegeixen com a plugins nous, sense tocar el shell ni els altres plugins.
+3. **Diverses vistes per plugin.** Un plugin pot registrar vistes en diverses regions del shell. Totes comparteixen el codi i les dades del plugin.
+4. **Tecnologia heterogènia.** Cada equip tria el framework que s'adapta al seu plugin: React, Angular, Lit o JavaScript sense framework.
+5. **Aïllament d'errors.** Si un plugin no es pot carregar o iniciar, l'error es registra a la consola i els altres plugins es carreguen igualment.
+6. **Comunicació entre plugins.** Els plugins intercanvien esdeveniments i peticions a través del [broker](../api/broker.md) del shell, sense importar-se entre ells.
+7. **Serveis del shell.** Cada shell pot exposar els seus propis serveis (client HTTP, autenticació, notificacions, traduccions…) a través de la seva API.
+8. **Actualitzacions més ràpides.** Un plugin es pot actualitzar sense tornar a desplegar el shell, de manera que les correccions i les funcionalitats arriben abans als usuaris.
 
-<br/>
+## Conceptes
 
-# Conceptes
+- **Nucli d'Harmonix** (`@uxland/harmonix`). Carrega i inicia els plugins, dona a cadascun la seva API i proporciona el gestor de regions.
+- **Shell.** L'aplicació principal. És un esquelet de regions on els plugins injecten les seves vistes, i construeix l'API que rep cada plugin.
+- **Plugin.** Un mòdul ES independent que exporta `initialize(api)` i `dispose(api)`. Conté tot el necessari per a una funcionalitat de l'aplicació.
+- **Regió.** Una àrea del shell on s'injecten vistes. Una regió pot mostrar una sola vista alhora (*single-active*) o diverses (*multiple-active*).
+- **Vista.** Un Web Component, registrat per un plugin, que es mostra en una regió.
+- **Broker.** El bus de missatges entre plugins: esdeveniments (publicació/subscripció) i peticions (enviament/resposta).
+- **Sandbox.** Una aplicació aïllada per desenvolupar i provar plugins: un shell amb només els plugins que s'estan desenvolupant. El [creador de plugins](../create-plugin/create-a-plugin.mdx) en configura un amb el [shell de demostració d'Harmonix](../create-plugin/demo-shell.md).
+- **Plugin Store.** El servei on es publiquen els plugins i d'on l'aplicació obté els plugins que carrega. Consulta [Gestió de plugins amb un Plugin Store](./gestio-plugins-plugin-store.md).
 
-1. **Motor Harmonix**: El "core" del framework, l'encarregat d'inicialitzar l'aplicació i tots els plugins, i dotar-los de capacitats especials per ser autocontinguts d'un shell.
-2. **Plugin**: Un plugin és una part independent del sistema que conté tot el necessari per executar una part específica de la funcionalitat de l'aplicació. Els plugins són reutilitzables i poden ser intercanviats entre diferents sistemes o aplicacions.
-3. **Shell:** És un esquelet format per diferents regions sobre el qual els desenvolupadors poden construir i injectar els seus plugins.
-4. **Regió:** És un espai definit al shell on poden injectar-se diferents vistes definides pels plugins. Les regions poden tenir característiques diferents com per exemple la capacitat de mostrar una o més d'una vista alhora, així com diferents adaptadors que alteren el seu comportament.
-5. **Vista:** És la instància d'un component o conjunt de components que per si sols tenen un sentit funcional. Les vistes s'injecten en les diferents regions del shell.
-6. **Sandbox.** És una aplicació aïllada per desenvolupar i provar plugins de manera independent, separada dels altres mòduls: un shell només amb els plugins que s'estan desenvolupant. És part del tooling de desenvolupament de la solució. El [creador de plugins](../create-plugin/create-a-plugin.mdx) en configura un amb el [shell de demostració d'Harmonix](../create-plugin/demo-shell.md).
-7. **SDK (Software Development Kit)**: Aquest és un conjunt d'eines que permet als desenvolupadors crear plugins i poder-se integrar amb el sistema, així com interactuar amb ell i altres plugins, en cas que ho necessitin.
-8. **Plugin Store**: És el lloc on es publiquen i guarden tots els plugins disponibles per al seu ús. Funciona com un repositori de bundles compilats i del qual l'aplicació n'obtindrà els necessaris per compondre la UI.
+Harmonix es distribueix en aquests paquets:
 
-  
+| Paquet | Ús |
+| --- | --- |
+| `@uxland/harmonix` | Nucli: inici dels plugins, gestor de regions i tipus de l'API |
+| `@uxland/harmonix-demo-shell` | Un shell mínim per desenvolupar i provar plugins |
+| `@uxland/create-harmonix-plugin` | Crea un projecte de plugin nou |
+| `@uxland/harmonix-cli` | Publica plugins en un Plugin Store (`harmonix publish`) |
+| `@uxland/harmonix-adapters` | Converteix components de React en Web Components |
 
-![](https://t9012015559.p.clickup-attachments.com/t9012015559/60d2fe59-dd78-406e-8701-cea5bdc2d40f/image.png)
+![Un shell amb les seves regions, les vistes de les quals provenen de plugins del Plugin Store](/img/concepts/shell-plugin-store.png)
 
+## Comparació amb altres enfocaments
 
-<br/>
+- **Un plugin, moltes vistes.** Amb les regions, un plugin pot injectar diverses vistes en diverses regions del shell. Amb iframes, cada peça incrustada necessita la seva pròpia URL.
+- **Més enllà d'una aplicació per ruta.** Eines com Webpack Module Federation o single-spa se solen fer servir perquè cada part de la pàgina sigui un microfrontend separat. En una estació de treball, una sola pantalla sovint combina peces de molts equips. Harmonix les compon per regió, no per ruta.
+- **Sense un servidor web per equip.** Un iframe necessita un servidor web que en serveixi l'HTML i el JavaScript. Un plugin d'Harmonix és un sol fitxer JavaScript, que pot servir un Plugin Store.
+- **Sense problemes d'origen creuat.** Els iframes poden comportar problemes de CORS i de xarxa. Els plugins s'executen a la mateixa pàgina que el shell.
+- **Comunicació integrada.** Els plugins i el shell es comuniquen a través de l'API i del broker, amb un contracte clar. Per exemple, un plugin pot demanar al shell que mostri una notificació.
+- **Governança.** Un Plugin Store (quan l'aplicació en té un) pot controlar quins plugins i quines versions rep cada usuari.
+- **Biblioteques compartides.** Els plugins no empaqueten el framework ni el shell: l'aplicació els proporciona una sola vegada, i així l'aplicació és més lleugera.
+- **Desenvolupament local.** Els equips desenvolupen amb un sandbox a la seva màquina, en lloc d'esperar un entorn de proves compartit.
 
-# Beneficis i avantatges respecte altres enfocaments  o eines
+## Tecnologies compatibles
 
-*   Amb el sistema basat en plugins i regions, es pot aconseguir que 1 sol plugin, pugui injectar **múltiples vistes** a **múltiples regions** de l'aplicació contenidora (shell). Amb un sistema basat en microfrontends en iframes, has de tenir una única URL per component a injectar.
-*   Els sistemes com Webpack Model Federation, Single SPA o altres eines, estan pensats per fer **Microfrontends convencionals**, on cada part de l'aplicació és un microfrontend. En estacions de treball complexes, diferents parts de l'aplicació es poden compondre a base de **moltes iniciatives i verticals diferents**, inclús barrejar-se, filtrar-se i necessitats funcionals complexes que aquestes eines no poden resoldre.
-*   L'iframe necessita un **servidor web** per servir l'HTML i JS. Amb la nostra solució, el **Plugin Store** serviria el compilat com a repositori d'objectes, evitant que els verticals hagin de tenir un servidor web (reducció dràstica del cost d'infraestructura i CI/CD)
-*   L'iframe pot generar **problemes de CORS** i requereix coneixement per part del proveïdor desenvolupador de mòduls, coneixements d'infraestructura per resoldre possibles problemes de xarxa.
-*   El framework implementa un sistema de **comunicació intermodular**, aplicació-plugin, reutilitzable, que no requereix implementació per part del desenvolupador de plugins.
-    *   Permet establir un contracte clar entre les peces i augmenta les possibilitats d'una interacció més **transparent** app-plugin.
-    *   Casos d'ús d'exemple (cridar un snackbar, utilitzar un component UI com un busy), etc
-*   El Plugin Store encapsula la **complexitat de governança** de permisos de plugins.
-*   **Compartir llibreries** comunes entre plugins, com podria ser el Design System o llibreries de JS React, Vue, Lit... (**reducció en pes de l'aplicació**)
-*   Facilita el desenvolupament de plugins proporcionant un **sandbox fàcilment instal·lable**, actualitzable i testejable. En el cas de l'iframe, hauries d'esperar a fer les proves a un entorn de proves preproductiu.
-*   Proporciona una **documentació clara** d'un desenvolupament de plugin i, en conseqüència, una definició clara del flux de treball.
+Cada vista que registra un plugin ha de ser un element HTML, normalment un [Web Component estàndard](https://developer.mozilla.org/en-US/docs/Web/API/Web_components). Els Web Components encapsulen els seus estils i el seu pintat, de manera que no xoquen amb altres plugins.
 
-
-<br/>
-
-# Tecnologies compatibles amb Harmonix
-
-Harmonix és un sistema d'injecció dinàmica de plugins, on aquests plugins poden tenir N componentes/vistes injectades en N regions. Cada un d'aquests components, ha de ser un [Web Component standard](https://developer.mozilla.org/es/docs/Web/API/Web_components).
-
-Els **Web Components** estàn establerts en l'ecosistema frontend Javascript i són una bona solució per les aplicacions basades en Harmonix, ja que encapsulen els estils i la llògica de pintat fent que no hi hagi col·lisions amb altres components i plugins.
-
-Per tant, quan es crea un plugin sempre s'ha d'encapsular cada un dels components creats amb la tecnologia que sigui, en un Web Component. Per tant, podriem dir que **Harmonix és compatible amb qualsevol llibreria/framework de renderitzat Javascript que sigui capaç de acabar creant un Web Component**.
-
-Hi ha diverses formes d'encapsular un component d'una llibreria Javascript, i des de l'equip de desenvolupament d'Harmonix, treballem per donar la **sol·lució més òptima** per a cada cas. Actualment, els frameworks que han estat provats i que tenim documentats són: **Vanilla JS** (Javascript natiu sense llibreria), **Lit 3**, **Angular 18** i **React 19**. A mesura que els consumidors d'Harmonix vagin necessitant altres com Vue, etcètera, anirem donant el suport i documentant.
+Harmonix funciona amb qualsevol biblioteca o framework de JavaScript que pugui generar un Web Component. El creador de plugins té plantilles per a React 19, Lit 3 i Angular 20. Un plugin fa servir la versió del framework que proporciona l'aplicació. Consulta [Notes per framework](../create-plugin/frameworks.mdx).

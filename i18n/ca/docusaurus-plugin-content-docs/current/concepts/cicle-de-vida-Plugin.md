@@ -1,55 +1,56 @@
 ---
-sidebar_position: 4
+sidebar_position: 5
 ---
 
-# Cicle de vida d'un Plugin
+# Cicle de vida d'un plugin
 
-# Introducció
+Un plugin és un mòdul ES, normalment empaquetat en un sol fitxer JavaScript. Exporta dues funcions, que retornen una `Promise`:
 
-Un plugin és una llibreria/paquet de Node.js que exporta almenys una funció `initialize` que rep una API de plugin per a connectar components a una instància de Harmonix Shell que l'allotja.
+- `initialize(api)` inicia el plugin.
+- `dispose(api)` l'atura i desfà tot el que ha fet `initialize`.
 
-El cicle de vida d'un plugin existeix en dues categories diferents:
+```typescript
+import type { DemoShellApi, BrokerDisposableHandler } from "@uxland/harmonix-demo-shell";
 
-*   **Cicle de vida offline**, és a dir, tot el que fa referència al desenvolupament, manteniment i provisionament d'un plugin.
-*   **Cicle de vida online**, és a dir, tot el que fa referència a carregar i avaluar un plugin dins d'una aplicació shell.
+let subscription: BrokerDisposableHandler | undefined;
 
-<br/>
+export const initialize = async (api: DemoShellApi) => {
+  await api.regionManager.registerMainView({
+    id: "orders",
+    factory: async () => document.createElement("orders-list"),
+  });
+  subscription = api.broker.subscribe("user:changed", () => console.log("Reload the orders"));
+};
 
-# Cicle de Vida Offline
+export const dispose = async (api: DemoShellApi) => {
+  subscription?.dispose();
+  await api.regionManager.removeView(api.regionManager.regions.main, "orders");
+};
+```
 
-El cicle de vida offline consisteix en:
+El cicle de vida d'un plugin té dues parts:
 
-1. Inicialització/Estructuració
+- **Cicle de vida fora de línia:** el desenvolupament, el manteniment i la distribució del plugin.
+- **Cicle de vida en línia:** el que passa amb el plugin dins d'un shell en execució.
+
+## Cicle de vida fora de línia
+
+1. Creació
 2. Desenvolupament i proves
 3. Publicació
 4. Manteniment
 5. Actualitzacions
-6. Desaprovació
+6. Obsolescència
 7. Desactivació
 
-  
+Les fases 1, 2 i 4 tenen lloc en local. Les fases 3, 5, 6 i 7 impliquen el Plugin Store, que les hauria de permetre totes. Alguns Plugin Stores també permeten un desplegament progressiu a la fase 3: una versió nova comença amb un subconjunt d'usuaris fins que és prou madura. Això és una capacitat del Plugin Store, no d'Harmonix.
 
-Mentre que les fases (1), (2) i (4) són purament locals, les fases (3), (5), (6) i (7) implicaran el servei de Plugin Store. Un servei de Plugin Store hauria de donar suport a totes aquestes accions. Normalment, a la fase (3) també es pot fer un desplegament progressiu, que implicaria començar només amb un subconjunt d'usuaris fins que el plugin arribi al nivell de maduresa desitjat.
+## Cicle de vida en línia
 
+1. **Càrrega.** El shell crida l'`importer()` de la `PluginDefinition` del plugin. Normalment és un `import()` dinàmic de l'URL del plugin al Plugin Store, o d'un mòdul local durant el desenvolupament.
+2. **Avaluació.** El navegador avalua el mòdul, que exposa `initialize` i `dispose`.
+3. **Inici.** Harmonix crida `initialize(api)` amb una instància de l'API creada per a aquest plugin. Tots els plugins s'inicien en paral·lel. Si un llança un error, l'error es registra a la consola i els altres plugins continuen.
+4. **Pintat.** Les vistes registrades apareixen a les seves regions. La `factory` de cada vista s'executa quan la seva regió necessita l'element.
+5. **Alliberament.** El shell crida `dispose(api)`. Aquesta funció és obligatòria i ho ha de desfer tot: eliminar les vistes, alliberar les subscripcions i els handlers de peticions del broker, aturar els temporitzadors i alliberar qualsevol altre recurs.
 
-<br/>
-
-# Cicle de Vida Online
-
-El cicle de vida online descriu què passa quan un plugin s'ha d'integrar en una aplicació shell. Tenim:
-
-1. Carrega
-2. Avaluació
-3. Configuració
-4. Renderització
-5. Desmuntatge
-
-  
-
-En la fase (1) es fa una petició al servei de Plugin Store i es recupera el script.
-
-A la fase (2) s'avalua el script.
-
-A la fase (3) s'executarà la funció de configuració necessària. En la fase de renderització (4) tots els components registrats de la fase (3) apareixeran a l'aplicació quan siguin necessaris.
-
-A la fase (5) s'executarà la funció opcional de desmuntatge.
+Consulta [Construir un shell](../api/building-a-shell.md) per veure aquest procés des del costat del shell.

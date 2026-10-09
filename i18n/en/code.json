@@ -425,5 +425,80 @@
   "techStack.title": {
     "message": "Supported technologies",
     "description": "Tech stack section title"
+  },
+  "composition.aria": {
+    "message": "Harmonix composing the plugins of three teams into one application"
+  },
+  "composition.plugin.orders": {
+    "message": "Orders"
+  },
+  "composition.plugin.insights": {
+    "message": "Insights"
+  },
+  "composition.plugin.alerts": {
+    "message": "Alerts"
+  },
+  "composition.plugin.profile": {
+    "message": "Profile"
+  },
+  "composition.plugin.help": {
+    "message": "Help"
+  },
+  "composition.team.sales": {
+    "message": "Sales team"
+  },
+  "composition.team.data": {
+    "message": "Data team"
+  },
+  "composition.team.platform": {
+    "message": "Platform team"
+  },
+  "composition.team.support": {
+    "message": "Support team"
+  },
+  "composition.orders.new": {
+    "message": "New order"
+  },
+  "composition.step.regions": {
+    "message": "The shell defines the regions"
+  },
+  "composition.step.ship": {
+    "message": "Each team ships its plugin"
+  },
+  "composition.step.compose": {
+    "message": "Harmonix composes them"
+  },
+  "composition.step.broker": {
+    "message": "They talk through the broker"
+  },
+  "composition.step.switch": {
+    "message": "Views switch without reloading"
+  },
+  "playground.legend": {
+    "message": "Choose which plugins the application loads:"
+  },
+  "playground.contributes.main": {
+    "message": "A view and a menu item."
+  },
+  "playground.contributes.region": {
+    "message": "A view in the {region}."
+  },
+  "playground.region.header": {
+    "message": "header"
+  },
+  "playground.region.menu": {
+    "message": "menu"
+  },
+  "playground.region.main": {
+    "message": "content"
+  },
+  "compose.description": {
+    "message": "Each plugin is independent: one team builds it, with the framework it prefers, and publishes it on its own. The application only decides which ones to load. Try it: switch plugins on and off, change views from the menu or create an order."
+  },
+  "getStarted.copy": {
+    "message": "Copy"
+  },
+  "getStarted.copied": {
+    "message": "Copied"
   }
 }

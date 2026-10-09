@@ -1,22 +1,22 @@
 ---
-sidebar_position: 6
+sidebar_position: 2
 ---
 
-# Example use of a Harmonix-based application
+# Example of use
 
-# Quick Shell Overview
+This page shows how a Harmonix application is put together. It uses the [Harmonix demo shell](../create-plugin/demo-shell.md), the small shell that Harmonix provides to develop and try plugins.
 
-To explain how **Harmonix** works and how you can build an app composed of different plugins developed in different technologies and by different clients, we will use the [Harmonix demo shell](../create-plugin/demo-shell.md), the small shell that Harmonix provides to develop and try plugins.
+## The parts
 
+There are three parts:
 
+- **Harmonix** (`@uxland/harmonix`). The core that loads the plugins, gives each one an API and manages the regions.
+- **The shell.** The main application. It defines a skeleton with regions where plugins inject Web Components. Each application builds its own shell, with its own layout and services.
+- **The plugins.** Packages developed by other teams. They are built and published, usually to a Plugin Store, and the shell loads them.
 
-First of all, there is **Harmonix**, the main engine capable of obtaining and joining all these plugins, providing them with functionalities to interact with each other and thus composing the final application.
+## The shell
 
-
-
-Second, there is the "**Shell**", which will be the main application and which through Harmonix, will define a skeleton with regions where plugins can inject different Web Components. Each application must build a different Shell, as each one will have its own skeleton and way of working. The demo shell has three regions: a header, a side menu and the main content. The shell, by itself, is nothing more than a set of containers, an empty skeleton. If we saw the shell before starting the plugins, we would see something similar to this:
-
-
+The demo shell has three regions: a header, a side menu and the main content. On its own, the shell is an empty skeleton. Before any plugin starts, its DOM looks like this:
 
 ```html
 <harmonix-demo-shell>
@@ -32,23 +32,14 @@ Second, there is the "**Shell**", which will be the main application and which t
 </harmonix-demo-shell>
 ```
 
-<br/>
+## A plugin
 
-# Quick Plugin Overview
+Each plugin is built and bundled into a JavaScript file, for example `plugin1-1.2.0.js`.
 
-And finally, we have the "**plugins**", which are nothing more than packages developed by a 3rd party, which are compiled, and once published to a "Plugin Store", are ready to be consumed by the Shell.
+The file is an ES module that exports two functions:
 
-
-
-Each plugin needs to be compiled and bundled, generating a JavaScript file, for example:
-
-**_plugin1-version-23.45.js._**
-
-
-
-These plugins, in their Javascript, need to define an **entry point** to start their lifecycle. At this initialization point, each plugin receives an object from the Shell, called **api**. With this API, the plugin has everything it needs to function within the Shell. For example, it has a way to register each component to each region that has been defined (header, side menu, main), or to publish and listen to events that other plugins may communicate. Each shell can add more services to its API: an HTTP client to make calls to a backend, a way to show a notification message on screen, among many other things. This would be an example of a plugin entry point:
-
-
+- `initialize(api)` starts the plugin. The shell calls it with an **API** object. Through the API the plugin registers its views in the regions (header, side menu, main) and publishes or listens to events from other plugins. Each shell can add more services to its API, such as an HTTP client or notifications.
+- `dispose(api)` stops the plugin. It must undo everything `initialize` did.
 
 ```typescript
 import type { DemoShellApi } from "@uxland/harmonix-demo-shell";
@@ -56,23 +47,28 @@ import type { DemoShellApi } from "@uxland/harmonix-demo-shell";
 export const initialize = async (api: DemoShellApi) => {
   const { regions } = api.regionManager;
 
-  // registration of Web Components in the regions of the shell skeleton
+  // Register Web Components in the regions of the shell
   await api.regionManager.registerView(regions.header, { id: "header", factory: async () => new Plugin1HeaderWebComponent() });
   await api.regionManager.registerView(regions.sideMenu, { id: "menu", factory: async () => new Plugin1MenuWebComponent() });
   await api.regionManager.registerView(regions.main, { id: "main", factory: async () => new Plugin1MainWebComponent() });
 
-  // tell the other plugins that this one is ready
+  // Tell the other plugins that this one is ready
   await api.broker.publish("plugin1:ready", { pluginId: api.pluginInfo.pluginId });
+};
+
+export const dispose = async (api: DemoShellApi) => {
+  const { regions } = api.regionManager;
+  await api.regionManager.removeView(regions.header, "header");
+  await api.regionManager.removeView(regions.sideMenu, "menu");
+  await api.regionManager.removeView(regions.main, "main");
 };
 ```
 
-<br/>
+`Plugin1HeaderWebComponent` and the others are custom elements defined by the plugin.
 
-# Quick Shell + Plugins Overview
+## The shell with plugins
 
-Once the Shell and the Harmonix framework have given the order to start the plugins, the Shell skeleton goes from being empty to being an application composed of many Web Components. If we now see how the DOM looks, it would be something like this:
-
-
+Once the plugins have started, the skeleton is filled with their Web Components. With two plugins, the DOM looks like this:
 
 ```html
 <harmonix-demo-shell>
@@ -101,14 +97,8 @@ Once the Shell and the Harmonix framework have given the order to start the plug
 </harmonix-demo-shell>
 ```
 
-
-
-As you can see, plugin1 and plugin2 have been able, through the API received at their initial point, to register different Web Components in different regions. Now the Shell application is full. The main region shows only one view at a time: the other one stays hidden until a menu item activates it.
-
-
+The header and the side menu are **multiple-active** regions: all their views are shown at once. The main region is **single-active**: only one view is shown at a time. When all the plugins have started, if no plugin has activated a main view, the demo shell activates the first one registered. The other view stays `hidden` until a menu item activates it.
 
 ![Two plugins in the demo shell](/img/create-plugin/demo-shell-regions.png)
 
-
-
-To develop a plugin, teams do not need the final application: the [plugin creator](../create-plugin/create-a-plugin.mdx) gives them a project that runs the plugin in the demo shell, so they can work individually and see how their plugin will look.
+To develop a plugin, teams do not need the final application. The [plugin creator](../create-plugin/create-a-plugin.mdx) gives them a project that runs the plugin in the demo shell, so they can work on their own and see how the plugin will look.

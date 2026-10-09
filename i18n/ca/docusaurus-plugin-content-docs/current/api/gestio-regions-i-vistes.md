@@ -1,108 +1,116 @@
 ---
-sidebar_position: 8
+sidebar_position: 2
 ---
 
-# Gestió de regions i vistes a Harmonix
+# Regions i vistes
 
-# Introducció
+Una **regió** és una àrea del shell on els plugins injecten vistes. Una **vista** és un element HTML, normalment un Web Component, que registra un plugin.
 
-Una de les característiques de les aplicacions d'Harmonix és el concepte de Regió. Qualsevol shell basat en Harmonix, ha de crear les regions pertinents i proporcionar una **api** als plugins per a gestionar les diferents **regions** de l'aplicació. Per dur a terme totes aquestes funcionalitats, Harmonix utilitza la llibreria _@uxland/regions._
+El shell crea les regions i dona a cada plugin un `regionManager` a la seva API. Aquesta pàgina explica com el fan servir els plugins. Per crear regions al teu propi shell, consulta [Construir un shell](./building-a-shell.md).
 
-Nota: algunes funcionalitats, s'hauran d'importar d'aquesta llibreria. En versions futures, Harmonix s'encarregarà d'exportar-les fent que el shell només tingui com a dependència única Harmonix.
+Harmonix fa servir la biblioteca [`@uxland/regions`](https://www.npmjs.com/package/@uxland/regions). El nucli torna a exportar `createRegionManager` i `createRegionHost`. El decorador `@region` i els adaptadors vénen de `@uxland/regions`, de la qual el shell depèn directament.
 
-<br/>
-
-# API HarmonixRegionManager
-
-Harmonix té una api per defecte per fer tota aquesta gestió de injecció de vistes a regions.
+## `HarmonixRegionManager`
 
 ```typescript
 export interface HarmonixRegionManager {
-    registerView(regionName: string, view: HarmonixViewDefinition): Promise<void>;
-    removeView(regionName: string, viewId: string): Promise<void>;
-    activateView(regionName: string, viewId: string): Promise<void>;
-    deactivateView(regionName: string, viewId: string): Promise<void>;
-    getRegion(regionName: string): Promise<IRegion>;
-    isViewActive(regionName: string, viewId: string): Promise<boolean>;
-    containsView(regionName: string, viewId: string): Promise<boolean>;
+  registerView(regionName: string, view: HarmonixViewDefinition): Promise<void>;
+  removeView(regionName: string, viewId: string): Promise<void>;
+  activateView(regionName: string, viewId: string): Promise<void>;
+  deactivateView(regionName: string, viewId: string): Promise<void>;
+  getRegion(regionName: string): Promise<IRegion>;
+  isViewActive(regionName: string, viewId: string): Promise<boolean>;
+  containsView(regionName: string, viewId: string): Promise<boolean>;
 }
 ```
 
-  
+| Mètode | Què fa |
+| --- | --- |
+| `registerView(region, view)` | Registra una vista en una regió |
+| `removeView(region, viewId)` | Elimina la vista de la regió |
+| `activateView(region, viewId)` | Mostra la vista. En una regió d'una sola vista activa, amaga la vista que estava activa |
+| `deactivateView(region, viewId)` | Amaga la vista |
+| `getRegion(region)` | L'objecte `IRegion` de `@uxland/regions` |
+| `isViewActive(region, viewId)` | Si la vista es mostra |
+| `containsView(region, viewId)` | Si la vista està registrada a la regió |
 
-Cada plugin pot declarar diferents vistes i injectar-les per les diferents regions.
+Un plugin pot registrar vistes en diverses regions.
 
-<br/>
-
-# Extensió API regions i creació api "amigable"
-
-Ara bé, cada Shell pot ampliar aquesta api i crear mètodes més "amigables" pels plugins com per exemple: `registerMainView`, `registerSidebarMenu`, on només demanin l'objecte "view", i ja no faci falta que els plugins coneguin el nom de la regió, ja que el propi mètode ja és explícit de quina regió es tracta "main", "sidebar". Trobareu un exemple d'aquesta extensió al [shell de demostració d'Harmonix](../create-plugin/demo-shell.md), amb `registerMainView`, `activateMainView` i `registerNavigationItem`.
-
-
-<br/>
-
-# Creació regionManager i regionHost
-
-El shell ha de crear l'objecte `regionManager`, l'objecte encarregat de la gestió de vistes i el regionHost, un Mixin per Lit necessari per tots aquells WebComponents que necessitin declarar regions i que està associat al `regionManager` anterior.
+## Definició d'una vista
 
 ```typescript
-const regionManager: IRegionManager = createRegionManager("hes-cc-conf");
-export const HesCConfRegionHost: any = createRegionHost(regionManager as any);
-```
-
-<br/>
-
-# Creació d'una regió al Shell
-
-En el component del Shell, hem de fer servir el decorador **_@region_** per tal de declarar una regió, indicant el nom i qui serà el host (quina element HTML serà la capsa on s'injectaran les vistes). Exemple:
-
-```typescript
-@customElement("my-shell")
-export class HesCConfShell extends HesCConfRegionHost(LitElement) {
-  
-  @region({ targetId: "header-right-region-container", name: shellRegions.headerRight })
-  headerRightRegion: IRegion | undefined;
+export interface HarmonixViewDefinition {
+  id: string;
+  factory: (regionContext?: unknown) => Promise<HTMLElement>;
+  sortHint?: string;
+  isDefault?: boolean;
+  removeFromDomWhenDeactivated?: boolean;
 }
 ```
 
-<br/>
+| Camp | Descripció |
+| --- | --- |
+| `id` | Id de la vista. El fan servir `activateView`, `removeView` i els altres mètodes |
+| `factory(regionContext?)` | Funció asíncrona que crea l'element. S'executa la primera vegada que s'activa la vista. `regionContext` és el context que el shell ha definit a la regió, si n'hi ha |
+| `sortHint` | Opcional. Clau d'ordenació per a les vistes d'una regió amb diverses vistes actives |
+| `isDefault` | Opcional. En una regió d'una sola vista activa, la vista s'activa quan s'afegeix si no n'hi ha cap altra d'activa, i també cada vegada que es desactiva la vista activa |
+| `removeFromDomWhenDeactivated` | Opcional. Treu l'element del DOM quan es desactiva la vista, en lloc d'amagar-lo |
 
-# Exemple complet
+### Ids de les vistes
 
-Podem crear un nou component per a seguir amb l'exemple, que en aquest cas serà `ExampleComponent`.
+Al shell de demostració, un id de vista només ha de ser únic dins del plugin: el shell desa cada vista com a `pluginId::viewId`. Si el teu shell no separa els ids d'aquesta manera, posa-hi com a prefix `api.pluginInfo.pluginId`.
 
-  
+## Tipus de regions
 
-En la inicialització del plugin, es rep l'objecte _api_, amb un `regionManager`. Aquest objecte permetrà registrar i injectar vistes, activar-les, desactivar-les, eliminar-les i fer tot el necessari.
+El shell tria com es comporta cada regió:
 
-  
+- Les regions **d'una sola vista activa** (*single-active*) mostren una vista alhora. Activar una vista amaga l'anterior. L'àrea de contingut principal sol ser d'aquest tipus.
+- Les regions **de diverses vistes actives** (*multiple-active*) mostren totes les seves vistes alhora, per exemple una capçalera o un menú. Una vista s'activa tan bon punt es registra.
 
-L'acció més bàsica és **registrar** una vista. Per a això, només hem de cridar al mètode _registerView_ indicant la regió on volem injectar la vista i l'objecte _View_. Aquest objecte definirà una factoria que retornarà el component que volem injectar.
+## Dreceres del shell
 
-  
+Un shell pot afegir dreceres perquè els plugins no hagin de conèixer els noms de les regions. El [shell de demostració](../create-plugin/demo-shell.md) afegeix:
 
-Ara bé, el shell pot oferir funcions "helper" perquè la injecció sigui més declarativa. El [shell de demostració d'Harmonix](../create-plugin/demo-shell.md), per exemple, té `registerMainView`, amb què ja no cal passar la regió, i `registerNavigationItem`, que afegeix al menú lateral un element que, en fer-hi clic, activa una vista de la regió `main`.
+| Drecera | Què fa |
+| --- | --- |
+| `regions` | Els noms de les regions: `regions.header`, `regions.sideMenu`, `regions.main` |
+| `registerMainView(view)` | `registerView` a la regió `main` |
+| `activateMainView(viewId)` | `activateView` a la regió `main` |
+| `registerNavigationItem({ id, label, icon?, mainViewId })` | Afegeix al menú lateral un element que activa la vista principal `mainViewId` |
 
-  
+Aquestes dreceres són del shell de demostració, no del nucli. Altres shells en poden oferir de diferents.
 
-La funció `activateMainView` del `regionManager` és l'encarregada de seleccionar quina és la vista activa a la regió main. Necessita com a argument l'id de la vista que s'ha registrat anteriorment, en aquest cas, "_plugin-main-view_". Els ids només han de ser únics dins del plugin: el shell desa cada vista com a `pluginId::viewId`.
+## Exemple complet
 
-  
+Primer, el plugin defineix l'element que mostrarà:
 
-Exemple, amb el shell de demostració:
+```typescript
+class ExampleComponent extends HTMLElement {
+  connectedCallback() {
+    const root = this.shadowRoot ?? this.attachShadow({ mode: "open" });
+    root.innerHTML = `<h1>Hello from ${this.getAttribute("plugin-id")}</h1>`;
+  }
+}
 
-  
+if (!customElements.get("example-plugin-view")) {
+  customElements.define("example-plugin-view", ExampleComponent);
+}
+```
+
+Després, el plugin el registra a `initialize` i l'elimina a `dispose`. Aquest exemple fa servir el shell de demostració:
 
 ```typescript
 import type { DemoShellApi } from "@uxland/harmonix-demo-shell";
 
 export const initialize = async (api: DemoShellApi) => {
-  console.log(`Plugin ${api.pluginInfo.pluginId} initialized`);
-
   // Generic: a view in any region.
   await api.regionManager.registerView(api.regionManager.regions.main, {
     id: "plugin-main-view",
-    factory: () => Promise.resolve(new ExampleComponent()),
+    factory: async () => {
+      const element = new ExampleComponent();
+      element.setAttribute("plugin-id", api.pluginInfo.pluginId);
+      return element;
+    },
   });
 
   // Helper: an item in the side menu that activates that view.
@@ -114,5 +122,11 @@ export const initialize = async (api: DemoShellApi) => {
 
   // Show it.
   await api.regionManager.activateMainView("plugin-main-view");
+};
+
+export const dispose = async (api: DemoShellApi) => {
+  const { regions } = api.regionManager;
+  await api.regionManager.removeView(regions.sideMenu, "plugin-menu");
+  await api.regionManager.removeView(regions.main, "plugin-main-view");
 };
 ```

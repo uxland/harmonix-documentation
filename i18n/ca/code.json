@@ -425,5 +425,80 @@
   "techStack.title": {
     "message": "Tecnologies suportades",
     "description": "Tech stack section title"
+  },
+  "composition.aria": {
+    "message": "Harmonix compon en una sola aplicació els plugins de tres equips"
+  },
+  "composition.plugin.orders": {
+    "message": "Comandes"
+  },
+  "composition.plugin.insights": {
+    "message": "Indicadors"
+  },
+  "composition.plugin.alerts": {
+    "message": "Avisos"
+  },
+  "composition.plugin.profile": {
+    "message": "Perfil"
+  },
+  "composition.plugin.help": {
+    "message": "Ajuda"
+  },
+  "composition.team.sales": {
+    "message": "Equip de vendes"
+  },
+  "composition.team.data": {
+    "message": "Equip de dades"
+  },
+  "composition.team.platform": {
+    "message": "Equip de plataforma"
+  },
+  "composition.team.support": {
+    "message": "Equip de suport"
+  },
+  "composition.orders.new": {
+    "message": "Nova comanda"
+  },
+  "composition.step.regions": {
+    "message": "El shell defineix les regions"
+  },
+  "composition.step.ship": {
+    "message": "Cada equip publica el seu plugin"
+  },
+  "composition.step.compose": {
+    "message": "Harmonix els compon"
+  },
+  "composition.step.broker": {
+    "message": "Es parlen pel broker"
+  },
+  "composition.step.switch": {
+    "message": "Canvien de vista sense recarregar"
+  },
+  "playground.legend": {
+    "message": "Tria quins plugins carrega l'aplicació:"
+  },
+  "playground.contributes.main": {
+    "message": "Una vista i un element al menú."
+  },
+  "playground.contributes.region": {
+    "message": "Una vista a la {region}."
+  },
+  "playground.region.header": {
+    "message": "capçalera"
+  },
+  "playground.region.menu": {
+    "message": "menú"
+  },
+  "playground.region.main": {
+    "message": "contingut"
+  },
+  "compose.description": {
+    "message": "Cada plugin és independent: el fa un equip, amb el framework que vulgui, i es publica pel seu compte. L'aplicació només decideix quins carrega. Prova-ho: activa i desactiva plugins, canvia de vista al menú o crea una comanda."
+  },
+  "getStarted.copy": {
+    "message": "Copiar"
+  },
+  "getStarted.copied": {
+    "message": "Copiat"
   }
 }

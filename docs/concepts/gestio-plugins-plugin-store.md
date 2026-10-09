@@ -1,35 +1,32 @@
 ---
-sidebar_position: 5
+sidebar_position: 6
 ---
 
-# Plugin Management with Plugin Store
+# Plugin management with a Plugin Store
 
-# Introduction
+In production, a Harmonix application usually loads its plugins from a **Plugin Store**. A Plugin Store is a plugin repository. It manages which plugins the application loads and lets teams publish and update plugins without redeploying the application.
 
-Every Harmonix-based application needs a key piece to function, the Plugin Store.
+## How it works
 
-The **Plugin Store** is a plugin repository that provides a set of functionalities to manage and orchestrate the dynamic composition of Harmonix applications, as well as the dynamic loading and updating of plugins.
+- The Plugin Store supplies plugins to the application at runtime. New features and updates reach users without deploying the whole application.
+- It has a **discovery service** that returns a JSON list of the available plugins, with their metadata, version and location.
+- When the shell starts, it fetches that list and loads each plugin from its URL.
 
-<br/>
+## Capabilities
 
+A Plugin Store should offer:
 
-# Overview
+- **Discovery service.** The list of plugins available to the application, with their location.
+- **User and provider management.** An administration panel to manage users and roles.
+- **Independent publication.** An API through which each provider publishes new versions of its plugins.
+- **Version control.** Control over which version the discovery service returns.
+- **Rules.** Conditions on the plugins returned by the discovery service, for example by user role.
+- **File hosting.** The store serves the built plugin files, so plugin teams do not need their own infrastructure.
 
-*   It is a service that provides a way to dynamically supply plugins to a Harmonix instance. This allows real-time updates and the integration of new features without deploying the entire application.
-*   It has a discovery service that returns a JSON listing all available plugins, including their metadata and locations. This JSON object serves as a registry for all the microfrontends (plugins) that the Harmonix instance can load.
-*   When the Harmonix instance starts, it retrieves the plugin list from the specified URL and parses the JSON to obtain the details of each plugin, including its URL and version. Finally, the plugins are dynamically loaded into the application.
+## Publishing
 
-<br/>
+The Harmonix CLI, `@uxland/harmonix-cli`, uploads a plugin to a Plugin Store. `harmonix publish` reads the plugin id (`name`), the `version` and the file to upload (`module`) from the plugin's `package.json`. See [Build and publish](../create-plugin/build-and-publish.mdx).
 
-# Functionalities
-
-*   **Discovery service**. Service that provides the list of available plugins for the Harmonix instance and their location.
-*   **User and provider management.** It will provide an administration panel that will allow the creation and administration of users and roles.
-*   **Independent plugin deployment**. Through an API, providers will be able to deploy new versions of their plugins independently.
-*   **Version control**. There will be an administration panel that will allow control of the version returned in the discovery service.
-*   **Rules management**. It will allow the configuration of rules on the plugins returned in the deployment service, based on conditions (for example, user role).
-*   **CDN.** Plugins will deploy their compiled files to the Plugin Store server so it serves the content, avoiding the need for plugins to require their own infrastructure.
-
-
-
-**NOTE**: The Harmonix Framework does not have its own infrastructure and therefore, its own Plugin Store. Currently, each Harmonix-based application project must have a customized Plugin Store with its infrastructure and corresponding CI/CD, as well as its frontend and backend application to manage the specific roles and permissions of that project.
+:::note
+Harmonix does not include a Plugin Store. Each application provides its own, with its infrastructure, CI/CD and administration of roles and permissions.
+:::

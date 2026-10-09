@@ -425,5 +425,80 @@
   "techStack.title": {
     "message": "Tecnologías soportadas",
     "description": "Tech stack section title"
+  },
+  "composition.aria": {
+    "message": "Harmonix compone en una sola aplicación los plugins de tres equipos"
+  },
+  "composition.plugin.orders": {
+    "message": "Pedidos"
+  },
+  "composition.plugin.insights": {
+    "message": "Indicadores"
+  },
+  "composition.plugin.alerts": {
+    "message": "Avisos"
+  },
+  "composition.plugin.profile": {
+    "message": "Perfil"
+  },
+  "composition.plugin.help": {
+    "message": "Ayuda"
+  },
+  "composition.team.sales": {
+    "message": "Equipo de ventas"
+  },
+  "composition.team.data": {
+    "message": "Equipo de datos"
+  },
+  "composition.team.platform": {
+    "message": "Equipo de plataforma"
+  },
+  "composition.team.support": {
+    "message": "Equipo de soporte"
+  },
+  "composition.orders.new": {
+    "message": "Nuevo pedido"
+  },
+  "composition.step.regions": {
+    "message": "El shell define las regiones"
+  },
+  "composition.step.ship": {
+    "message": "Cada equipo publica su plugin"
+  },
+  "composition.step.compose": {
+    "message": "Harmonix los compone"
+  },
+  "composition.step.broker": {
+    "message": "Se hablan por el broker"
+  },
+  "composition.step.switch": {
+    "message": "Cambian de vista sin recargar"
+  },
+  "playground.legend": {
+    "message": "Elige qué plugins carga la aplicación:"
+  },
+  "playground.contributes.main": {
+    "message": "Una vista y un elemento en el menú."
+  },
+  "playground.contributes.region": {
+    "message": "Una vista en la {region}."
+  },
+  "playground.region.header": {
+    "message": "cabecera"
+  },
+  "playground.region.menu": {
+    "message": "menú"
+  },
+  "playground.region.main": {
+    "message": "contenido"
+  },
+  "compose.description": {
+    "message": "Cada plugin es independiente: lo hace un equipo, con el framework que quiera, y se publica por su cuenta. La aplicación solo decide cuáles carga. Pruébalo: activa y desactiva plugins, cambia de vista en el menú o crea un pedido."
+  },
+  "getStarted.copy": {
+    "message": "Copiar"
+  },
+  "getStarted.copied": {
+    "message": "Copiado"
   }
 }

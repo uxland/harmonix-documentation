@@ -4,142 +4,96 @@ sidebar_position: 13
 
 # FAQ
 
-# Frequently Asked Questions about Harmonix Framework
+## What is Harmonix?
 
+Harmonix is a framework for composing a single-page application from plugins that are developed and deployed independently. A shell defines regions, and each plugin registers Web Components as views in those regions.
 
+## Who is Harmonix for?
 
-### 1\. What is Harmonix Framework?
+For applications built by several teams, or by different companies, where each team develops its own features with its own technology and release cycle.
 
+## Which frameworks can I use?
 
+React, Angular, Lit or plain JavaScript/TypeScript: anything that produces a Web Component. The [plugin creator](../create-plugin/create-a-plugin.mdx) has templates for React, Lit and Angular.
 
-Harmonix is a microfrontend framework designed to facilitate the creation of advanced SPA applications with independent teams. It uses a modular plugin-based architecture to enable the integration of components in a scalable and flexible way.
+## What is the shell?
 
+The main application. It renders the layout, defines the regions, builds the API each plugin receives and loads the plugins. It also provides the common services, such as authentication or translations. See [Building a shell](../api/building-a-shell.md).
 
+## What is a plugin?
 
-### 2\. Who is Harmonix intended for?
+An ES module that exports `initialize(api)` and `dispose(api)`. It provides one feature of the application. It can be added, updated or removed without redeploying the shell. See [Plugin lifecycle](../concepts/cicle-de-vida-Plugin.md).
 
+## What are regions?
 
+Areas of the shell where plugins inject views. Some show one view at a time, others show several. See [Regions and views](../api/gestio-regions-i-vistes.md).
 
-Harmonix is ideal for large companies or projects with distributed teams, where each team can develop specific functionalities without affecting the rest of the application.
+## What does the Harmonix API offer?
 
+Each plugin receives an API with:
 
+- `regionManager`, to register and activate views in the regions.
+- `pluginInfo`, with the plugin id.
+- `createLocaleManager`, to translate the plugin's messages.
 
-### 3\. Is Harmonix compatible with multiple frameworks?
+Each shell extends it with its own services, such as a broker, an HTTP client or notifications. See the [API reference](../api/Api.md).
 
+## How are translations handled?
 
+Each plugin passes its messages to `api.createLocaleManager(messages)` and gets a translator. Harmonix only defines the interface; the shell implements it and decides the current language.
 
-Yes. It is technology agnostic, compatible with React, Angular, Lit, Vanilla JavaScript, and TypeScript, among others.
+## How do plugins communicate?
 
+Through the shell's [broker](../api/broker.md). A plugin can publish events that any number of plugins subscribe to, or send requests that one plugin answers. Plugins never import each other.
 
+## What happens if a plugin fails to load?
 
-### 4\. How are regions managed?
+The error is logged and the plugin is skipped. The other plugins are loaded and initialized normally.
 
+## Do I need a Plugin Store? How do I publish a plugin?
 
+A shell can load plugins from any URL or from local modules, so a Plugin Store is not required. In production, applications usually have one to manage plugins and versions. To upload a plugin, use `harmonix publish` from [`@uxland/harmonix-cli`](https://www.npmjs.com/package/@uxland/harmonix-cli). See [Build and publish](../create-plugin/build-and-publish.mdx) and [Plugin management with a Plugin Store](../concepts/gestio-plugins-plugin-store.md).
 
-Regions are defined areas within the Shell application where plugins can inject views. This system ensures the visual and functional integration of each component.
+## How do I develop a plugin without the final application?
 
+Use the [plugin creator](../create-plugin/create-a-plugin.mdx). It creates a project that runs your plugin inside the [demo shell](../create-plugin/demo-shell.md), a small shell with a header, a side menu and a main region.
 
+## How do I build my own shell?
 
-### 5\. What is the Shell application?
+Use `@uxland/harmonix` and `@uxland/regions` to create the regions, define your API and load the plugins with `bootstrapPlugins`. See [Building a shell](../api/building-a-shell.md).
 
+## Can two plugins use the same view id?
 
+In the demo shell, yes: it stores each view as `pluginId::viewId`. In other shells, it depends on whether the shell namespaces view ids. If it does not, prefix your ids with the plugin id.
 
-The Shell application acts as a main container for all plugins. It manages regions, navigation and common services, such as authentication, localization or state management.
+## How are styles isolated?
 
+Each view renders in its own Shadow DOM, so its styles do not leak out and the shell's styles do not leak in. The plugin creator templates already do this. Harmonix does not provide a common look: that is the job of the shell and its design system, for example through CSS custom properties.
 
+## How do plugins share libraries like React?
 
-### 6\. What is a plugin in Harmonix?
+Plugins do not bundle the framework. They are built with it as an external, and the application provides a single copy to all plugins. Develop with the same major version the application uses. See [Build and publish](../create-plugin/build-and-publish.mdx).
 
+## How does Harmonix compare to Module Federation, single-spa or iframes?
 
+- **Iframes** isolate completely, but each piece needs its own URL and web server, and communication and styling across frames are hard.
+- **Webpack Module Federation** and **single-spa** are general tools to load or mount separately built applications, often one per route.
+- **Harmonix** composes one screen from many plugins by region: one plugin can place views in several regions, and plugins talk through the shell's API and broker.
 
-A plugin is an independent module that provides specific functionalities to the application. It can be added, modified or removed without affecting the application's performance.
+## Is Harmonix suitable for small applications?
 
+It is designed for large applications with several teams. It can also make sense in a smaller application that is expected to grow or to involve more teams.
 
+## Does Harmonix support CI/CD?
 
-### 7\. What is the main function of the Harmonix API?
+Yes. Each plugin is built and published on its own, so each team can have its own pipeline and release independently.
 
+## What are the most common use cases?
 
+- Workstation-style applications built by independent teams.
+- SaaS platforms where customers enable different features.
+- Integrating products from different companies in the same interface.
 
-The Harmonix API allows:
+## Where can I find more resources?
 
-• Managing regions and injecting components.
-
-• Accessing specific plugin information (such as identifiers and metadata).
-
-• Creating custom functionalities, such as translations or visual interactions.
-
-
-
-### 8\. Can the API be customized?
-
-
-
-Yes, the API can be extended to adapt it to the specific needs of the project. This includes incorporating functionalities such as authentication, global state management, translations, and interaction services.
-
-
-
-### 9\. How is localization and translations managed?
-
-Harmonix includes tools to manage localized messages, which can be administered through the createLocaleManager function. This allows easily integrating multiple languages in large applications.
-
-
-
-### 10\. Is Harmonix suitable for small applications?
-
-
-
-Although Harmonix is intended for complex scenarios, it can also be useful in smaller applications if growth is expected or if multiple teams are needed.
-
-
-
-### 11\. Is Harmonix suitable for large projects?
-
-
-
-Yes, thanks to its modular and scalable architecture, Harmonix is intended for complex applications where multiple teams and providers work.
-
-
-
-
-
-### 12\. How does Harmonix help unify experiences?
-
-
-
-Through a system of shared regions and coherent styles, Harmonix ensures that the user perceives the application as an integrated whole, even though various teams participate.
-
-
-
-### 13\. What benefits does technological agnosticism bring?
-
-
-
-It allows using different technologies within the same application, taking advantage of the strengths of frameworks such as React for the interface and Angular for specific functionalities.
-
-
-
-### 14\. Does Harmonix support continuous integration and DevOps?
-
-
-
-Yes. Harmonix can be easily integrated with CI/CD pipelines to deploy plugins independently and maintain updated versions.
-
-
-
-### 15\. What are the most common use cases?
-
-
-
-• Complex applications with independent teams.
-
-• SaaS platforms where clients can customize functionalities.
-
-• Integration of products from different companies within the same interface.
-
-
-
-### 16\. Where can I find more resources and documentation?
-
-
-
-Complete documentation is available at [harmonixframework.dev](https://harmonixframework.dev/), including tutorials and best practices to get started.
+Start with [Create a plugin](../create-plugin/create-a-plugin.mdx). The source code is on [GitHub](https://github.com/uxland/harmonix).

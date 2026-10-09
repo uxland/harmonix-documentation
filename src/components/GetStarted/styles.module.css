@@ -32,7 +32,7 @@
   flex-direction: column;
   align-items: flex-start;
   gap: 32px;
-  width: 418px;
+  width: 470px;
 }
 
 .getStartedButton {
@@ -60,6 +60,48 @@
   color: #30363a;
   background-image: conic-gradient(from 0.5turn, #66ffe5, #8093ff 0.44turn, #66ffe5);
   text-decoration: none;
+}
+.command {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 10px 10px 10px 16px;
+  border: 1px solid #30363a;
+  border-radius: 10px;
+  background: #18191a;
+}
+.command code {
+  flex: 1;
+  overflow-x: auto;
+  padding: 0;
+  border: 0;
+  background: none;
+  color: #66ffe5;
+  font-size: 13px;
+  white-space: nowrap;
+}
+.command code span {
+  color: #7a7f84;
+}
+.copy {
+  flex: none;
+  padding: 6px 12px;
+  border: 1px solid #30363a;
+  border-radius: 6px;
+  background: #232526;
+  color: #f4f4f4;
+  font-family: "Gilroy-Regular";
+  font-size: 13px;
+  cursor: pointer;
+}
+.copy:hover {
+  border-color: #66ffe5;
+}
+.copy:focus-visible {
+  outline: 2px solid #66ffe5;
+  outline-offset: 2px;
 }
 .getStartedText {
   font-family: "Gilroy-Regular";

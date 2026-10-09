@@ -4,35 +4,49 @@ sidebar_position: 1
 
 # Introducció
 
-# Visió general
+Harmonix és un framework per compondre una aplicació d'una sola pàgina a partir de plugins que es desenvolupen i es despleguen de manera independent. Un shell defineix regions. Cada plugin és un mòdul de JavaScript, la funció `initialize(api)` del qual registra Web Components com a vistes en aquestes regions i es comunica amb altres plugins a través d'un broker.
 
-En un entorn en constant evolució i d'alta demanda funcional, l'eficiència i la precisió esdevenen crítics per proporcionar serveis de primera qualitat. Conscients d'aquesta necessitat creixent i de la dificultat de trobar eines capaces de resoldre casos d'ús complexes, es presenta un innovador **framework** basat en un **sistema de plugins modular**, dissenyat específicament per a la construcció d'aplicacions avançades.
+```typescript
+import type { DemoShellApi } from "@uxland/harmonix-demo-shell";
 
-  
+export const initialize = async (api: DemoShellApi) => {
+  await api.regionManager.registerMainView({
+    id: "orders",
+    factory: async () => document.createElement("orders-list"),
+  });
+};
 
-El sistema de plugins ofereix una solució **completa i adaptable** que permet als professionals tenir una **visió global** i **optimitzar** el seu entorn de treball segons les necessitats específiques de la seva pràctica. Aquest sistema proporciona una plataforma **versàtil** i d'alt **rendiment** que impulsa l'eficiència i millora els resultats.
+export const dispose = async (api: DemoShellApi) => {
+  await api.regionManager.removeView(api.regionManager.regions.main, "orders");
+};
+```
 
-<br/>
+## Per què Harmonix
 
-# Filosofia i principis de disseny
+Sovint, les aplicacions grans les construeixen diversos equips, de vegades d'empreses diferents. Cada equip vol triar les seves eines i publicar al seu ritme. Tot i així, els usuaris esperen una aplicació única i coherent.
 
-L’estratègia tecnològica basada en **plugins modulars**, a diferència de la tecnologia de microfrontends convencionals i iframes, ens permet que diferents equips de treball desenvolupin aquests plugins de forma **independent** i després cada un d’ells s’injecti visual i funcionalment en les diferents **regions** que la plataforma modular proporciona, de manera que per cada plugin es podran visualitzar **diferents vistes repartides per l’aplicació**, però alhora connectades tècnica i funcionalment entre si, oferint així una **versatilitat i rendiment** que ajudarà al fluxe de treball del professional.
+Harmonix divideix l'aplicació en dos tipus de peces:
 
-  
+- **El shell.** S'encarrega de la disposició de la pàgina, defineix les regions i dona una API a cada plugin. No conté cap funcionalitat de negoci.
+- **Els plugins.** Cadascun aporta una funcionalitat. Un plugin pot col·locar diverses vistes en diverses regions: una llista a l'àrea principal, un comptador a la capçalera i un element al menú lateral. Totes comparteixen el codi i les dades del plugin.
 
-A més a més, els plugins, a l’estar injectats i renderitzats per la pròpia plataforma i no ser un simple iframe, tenen **accés directe a funcionalitats i serveis** que ofereix la plataforma, així com la possibilitat d’interactuar amb altres plugins i evitar problemes de incompatibilitats, infraestructura i seguretat.
+Els plugins no són iframes. S'executen a la mateixa pàgina que el shell, de manera que poden fer servir els serveis que el shell exposa a la seva API i intercanviar missatges amb altres plugins.
 
+## Principis de disseny
 
-<br/>
+- **Plugins independents.** Cada plugin té el seu repositori, la seva tecnologia, la seva construcció i el seu cicle de publicació. Només ha de complir el contracte amb el shell: exportar `initialize` i `dispose`, i pintar Web Components.
+- **Agnòstic de la tecnologia.** Una vista és un Web Component estàndard. Es pot escriure amb React, Angular, Lit o JavaScript sense framework.
+- **Composició per regions.** El shell decideix on va cada cosa. Els plugins decideixen què hi va.
+- **Acoblament feble.** Els plugins no s'importen mai entre ells. Es comuniquen a través del broker del shell.
+- **Aïllament d'errors.** Si un plugin no es pot carregar o iniciar, els altres es carreguen igualment.
 
-# Casos d'ús principals
+## Casos d'ús principals
 
-L'escenari d'ús principal d'una aplicació basada en el framework **Harmonix**, és tota aquella aplicació estil "**Estació de treball**" i "**Single Page Application**", on l'usuari vol veure el màxim d'informació possible, interconnectada entre si, reactiva i amb una experiència que faci que el procés a realitzar sigui còmode, accessible, dinàmic i efectiu.
+Harmonix encaixa en aplicacions d'una sola pàgina de tipus estació de treball. En aquestes aplicacions, els usuaris veuen molta informació relacionada alhora, i les vistes han de reaccionar les unes a les altres.
 
-  
+És especialment útil quan una mateixa aplicació conté funcionalitats construïdes per equips o proveïdors diferents, cadascun amb la seva tecnologia i el seu cicle de publicació.
 
-A més a més, Harmonix prové d'una **sèrie d'eines** perquè aquestes estacions de treball pugui contenir diferents plugins, construïts amb **tecnologies i cicles de vida diferents**, on únicament han de complir unes **normes d'adhesió** amb l'**aplicació principal (shell)**, però alhora dotar de funcionalitats d'interactivitat amb aquests plugins.
+## Passos següents
 
-  
-
-Cal ressaltar la importància d'aquesta **autonomia** que tenen els plugins que actuen de microfrontends, per ser desenvolupats amb la **tecnologia** que es desitgi (sempre i quan s'encapsulin en un Web Component, que es detallarà en punts posteriors), i de tenir un **cicle de desenvolupament i desplegament** propis totalment agnòstics al framework i al shell, cosa que facilita i soluciona casos d'ús reals on la mateixa aplicació pot contenir plugins i iniciatives creades per **clients diferents**.
+- L'[Exemple d'ús](./exemple-us.md) mostra un shell i dos plugins.
+- [Crear un plugin](../create-plugin/create-a-plugin.mdx) et dona un plugin que funciona en pocs minuts.

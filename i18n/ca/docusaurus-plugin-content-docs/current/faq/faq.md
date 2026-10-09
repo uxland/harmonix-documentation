@@ -2,144 +2,98 @@
 sidebar_position: 13
 ---
 
-# FAQ
+# Preguntes freqüents
 
-# Preguntes Freqüents sobre Harmonix Framework
+## Què és Harmonix?
 
-  
+Harmonix és un framework per compondre una aplicació d'una sola pàgina a partir de plugins que es desenvolupen i es despleguen de manera independent. Un shell defineix regions, i cada plugin hi registra Web Components com a vistes.
 
-### 1\. Què és Harmonix Framework?
+## A qui s'adreça Harmonix?
 
-  
+A aplicacions construïdes per diversos equips, o per empreses diferents, on cada equip desenvolupa les seves funcionalitats amb la seva tecnologia i el seu cicle de publicació.
 
-Harmonix és un framework de microfrontends dissenyat per facilitar la creació d’aplicacions SPA avançades amb equips independents. Utilitza una arquitectura modular basada en plugins per permetre la integració de components de forma escalable i flexible.
+## Quins frameworks puc fer servir?
 
-  
+React, Angular, Lit o JavaScript/TypeScript sense framework: qualsevol cosa que generi un Web Component. El [creador de plugins](../create-plugin/create-a-plugin.mdx) té plantilles per a React, Lit i Angular.
 
-### 2\. Per a qui està pensat Harmonix?
+## Què és el shell?
 
-  
+L'aplicació principal. Pinta la disposició de la pàgina, defineix les regions, construeix l'API que rep cada plugin i carrega els plugins. També proporciona els serveis comuns, com l'autenticació o les traduccions. Consulta [Construir un shell](../api/building-a-shell.md).
 
-Harmonix és ideal per a empreses grans o projectes amb equips distribuïts, on cada equip pot desenvolupar funcionalitats específiques sense afectar la resta de l’aplicació.
+## Què és un plugin?
 
-  
+Un mòdul ES que exporta `initialize(api)` i `dispose(api)`. Aporta una funcionalitat de l'aplicació. Es pot afegir, actualitzar o eliminar sense tornar a desplegar el shell. Consulta [Cicle de vida d'un plugin](../concepts/cicle-de-vida-Plugin.md).
 
-### 3\. Harmonix és compatible amb múltiples frameworks?
+## Què són les regions?
 
-  
+Àrees del shell on els plugins injecten vistes. Algunes mostren una vista alhora; d'altres, diverses. Consulta [Regions i vistes](../api/gestio-regions-i-vistes.md).
 
-Sí. És agnòstic pel que fa a la tecnologia, compatible amb React, Angular, Lit, Vanilla JavaScript, i TypeScript, entre altres.
+## Què ofereix l'API d'Harmonix?
 
-  
+Cada plugin rep una API amb:
 
-### 4\. Com es gestionen les regions?
+- `regionManager`, per registrar i activar vistes a les regions.
+- `pluginInfo`, amb l'id del plugin.
+- `createLocaleManager`, per traduir els missatges del plugin.
 
-  
+Cada shell l'amplia amb els seus propis serveis, com un broker, un client HTTP o notificacions. Consulta la [Referència de l'API](../api/Api.md).
 
-Les regions són àrees definides dins l’aplicació Shell on els plugins poden injectar vistes. Aquest sistema assegura la integració visual i funcional de cada component.
+## Com es gestionen les traduccions?
 
-  
+Cada plugin passa els seus missatges a `api.createLocaleManager(messages)` i obté un traductor. Harmonix només defineix la interfície; el shell la implementa i decideix l'idioma actual.
 
-### 5\. Què és l’aplicació Shell?
+## Com es comuniquen els plugins?
 
-  
+A través del [broker](../api/broker.md) del shell. Un plugin pot publicar esdeveniments als quals se subscriuen tants plugins com calgui, o enviar peticions que respon un sol plugin. Els plugins no s'importen mai entre ells.
 
-L’aplicació Shell actua com un contenidor principal per a tots els plugins. Gestiona les regions, la navegació i serveis comuns, com autenticació, localització o gestió d’estat.
+## Què passa si un plugin no es pot carregar?
 
-  
+L'error es registra a la consola i el plugin se salta. Els altres plugins es carreguen i s'inicien amb normalitat.
 
-### 6\. Què és un plugin a Harmonix?
+## Necessito un Plugin Store? Com publico un plugin?
 
-  
+Un shell pot carregar plugins des de qualsevol URL o des de mòduls locals, així que un Plugin Store no és obligatori. En producció, les aplicacions normalment en tenen un per gestionar els plugins i les versions. Per pujar un plugin, fes servir `harmonix publish` de [`@uxland/harmonix-cli`](https://www.npmjs.com/package/@uxland/harmonix-cli). Consulta [Construir i publicar](../create-plugin/build-and-publish.mdx) i [Gestió de plugins amb un Plugin Store](../concepts/gestio-plugins-plugin-store.md).
 
-Un plugin és un mòdul independent que proporciona funcionalitats concretes a l’aplicació. Es pot afegir, modificar o eliminar sense afectar el rendiment de l’aplicació.
+## Com desenvolupo un plugin sense l'aplicació final?
 
-  
+Fes servir el [creador de plugins](../create-plugin/create-a-plugin.mdx). Crea un projecte que executa el teu plugin dins del [shell de demostració](../create-plugin/demo-shell.md), un shell petit amb una capçalera, un menú lateral i una regió principal.
 
-### 7\. Quina és la funció principal de l’API de Harmonix?
+## Com construeixo el meu propi shell?
 
-  
+Fes servir `@uxland/harmonix` i `@uxland/regions` per crear les regions, defineix la teva API i carrega els plugins amb `bootstrapPlugins`. Consulta [Construir un shell](../api/building-a-shell.md).
 
-L’API de Harmonix permet:
+## Dos plugins poden fer servir el mateix id de vista?
 
-• Gestionar regions i injectar components.
+Al shell de demostració, sí: desa cada vista com a `pluginId::viewId`. En altres shells, depèn de si el shell separa els ids de les vistes per plugin. Si no ho fa, posa l'id del plugin com a prefix dels teus ids.
 
-• Accedir a informació específica del plugin (com identificadors i metadades).
+## Com s'aïllen els estils?
 
-• Crear funcionalitats personalitzades, com traduccions o interaccions visuals.
+Cada vista es pinta en el seu propi Shadow DOM, de manera que els seus estils no se n'escapen i els estils del shell no hi entren. Les plantilles del creador de plugins ja ho fan. Harmonix no proporciona un aspecte comú: això correspon al shell i al seu sistema de disseny, per exemple a través de propietats personalitzades de CSS.
 
-  
+## Com comparteixen els plugins biblioteques com React?
 
-### 8\. Es pot personalitzar l’API?
+Els plugins no empaqueten el framework. Es construeixen amb el framework com a extern, i l'aplicació en proporciona una sola còpia a tots els plugins. Desenvolupa amb la mateixa versió major que fa servir l'aplicació. Consulta [Construir i publicar](../create-plugin/build-and-publish.mdx).
 
-  
+## Com es compara Harmonix amb Module Federation, single-spa o els iframes?
 
-Sí, l’API es pot estendre per adaptar-la a les necessitats específiques del projecte. Això inclou la incorporació de funcionalitats com autenticació, gestió d’estat global, traduccions, i serveis d’interacció.
+- Els **iframes** aïllen completament, però cada peça necessita la seva pròpia URL i el seu servidor web, i la comunicació i els estils entre marcs són complicats.
+- **Webpack Module Federation** i **single-spa** són eines generals per carregar o muntar aplicacions construïdes per separat, sovint una per ruta.
+- **Harmonix** compon una sola pantalla a partir de molts plugins per regió: un plugin pot col·locar vistes en diverses regions, i els plugins es comuniquen a través de l'API i el broker del shell.
 
-  
+## Harmonix és adequat per a aplicacions petites?
 
-### 9\. Com es gestiona la localització i traduccions?
+Està pensat per a aplicacions grans amb diversos equips. També pot tenir sentit en una aplicació més petita que es preveu que creixi o que hi participin més equips.
 
-Harmonix inclou eines per gestionar missatges localitzats, que es poden administrar a través de la funció createLocaleManager. Això permet integrar fàcilment idiomes múltiples en aplicacions grans.
+## Harmonix admet CI/CD?
 
-  
+Sí. Cada plugin es construeix i es publica pel seu compte, així que cada equip pot tenir el seu propi pipeline i publicar de manera independent.
 
-### 10\. És Harmonix adequat per aplicacions petites?
+## Quins són els casos d'ús més habituals?
 
-  
+- Aplicacions de tipus estació de treball construïdes per equips independents.
+- Plataformes SaaS on els clients activen funcionalitats diferents.
+- Integració de productes d'empreses diferents en una mateixa interfície.
 
-Tot i que Harmonix està pensat per escenaris complexos, també pot ser útil en aplicacions més petites si es preveu creixement o si es necessiten múltiples equips.
+## On puc trobar més recursos?
 
-  
-
-### 11\. Harmonix és adequat per a projectes grans?
-
-  
-
-Sí, gràcies a la seva arquitectura modular i escalable, Harmonix està pensat per aplicacions complexes on treballen múltiples equips i proveïdors.
-
-  
-
-  
-
-### 12\. Com ajuda Harmonix a la unificació d’experiències?
-
-  
-
-Mitjançant un sistema de regions compartides i estils coherents, Harmonix assegura que l’usuari percebi l’aplicació com un tot integrat, encara que hi participin diversos equips.
-
-  
-
-### 13\. Quins beneficis aporta l’agnosticisme tecnològic?
-
-  
-
-Permet utilitzar diferents tecnologies dins d’una mateixa aplicació, aprofitant punts forts de frameworks com React per a la interfície i Angular per a funcionalitats específiques.
-
-  
-
-### 14\. Harmonix suporta la integració contínua i DevOps?
-
-  
-
-Sí. Harmonix es pot integrar fàcilment amb pipelines de CI/CD per desplegar plugins de manera independent i mantenir versions actualitzades.
-
-  
-
-### 15\. Quins són els casos d’ús més comuns?
-
-  
-
-• Aplicacions complexes amb equips independents.
-
-• Plataformes SaaS on els clients poden personalitzar funcionalitats.
-
-• Integració de productes d’empreses diferents dins una mateixa interfície.
-
-  
-
-### 16\. On puc trobar més recursos i documentació?
-
-  
-
-La documentació completa està disponible a [harmonixframework.dev](https://harmonixframework.dev/), incloent-hi tutorials i bones pràctiques per començar .
+Comença per [Crear un plugin](../create-plugin/create-a-plugin.mdx). El codi font és a [GitHub](https://github.com/uxland/harmonix).
