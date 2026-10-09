@@ -2082,6 +2082,11 @@
     micromark-util-character "^1.1.0"
     micromark-util-symbol "^1.0.1"
 
+"@stackblitz/sdk@^1":
+  version "1.11.1"
+  resolved "https://registry.yarnpkg.com/@stackblitz/sdk/-/sdk-1.11.1.tgz#65a3491aa59aeff2987a6e5c940b2058b6f242ca"
+  integrity sha512-5wl1j3IhtmE7POTl2W9VGQdbQyBQrRsF3jcYBK+0V353AuO8H2GFZkiFNyTRxL+TDY3HIFCHc3G983Osmg76Lg==
+
 "@svgr/babel-plugin-add-jsx-attribute@8.0.0":
   version "8.0.0"
   resolved "https://registry.yarnpkg.com/@svgr/babel-plugin-add-jsx-attribute/-/babel-plugin-add-jsx-attribute-8.0.0.tgz#4001f5d5dd87fa13303e36ee106e3ff3a7eb8b22"

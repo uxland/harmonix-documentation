@@ -611,5 +611,47 @@
   },
   "diagram.workflow.run.who": {
     "message": "Al navegador"
+  },
+  "sandbox.frameworks": {
+    "message": "Framework"
+  },
+  "sandbox.newTab": {
+    "message": "Obrir a StackBlitz"
+  },
+  "sandbox.placeholder.title": {
+    "message": "El projecte que genera el creador, en marxa al navegador"
+  },
+  "sandbox.placeholder.text": {
+    "message": "StackBlitz instal·la les dependències i executa npm run dev: veuràs el codi, el terminal i el plugin dins del shell de demostració. Pots editar-lo; no es desa enlloc. Triga uns segons la primera vegada."
+  },
+  "sandbox.start": {
+    "message": "Obrir el sandbox"
+  },
+  "sandbox.loading": {
+    "message": "Preparant el projecte…"
+  },
+  "sandbox.error": {
+    "message": "No s'ha pogut carregar el projecte ({message}). Torna-ho a provar o crea'l en local amb npm create."
+  },
+  "sandbox.version": {
+    "message": "Plantilla de @uxland/create-harmonix-plugin {version}."
+  },
+  "sandbox.notIsolated": {
+    "message": "Aquí no es pot executar dins de la pàgina, però el pots obrir a StackBlitz en una pestanya nova."
+  },
+  "sandbox.page.title": {
+    "message": "Sandbox"
+  },
+  "sandbox.page.description": {
+    "message": "Prova un plugin de Harmonix amb React, Lit o Angular al navegador, sense instal·lar res."
+  },
+  "sandbox.page.heading": {
+    "message": "Prova un plugin al navegador"
+  },
+  "sandbox.page.intro": {
+    "message": "El mateix projecte que crea npm create @uxland/harmonix-plugin, sense instal·lar res. Quan el vulguis al teu equip, segueix la guia per crear-lo."
+  },
+  "sandbox.page.guide": {
+    "message": "Crear un plugin"
   }
 }
