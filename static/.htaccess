@@ -1,0 +1,10 @@
+# The Sandbox page embeds StackBlitz projects that run Node in the browser (WebContainers).
+# StackBlitz only starts them when the embedding page is cross-origin isolated, so this page,
+# and only this page, is served with COOP and COEP. `credentialless` lets it keep loading
+# cross-origin resources that do not send CORP headers.
+<IfModule mod_headers.c>
+  <If "%{REQUEST_URI} =~ m#^/((ca|es)/)?sandbox(/|/index\.html)?$#">
+    Header always set Cross-Origin-Opener-Policy "same-origin"
+    Header always set Cross-Origin-Embedder-Policy "credentialless"
+  </If>
+</IfModule>

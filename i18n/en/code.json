@@ -611,5 +611,47 @@
   },
   "diagram.workflow.run.who": {
     "message": "In the browser"
+  },
+  "sandbox.frameworks": {
+    "message": "Framework"
+  },
+  "sandbox.newTab": {
+    "message": "Open in StackBlitz"
+  },
+  "sandbox.placeholder.title": {
+    "message": "The project the creator generates, running in your browser"
+  },
+  "sandbox.placeholder.text": {
+    "message": "StackBlitz installs the dependencies and runs npm run dev: you will see the code, the terminal and the plugin inside the demo shell. You can edit it; nothing is saved. It takes a few seconds the first time."
+  },
+  "sandbox.start": {
+    "message": "Open the sandbox"
+  },
+  "sandbox.loading": {
+    "message": "Preparing the project…"
+  },
+  "sandbox.error": {
+    "message": "The project could not be loaded ({message}). Try again, or create it locally with npm create."
+  },
+  "sandbox.version": {
+    "message": "Template from @uxland/create-harmonix-plugin {version}."
+  },
+  "sandbox.notIsolated": {
+    "message": "It cannot run inside this page here, but you can open it in StackBlitz in a new tab."
+  },
+  "sandbox.page.title": {
+    "message": "Sandbox"
+  },
+  "sandbox.page.description": {
+    "message": "Try a Harmonix plugin with React, Lit or Angular in your browser, without installing anything."
+  },
+  "sandbox.page.heading": {
+    "message": "Try a plugin in your browser"
+  },
+  "sandbox.page.intro": {
+    "message": "The same project that npm create @uxland/harmonix-plugin creates, without installing anything. When you want it on your machine, follow the guide to create it."
+  },
+  "sandbox.page.guide": {
+    "message": "Create a plugin"
   }
 }

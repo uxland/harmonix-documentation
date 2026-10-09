@@ -138,6 +138,11 @@ export default async function createConfig(): Promise<Config> {
             label: 'Packages',
           },
           {
+            to: '/sandbox',
+            position: 'left',
+            label: 'Sandbox',
+          },
+          {
             type: 'docSidebar',
             sidebarId: 'bestPracticesSidebar',
             position: 'left',
