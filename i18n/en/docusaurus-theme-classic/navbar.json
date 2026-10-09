@@ -19,6 +19,10 @@
     "message": "Getting started",
     "description": "Navbar item with label Getting started"
   },
+  "item.label.Packages": {
+    "message": "Packages",
+    "description": "Navbar item with label Packages"
+  },
   "item.label.Best practices": {
     "message": "Best practices",
     "description": "Navbar item with label Best practices"

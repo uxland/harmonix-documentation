@@ -1,63 +1,58 @@
 ---
-sidebar_position: 2
+sidebar_position: 3
 ---
+
+import { ShellAnatomy } from '@site/src/components/Diagrams/ShellAnatomy';
 
 # Features
 
-# Main Features
+## Main features
 
-1. **Independent Development:** Development teams can work independently on different plugins, which allows for greater agility and facilitates the implementation of changes and new features.
-2. **Scalability:** The plugin-based modular architecture facilitates horizontal scalability, as each plugin can be scaled separately. This is particularly beneficial in environments where certain parts of the user interface may experience higher load than others.
-3. **Component Reusability:** User interface components can be reused in different parts of the application, which can lead to more efficient development and consistency in the appearance and behavior of the user interface.
-4. **Heterogeneous Technology:** Teams can choose the most appropriate technologies for each plugin, which allows the use of different frameworks and libraries according to the specific requirements of each part of the user interface.
-5. **Fault Resistance:** The modular plugin-based architecture can make the application more resistant to failures, as an error in one plugin will not necessarily affect the entire application.
-6. **Interactivity:** Plugins can interact via commands and events between them, as well as with the services provided by the shell (modals, translations, business events, etc.)
-7. **Authentication and security**: The system provides an http client to more easily manage authentication, preserve and refresh the session, and preserve security and avoid data cross-contamination errors.
-8. **Improves User Experience:** By allowing incremental and rapid updates in specific parts of the user interface, the user experience can be improved by introducing new features or fixing issues more quickly.
+1. **Independent development.** Teams work on different plugins independently. Each plugin has its own repository, build and release cycle.
+2. **Grows by adding plugins.** New functionality is added as new plugins, without touching the shell or the other plugins.
+3. **Several views per plugin.** A plugin can register views in several regions of the shell. All of them share the plugin's code and data.
+4. **Heterogeneous technology.** Each team chooses the framework that fits its plugin: React, Angular, Lit or plain JavaScript.
+5. **Fault isolation.** If a plugin fails to load or initialize, the error is logged and the other plugins still load.
+6. **Communication between plugins.** Plugins exchange events and requests through the shell's [broker](../api/broker.md), without importing each other.
+7. **Shell services.** Each shell can expose its own services (HTTP client, authentication, notifications, translations…) through its API.
+8. **Faster updates.** A plugin can be updated without redeploying the shell, so fixes and features reach users sooner.
 
-<br/>
+## Concepts
 
-# Concepts
+- **Harmonix core** (`@uxland/harmonix`). Loads and initializes the plugins, gives each one its API and provides the region manager.
+- **Shell.** The main application. It is a skeleton of regions where plugins inject their views, and it builds the API each plugin receives.
+- **Plugin.** An independent ES module that exports `initialize(api)` and `dispose(api)`. It contains everything needed for one feature of the application.
+- **Region.** An area of the shell where views are injected. A region can show one view at a time (single-active) or several (multiple-active).
+- **View.** A Web Component, registered by a plugin, that is shown in a region.
+- **Broker.** The message bus between plugins: events (publish/subscribe) and requests (send/handle).
+- **Sandbox.** An isolated application to develop and test plugins: a shell with only the plugins being developed. The [plugin creator](../create-plugin/create-a-plugin.mdx) sets one up with the [Harmonix demo shell](../create-plugin/demo-shell.md).
+- **Plugin Store.** The service where plugins are published, and from which the application gets the plugins it loads. See [Plugin management with a Plugin Store](./gestio-plugins-plugin-store.md).
 
-1. **Harmonix Engine**: The "core" of the framework, responsible for initializing the application and all plugins, and providing them with special capabilities to be self-contained within a shell.
-2. **Plugin**: A plugin is an independent part of the system that contains everything necessary to execute a specific part of the application's functionality. Plugins are reusable and can be interchanged between different systems or applications.
-3. **Shell:** It is a skeleton formed by different regions on which developers can build and inject their plugins.
-4. **Region:** It is a defined space in the shell where different views defined by plugins can be injected. Regions can have different characteristics such as the ability to display one or more views simultaneously, as well as different adapters that alter their behavior.
-5. **View:** It is the instance of a component or set of components that on their own have a functional meaning. Views are injected into the different regions of the shell.
-6. **Sandbox.** It is a secure and isolated application for developing and testing plugins independently, separate from other modules. It operates as an application without plugins that mimics the actual Workstation application. It is part of the solution's development tooling.
-7. **SDK (Software Development Kit)**: This is a set of tools that allows developers to create plugins and be able to integrate with the system, as well as interact with it and other plugins, if needed.
-8. **Plugin Store**: It is the place where all available plugins are published and stored for use. It functions as a repository of compiled bundles from which the application will obtain the necessary ones to compose the UI.
+Harmonix is distributed as these packages:
 
+| Package | Use |
+| --- | --- |
+| `@uxland/harmonix` | Core: plugin bootstrapping, region manager and API types |
+| `@uxland/harmonix-demo-shell` | A minimal shell to develop and try plugins |
+| `@uxland/create-harmonix-plugin` | Creates a new plugin project |
+| `@uxland/harmonix-cli` | Publishes plugins to a Plugin Store (`harmonix publish`) |
+| `@uxland/harmonix-adapters` | Turns React components into Web Components |
 
+<ShellAnatomy />
 
-![](https://t9012015559.p.clickup-attachments.com/t9012015559/60d2fe59-dd78-406e-8701-cea5bdc2d40f/image.png)
+## Comparison with other approaches
 
+- **One plugin, many views.** With regions, one plugin can inject several views into several regions of the shell. With iframes, each embedded piece needs its own URL.
+- **Beyond one-app-per-route.** Tools like Webpack Module Federation or single-spa are usually used so that each part of the page is a separate microfrontend. In a workstation, one screen often combines pieces from many teams. Harmonix composes them by region rather than by route.
+- **No web server per team.** An iframe needs a web server to serve its HTML and JavaScript. A Harmonix plugin is a single JavaScript file, which a Plugin Store can serve.
+- **No cross-origin issues.** Iframes can bring CORS and networking problems. Plugins run in the same page as the shell.
+- **Built-in communication.** Plugins and the shell talk through the API and the broker, with a clear contract. For example, a plugin can ask the shell to show a notification.
+- **Governance.** A Plugin Store (when the application provides one) can control which plugins and versions each user gets.
+- **Shared libraries.** Plugins do not bundle the framework or the shell: the application provides them once, which keeps the application lighter.
+- **Local development.** Teams develop with a sandbox on their own machine, instead of waiting for a shared test environment.
 
-<br/>
+## Compatible technologies
 
-# Benefits and advantages over other approaches or tools
+Each view a plugin registers must be an HTML element, typically a [standard Web Component](https://developer.mozilla.org/en-US/docs/Web/API/Web_components). Web Components encapsulate their styles and rendering, so they do not collide with other plugins.
 
-*   With the plugin and region-based system, it is possible for 1 single plugin to inject **multiple views** into **multiple regions** of the container application (shell). With an iframe-based microfrontend system, you need to have a single URL per component to inject.
-*   Systems like Webpack Model Federation, Single SPA or other tools are designed for **conventional Microfrontends**, where each part of the application is a microfrontend. In complex workstations, different parts of the application can be composed from **many different initiatives and verticals**, even mixed, filtered, and complex functional needs that these tools cannot solve.
-*   The iframe needs a **web server** to serve the HTML and JS. With our solution, the **Plugin Store** would serve the compiled code as an object repository, avoiding the need for verticals to have a web server (drastic reduction in infrastructure and CI/CD costs)
-*   The iframe can generate **CORS problems** and requires knowledge on the part of the module developer provider, infrastructure knowledge to solve possible network problems.
-*   The framework implements a **cross-module communication** system, application-plugin, reusable, that does not require implementation by the plugin developer.
-    *   Allows establishing a clear contract between pieces and increases the possibilities of more **transparent** app-plugin interaction.
-    *   Example use cases (calling a snackbar, using a UI component like a busy), etc
-*   The Plugin Store encapsulates the **governance complexity** of plugin permissions.
-*   **Share common libraries** between plugins, such as the Design System or JS libraries like React, Vue, Lit... (**reduction in application weight**)
-*   Facilitates plugin development by providing an **easily installable**, updatable and testable **sandbox**. In the case of the iframe, you would have to wait to do tests in a pre-production test environment.
-*   Provides **clear documentation** for plugin development and, consequently, a clear definition of the workflow.
-
-
-<br/>
-
-# Technologies compatible with Harmonix
-
-Harmonix is a dynamic plugin injection system, where these plugins can have N components/views injected into N regions. Each of these components must be a [standard Web Component](https://developer.mozilla.org/es/docs/Web/API/Web_components).
-
-**Web Components** are established in the Javascript frontend ecosystem and are a good solution for applications based on Harmonix, as they encapsulate styles and rendering logic so that there are no collisions with other components and plugins.
-
-Therefore, when creating a plugin, each of the created components must always be encapsulated with whatever technology, in a Web Component. Therefore, we could say that **Harmonix is compatible with any Javascript rendering library/framework that is capable of ultimately creating a Web Component**.
-
-There are several ways to encapsulate a component from a Javascript library, and from the Harmonix development team, we work to provide the **most optimal solution** for each case. Currently, the frameworks that have been tested and documented are: **Vanilla JS** (native Javascript without library), **Lit 3**, **Angular 18** and **React 19**. As Harmonix consumers need others like Vue, etc., we will provide support and documentation.
+Harmonix works with any JavaScript library or framework that can produce a Web Component. The plugin creator has templates for React 19, Lit 3 and Angular 20. A plugin uses the framework version that the application provides. See [Framework notes](../create-plugin/frameworks.mdx).

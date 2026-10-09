@@ -1,0 +1,111 @@
+---
+sidebar_position: 4
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Build y publicación
+
+## Build
+
+```bash
+npm run build
+```
+
+El resultado es **un único módulo ES, `dist/index.js`**, con tu plugin y su propio código. No incluye:
+
+- **El shell** (`@uxland/harmonix-demo-shell`, o el shell de la aplicación donde se ejecuta).
+- **El framework**: React y React DOM, Lit, o Angular y RxJS.
+
+La aplicación que carga el plugin los proporciona, de manera que todos los plugins comparten una sola copia: un shell, con un gestor de regiones y un broker, y una copia de cada framework. Si un plugin trajera su propia copia del shell, registraría sus vistas en un shell que nadie pinta.
+
+<Tabs groupId="framework">
+  <TabItem value="react" label="React" default>
+
+`vite build` en modo librería: entrada `src/plugin.ts`, salida `dist/index.js`.
+
+```typescript title="vite.config.ts"
+export default defineConfig({
+  server: { port: 5173 },
+  // The JSX runtime goes into the bundle and reads process.env.NODE_ENV, which browsers do not have.
+  define: { "process.env.NODE_ENV": JSON.stringify("production") },
+  build: {
+    lib: { entry: "src/plugin.ts", formats: ["es"], fileName: "index" },
+    rollupOptions: { external: ["@uxland/harmonix-demo-shell", "react", "react-dom", "react-dom/client"] },
+  },
+});
+```
+
+`@uxland/harmonix-adapters`, que pinta componentes React dentro de web components, va dentro del bundle.
+
+  </TabItem>
+  <TabItem value="lit" label="Lit">
+
+`vite build` en modo librería: entrada `src/plugin.ts`, salida `dist/index.js`.
+
+```typescript title="vite.config.ts"
+export default defineConfig({
+  server: { port: 5173 },
+  build: {
+    lib: { entry: "src/plugin.ts", formats: ["es"], fileName: "index" },
+    rollupOptions: { external: ["@uxland/harmonix-demo-shell", /^lit($|\/)/, /^@lit\//] },
+  },
+});
+```
+
+  </TabItem>
+  <TabItem value="angular" label="Angular">
+
+Angular tiene su propio compilador, así que el build tiene dos pasos (`ng build my-plugin && vite build`):
+
+1. **`ng build my-plugin`** compila la librería con ng-packagr en `projects/my-plugin/dist`. La librería se compila en modo AOT completo (`"compilationMode": "full"` en `tsconfig.lib.json`): el resultado funciona tal cual, sin el compilador de Angular.
+2. **`vite build`** empaqueta ese resultado en un único `dist/index.js`, con el código que necesita el plugin y sin Angular, RxJS ni el shell.
+
+```typescript title="vite.config.ts"
+export default defineConfig({
+  build: {
+    lib: { entry: "projects/my-plugin/dist/fesm2022/my-plugin.mjs", formats: ["es"], fileName: () => "index.js" },
+    rollupOptions: { external: ["@uxland/harmonix-demo-shell", /^@angular\//, /^rxjs($|\/)/] },
+  },
+});
+```
+
+  </TabItem>
+</Tabs>
+
+Para comprobar los tipos sin construir: `npm run typecheck`.
+
+## Publicar en la Plugin Store
+
+El fichero que subes a la Plugin Store es `dist/index.js`. La aplicación obtiene la lista de plugins de la store y carga cada uno con su id y su versión.
+
+Puedes subirlo con la CLI de Harmonix, [`@uxland/harmonix-cli`](https://www.npmjs.com/package/@uxland/harmonix-cli). Lee el plugin de `package.json`, que el creador ya ha rellenado:
+
+| Campo | Valor | Uso |
+| --- | --- | --- |
+| `name` | `my-plugin` | El id del plugin |
+| `version` | `0.1.0` | La versión que se publica |
+| `module` | `dist/index.js` | El fichero que se sube |
+
+Crea un fichero `.harmonixrc` en la raíz del proyecto con la dirección de la store y tu clave de API:
+
+```ini title=".harmonixrc"
+registry=https://your-plugin-store.example.com/upload
+apiKey=your-api-key
+```
+
+:::danger
+`.harmonixrc` contiene credenciales: no lo subas nunca al repositorio. Los proyectos hechos con el creador ya lo tienen en `.gitignore`.
+:::
+
+En lugar del fichero, también puedes pasarlas como opciones: `--registry <url>` y `--api-key <key>`.
+
+Después construye y publica:
+
+```bash
+npm run build
+npx @uxland/harmonix-cli publish
+```
+
+Para publicar una versión nueva, cambia primero `version` en `package.json`.

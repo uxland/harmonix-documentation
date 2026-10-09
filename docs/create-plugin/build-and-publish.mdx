@@ -1,0 +1,111 @@
+---
+sidebar_position: 4
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Build and publish
+
+## Build
+
+```bash
+npm run build
+```
+
+The result is **a single ES module, `dist/index.js`**, with your plugin and its own code. It does not include:
+
+- **The shell** (`@uxland/harmonix-demo-shell`, or the shell of the application where it runs).
+- **The framework**: React and React DOM, Lit, or Angular and RxJS.
+
+The application that loads the plugin provides them, so that all the plugins share a single copy: one shell, with one region manager and one broker, and one copy of each framework. If a plugin brought its own copy of the shell, it would register its views in a shell that nobody paints.
+
+<Tabs groupId="framework">
+  <TabItem value="react" label="React" default>
+
+`vite build` in library mode: entry `src/plugin.ts`, output `dist/index.js`.
+
+```typescript title="vite.config.ts"
+export default defineConfig({
+  server: { port: 5173 },
+  // The JSX runtime goes into the bundle and reads process.env.NODE_ENV, which browsers do not have.
+  define: { "process.env.NODE_ENV": JSON.stringify("production") },
+  build: {
+    lib: { entry: "src/plugin.ts", formats: ["es"], fileName: "index" },
+    rollupOptions: { external: ["@uxland/harmonix-demo-shell", "react", "react-dom", "react-dom/client"] },
+  },
+});
+```
+
+`@uxland/harmonix-adapters`, which renders React components inside web components, goes into the bundle.
+
+  </TabItem>
+  <TabItem value="lit" label="Lit">
+
+`vite build` in library mode: entry `src/plugin.ts`, output `dist/index.js`.
+
+```typescript title="vite.config.ts"
+export default defineConfig({
+  server: { port: 5173 },
+  build: {
+    lib: { entry: "src/plugin.ts", formats: ["es"], fileName: "index" },
+    rollupOptions: { external: ["@uxland/harmonix-demo-shell", /^lit($|\/)/, /^@lit\//] },
+  },
+});
+```
+
+  </TabItem>
+  <TabItem value="angular" label="Angular">
+
+Angular has its own compiler, so the build has two steps (`ng build my-plugin && vite build`):
+
+1. **`ng build my-plugin`** compiles the library with ng-packagr into `projects/my-plugin/dist`. The library is compiled in full AOT mode (`"compilationMode": "full"` in `tsconfig.lib.json`): the result runs as it is, without the Angular compiler.
+2. **`vite build`** bundles that result into a single `dist/index.js`, with the code the plugin needs and without Angular, RxJS or the shell.
+
+```typescript title="vite.config.ts"
+export default defineConfig({
+  build: {
+    lib: { entry: "projects/my-plugin/dist/fesm2022/my-plugin.mjs", formats: ["es"], fileName: () => "index.js" },
+    rollupOptions: { external: ["@uxland/harmonix-demo-shell", /^@angular\//, /^rxjs($|\/)/] },
+  },
+});
+```
+
+  </TabItem>
+</Tabs>
+
+To check the types without building: `npm run typecheck`.
+
+## Publish to the Plugin Store
+
+The file you upload to the Plugin Store is `dist/index.js`. The application gets the list of plugins from the store and loads each one with its id and its version.
+
+You can upload it with the Harmonix CLI, [`@uxland/harmonix-cli`](https://www.npmjs.com/package/@uxland/harmonix-cli). It reads the plugin from `package.json`, which the creator has already filled in:
+
+| Field | Value | Use |
+| --- | --- | --- |
+| `name` | `my-plugin` | The plugin id |
+| `version` | `0.1.0` | The version to publish |
+| `module` | `dist/index.js` | The file to upload |
+
+Create a `.harmonixrc` file at the root of the project with the address of the store and your API key:
+
+```ini title=".harmonixrc"
+registry=https://your-plugin-store.example.com/upload
+apiKey=your-api-key
+```
+
+:::danger
+`.harmonixrc` contains credentials: never commit it. The projects made with the creator already have it in `.gitignore`.
+:::
+
+Instead of the file, you can also pass them as options: `--registry <url>` and `--api-key <key>`.
+
+Then build and publish:
+
+```bash
+npm run build
+npx @uxland/harmonix-cli publish
+```
+
+To publish a new version, change `version` in `package.json` first.

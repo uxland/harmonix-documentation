@@ -1,35 +1,32 @@
 ---
-sidebar_position: 5
+sidebar_position: 6
 ---
 
-# Gestió de plugins amb Plugin Store
+# Gestió de plugins amb un Plugin Store
 
-# Introducció
+En producció, una aplicació Harmonix normalment carrega els seus plugins des d'un **Plugin Store**. Un Plugin Store és un repositori de plugins. Gestiona quins plugins carrega l'aplicació i permet que els equips publiquin i actualitzin plugins sense tornar a desplegar l'aplicació.
 
-Cada aplicació basada en Harmonix, necessita una peça clau per poder funcionar, el Plugin Store.
+## Com funciona
 
-El **Plugin Store** és un repositori de plugins que proporciona un conjunt de funcionalitats per gestionar i orquestrar la composició dinàmica d'aplicacions Harmonix, així com la càrrega i actualització dinàmica dels plugins.
+- El Plugin Store proporciona els plugins a l'aplicació en temps d'execució. Les funcionalitats noves i les actualitzacions arriben als usuaris sense desplegar tota l'aplicació.
+- Té un **servei de descobriment** que retorna una llista JSON dels plugins disponibles, amb les seves metadades, la versió i la ubicació.
+- Quan el shell s'inicia, obté aquesta llista i carrega cada plugin des del seu URL.
 
-<br/>
+## Capacitats
 
+Un Plugin Store hauria d'oferir:
 
-# Visió general
+- **Servei de descobriment.** La llista de plugins disponibles per a l'aplicació, amb la seva ubicació.
+- **Gestió d'usuaris i proveïdors.** Un tauler d'administració per gestionar els usuaris i els rols.
+- **Publicació independent.** Una API a través de la qual cada proveïdor publica versions noves dels seus plugins.
+- **Control de versions.** Control sobre quina versió retorna el servei de descobriment.
+- **Regles.** Condicions sobre els plugins que retorna el servei de descobriment, per exemple segons el rol de l'usuari.
+- **Allotjament de fitxers.** El Plugin Store serveix els fitxers dels plugins construïts, de manera que els equips de plugins no necessiten la seva pròpia infraestructura.
 
-*   És un servei que proporciona una manera de subministrar dinàmicament plugins a una instància de Harmonix. Això permet actualitzacions en temps real i la integració de noves funcions sense desplegar tota l'aplicació.
-*   Té un servei de descobriment que retorna un JSON que llista tots els plugins disponibles, incloent-hi la seva metadada i ubicacions. Aquest objecte JSON serveix com a registre per a tots els microfrontends (plugins) que la instància de Harmonix pot carregar.
-*   Quan la instància de Harmonix s'inicia, recupera el llistat de plugins des de la URL especificada i analitza el JSON per obtenir els detalls de cada plugin, incloent la seva URL i versió. Finalment, els plugins es carreguen dinàmicament a l'aplicació.
+## Publicació
 
-<br/>
+La CLI d'Harmonix, `@uxland/harmonix-cli`, puja un plugin a un Plugin Store. `harmonix publish` llegeix l'id del plugin (`name`), la versió (`version`) i el fitxer que s'ha de pujar (`module`) del `package.json` del plugin. Consulta [Construir i publicar](../create-plugin/build-and-publish.mdx).
 
-# Funcionalitats
-
-*   **Servei de descobriment**. Servei que proporciona el llistat de plugins disponibles per a la instància d'Harmonix i la seva ubicació.
-*   **Gestió d'usuaris i proveïdors.** Proporcionarà un panell d'administració que permetrà la creació i administració d'usuaris i rols.
-*   **Desplegament independent de plugins**. Mitjançant una API, els proveïdors podran desplegar noves versions dels seus plugins de forma independent.
-*   **Control de versions**. Hi haurà un panell d'administració que permetrà controlar la versió retornada en el servei de descobriment.
-*   **Gestió de regles**. Permetrà la configuració de regles sobre els plugins retornats en el servei de desplegament, basades en condicions (per exemple, rol d'usuari).
-*   **CDN.** Els plugins desplegaran els seus arxius compilats al servidor de Plugin Store perquè serveixi el contingut, evitant que els plugins requereixin una infraestructura pròpia.
-
-  
-
-**NOTA**: El Framework Harmonix no disposa d'una infraestructura pròpia i per tant, un Plugin Store propi. Actualment, cada projecte d'aplicació basat en Harmonix ha de disposar d'un Plugin Store personalitzat amb la seva infraestructura i el seu CI/CD corresponent, així com la seva aplicació frontal i backend per gestionar els rols i permisos específics d'aquell projecte.
+:::note
+Harmonix no inclou cap Plugin Store. Cada aplicació proporciona el seu, amb la seva infraestructura, la seva CI/CD i la seva administració de rols i permisos.
+:::

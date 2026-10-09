@@ -2,78 +2,100 @@
 sidebar_position: 12
 ---
 
-# Best practices
+# Bones pràctiques
 
-# Desconnectar correctament el plugin
+## Allibera bé el plugin
 
-En el cicle de vida d'un plugin, passem per 2 fases importants; la **iniciació** (muntatge) i la **desconnexió** (desmuntatge). És important que tot allò que s'hagi fet en el muntatge del plugin (registrar vistes, subscriure's a events del broker de missatges, crear contenidors de dependències interns, etcètera), es **faci una desconnexió neta** per tal de no deixar **cap rastre en memòria** del teu plugin. Tot i que, en la majoria dels casos, l'usuari tancarà el navegador i l'aplicació de Primària morirà en aquell instant, es poden donar casos potencials en què es facin coses com canviar de pacient, renovar sessió, canvis de context, etcètera, que provoquin una nova càrrega de plugins en calent. Si no desconnectem bé els nostres plugins, podem deixar en memòria peces que poden afectar el rendiment **(memory leaks)**, o dades d'altres pacients **(barreja de dades de pacients)**.
+Un plugin té dos moments clau: l'**inici** (`initialize`) i l'**alliberament** (`dispose`). Tot el que fa el plugin quan s'inicia s'ha de desfer quan s'allibera: vistes registrades, subscripcions i handlers de peticions del broker, temporitzadors, contenidors de dependències, aplicacions del framework…
 
-
-<br/>
-
-# Tractar l'API que es rep en el muntatge, com a singleton
-
-Quan inicialitzem un plugin, rebem per paràmetre l'objecte API. És important no fer gaires tractaments en aquesta API, com clonar l'objecte, afegir referències innecessàries o altres males pràctiques. Hem de tractar aquest objecte API com un **singleton únic** i que serà la font de la veritat i les eines necessàries per treballar. Una bona pràctica seria crear un contenidor de dependències (per exemple el que crea la llibreria **_inversify_**) i afegir l'API com a dependència al contenidor perquè pugui resoldre-la en qualsevol punt del nostre codi en forma de singleton.
-
-<br/>
-
-# Utilitzar la inicialització correctament com a punt d'entrada i inici del cicle de vida del teu plugin
-
-En la funció "_initialize_" que s'ha d'implementar, és un bon punt per fer les primeres configuracions necessàries del teu plugin, així com les primeres crides a serveis i injecció de vistes a regions.
-
-Exemple:
+Sovint l'usuari tanca el navegador i tot desapareix. Però un shell també pot descarregar i tornar a carregar plugins sense recarregar la pàgina, per exemple quan canvia l'usuari o el context de treball, o quan es renova la sessió. Si un plugin no ho neteja tot, pot deixar coses a la memòria (**fuites de memòria**) o mostrar dades del context anterior (**barreja de dades**).
 
 ```typescript
-export const initialize = async (api: PrimariaApi) => {
-  registerViews(api); //registre de vistes a regions
-  await initializeLocalization(api); //inicialització de les traduccions del plugin
-  bootstrapFeatures(api); //inicialització dels casos d'ús del plugin
-  return Promise.resolve();
+import type { BrokerDisposableHandler, DemoShellApi } from "@uxland/harmonix-demo-shell";
+
+const handlers: BrokerDisposableHandler[] = [];
+let timer: ReturnType<typeof setInterval> | undefined;
+
+export const initialize = async (api: DemoShellApi) => {
+  await api.regionManager.registerMainView({ id: "orders", factory: async () => document.createElement("orders-list") });
+  handlers.push(api.broker.subscribe("users:changed", () => clearOrdersCache()));
+  timer = setInterval(() => refreshOrders(), 60_000);
+};
+
+export const dispose = async (api: DemoShellApi) => {
+  clearInterval(timer);
+  for (const handler of handlers.splice(0)) handler.dispose();
+  await api.regionManager.removeView(api.regionManager.regions.main, "orders");
 };
 ```
 
-<br/>
+## Tracta l'API com un singleton
 
-# No fer un plugin per cada lloc on volem mostrar informació
+El plugin rep la seva API a `initialize`. No la clonis ni l'embolcallis en còpies. Tracta-la com l'única font de veritat de tot el que ofereix el shell.
 
-Cal recordar que un plugin és una part independent del sistema capaç de resoldre diferents casos d'ús d'un mateix àmbit. És important entendre que un plugin és capaç d'injectar diferents vistes/web components a diferents regions del Shell, però alhora que les dades que es mostren en aquests components vinguin de la mateixa única font de dades.
+Desa'n una referència on la resta del plugin hi pugui accedir. N'hi ha prou amb una variable de mòdul. En plugins més grans, opcionalment, la pots registrar en un contenidor de dependències, per exemple amb [InversifyJS](https://inversify.io/), i resoldre-la com a singleton a qualsevol punt del codi.
 
-Exemple:
+## Fes servir `initialize` com a punt d'entrada
 
-Si tenim un plugin d'al·lèrgies del pacient, en el cas de Salut, i necessitem mostrar 3 vistes diferents (un llistat d'al·lèrgies a la vista principal, un comptador d'al·lèrgies a la capçalera i un botó per afegir-ne una al menú d'accions), no és necessari i de fet **NO RECOMENABLE**, crear 3 plugins.
+`initialize` és on el plugin es configura, fa les primeres crides a serveis i registra les seves vistes. Espera (`await`) cada pas asíncron, perquè els errors arribin a Harmonix:
 
-Crear 3 plugins implicaria triplicar molt de codi i tenir el cicle de vida independent quan en realitat s'està tractant el mateix àmbit. Amb 1 sol plugin i 1 sol backend d'al·lèrgies, es gestionaran les dades de forma que hi haurà una única font de la veritat que alimentarà aquests 3 components injectats a 3 regions diferents del Shell.
+```typescript
+export const initialize = async (api: DemoShellApi) => {
+  await registerViews(api); // register views in the regions
+  await initializeLocalization(api); // set up the plugin's translations
+  await bootstrapFeatures(api); // start the plugin's use cases
+};
+```
 
+## Deixa que `initialize` falli davant d'errors greus
 
-<br/>
+Si el plugin no pot funcionar, per exemple perquè falta una configuració obligatòria, deixa que `initialize` llanci un error. Harmonix registra l'error a la consola i salta el plugin, i els altres plugins continuen funcionant. No t'empassis l'error deixant el plugin mig iniciat.
 
-# Prefixar les vistes d'un plugin amb el id del plugin
+## No depenguis de l'ordre de càrrega dels plugins
 
-Per tal que 2 plugins de 2 iniciatives diferents no col·lisionin, creant una vista amb el mateix id (header-view, main-view) per exemple, és recomanable prefixar els id's de les vistes a injectar amb el pluginId que arriba sempre a la funció "initialize".
+Tots els plugins es carreguen i s'inicien en paral·lel. Pot ser que un altre plugin no estigui preparat quan s'inicia el teu. No cridis altres plugins durant `initialize` comptant que ja hi seran. Fes servir el [broker](../api/broker.md): subscriu-te als esdeveniments que necessitis i envia peticions quan l'usuari faci alguna acció, no durant l'arrencada.
 
-Exemple:
+## Un plugin per funcionalitat, no per vista
+
+Un plugin és una part independent del sistema que resol els casos d'ús d'un àmbit. Pot injectar vistes diferents en regions diferents, totes alimentades per les mateixes dades.
+
+Per exemple, un plugin de comandes pot necessitar tres vistes: la llista de comandes a la regió principal, un comptador de comandes obertes a la capçalera i un element al menú lateral. **No** creïs tres plugins per a això. Tres plugins duplicarien codi i tindrien cicles de vida separats per a un sol àmbit. Amb un plugin i un sol backend de comandes, hi ha una única font de veritat que alimenta les tres vistes.
+
+## Ids de les vistes
+
+Dos plugins poden fer servir el mateix id de vista, per exemple `main`. El shell de demostració ja separa els ids com a `pluginId::viewId`, de manera que no xoquen. Si el teu shell no ho fa, posa l'id del plugin com a prefix dels ids:
 
 ```typescript
 const pluginId = api.pluginInfo.pluginId;
 
-api.regionManager.registerMainView({
-    id: `${pluginId}-main-view`,
-    factory: mainFactory
-  },);
+await api.regionManager.registerView(api.regionManager.regions.main, {
+  id: `${pluginId}-main-view`,
+  factory: mainFactory,
+});
 ```
 
+## Posa un prefix als noms dels elements personalitzats
 
-<br/>
+Els noms dels elements personalitzats són globals a tota la pàgina, i un nom només es pot definir una vegada. Posa l'id del plugin com a prefix dels noms de les etiquetes. Per a un plugin amb l'id `orders`, fes servir noms com `orders-list` o `orders-header-counter`.
 
-# Gestió d'assets estàtics
+Defineix cada element una sola vegada i protegeix-ne la definició, ja que un plugin es pot tornar a iniciar després d'haver-se alliberat:
 
-Cada plugin ha de ser responsable de resoldre els assets estàtics com imatges, fonts, etcètera. El model Harmonix no és una aplicació convencional en la que es disposa d'una carpeta public amb els estàtics, ja que el shell no coneix la implementació de les iniciatives que realitzaran plugins.
+```typescript
+if (!customElements.get("orders-list")) {
+  customElements.define("orders-list", OrdersList);
+}
+```
 
-Per tant es recomana que imatges, icones, fonts, etcètera estiguin en el plugin en format codi, o sigui el plugin qui creei una infraestructura pròpia on allotjar aquests assets i consumir-los segons els convingui.
+## Aïlla els estils amb el Shadow DOM
 
+Les vistes conviuen amb les vistes d'altres plugins. Pinta-les en el seu propi shadow root, perquè els seus estils no se n'escapin i els estils del shell no hi entrin. Les propietats personalitzades de CSS sí que travessen el shadow DOM, de manera que les vistes poden continuar fent servir les variables del tema del shell. Consulta [Notes per framework](../create-plugin/frameworks.mdx).
 
-<br/>
+## No toquis mai el DOM del shell
 
-# Desconnectar correctament el plugin
+Un plugin només mostra contingut a través de les seves vistes a les regions. No consultis ni modifiquis els elements del shell, ni les vistes d'altres plugins. El shell pot canviar la seva disposició en qualsevol moment, i els altres plugins no formen part del teu contracte.
 
-En el cicle de vida d'un plugin, passem per 2 fases importants; la **iniciació** (muntatge) i la **desconnexió** (desmuntatge). És important que tot allò que s'hagi fet en el muntatge del plugin (registrar vistes, subscriure's a events del broker de missatges, crear contenidors de dependències interns, etcètera), es **faci una desconnexió neta** per tal de no deixar **cap rastre en memòria** del teu plugin. Tot i que, en la majoria dels casos, l'usuari tancarà el navegador i l'aplicació de Primària morirà en aquell instant, es poden donar casos potencials en què es facin coses com canviar de pacient, renovar sessió, canvis de context, etcètera, que provoquin una nova càrrega de plugins en calent. Si no desconnectem bé els nostres plugins, podem deixar en memòria peces que poden afectar el rendiment **(memory leaks)**, o dades d'altres pacients **(barreja de dades de pacients)**.
+## Recursos estàtics
+
+Cada plugin és responsable dels seus propis recursos estàtics: imatges, tipografies, icones… Una aplicació Harmonix no és una aplicació convencional amb una carpeta pública compartida, perquè el shell no coneix els plugins que carregarà.
+
+Inclou els recursos al codi del plugin (per exemple, com a SVG en línia o URL de dades), o allotja'ls a la teva infraestructura i carrega'ls des d'allà.

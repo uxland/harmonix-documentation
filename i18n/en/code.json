@@ -406,9 +406,9 @@
     "message": "GET STARTED",
     "description": "Get started button in hero"
   },
-  "hero.playground": {
-    "message": "PLAYGROUND",
-    "description": "Playground button in hero"
+  "hero.createPlugin": {
+    "message": "CREATE A PLUGIN",
+    "description": "Create a plugin button in hero"
   },
   "hero.subtitle.line1": {
     "message": "Building Faster,",
@@ -425,5 +425,191 @@
   "techStack.title": {
     "message": "Supported technologies",
     "description": "Tech stack section title"
+  },
+  "composition.aria": {
+    "message": "Harmonix composing the plugins of three teams into one application"
+  },
+  "composition.plugin.orders": {
+    "message": "Orders"
+  },
+  "composition.plugin.insights": {
+    "message": "Insights"
+  },
+  "composition.plugin.alerts": {
+    "message": "Alerts"
+  },
+  "composition.plugin.profile": {
+    "message": "Profile"
+  },
+  "composition.plugin.help": {
+    "message": "Help"
+  },
+  "composition.team.sales": {
+    "message": "Sales team"
+  },
+  "composition.team.data": {
+    "message": "Data team"
+  },
+  "composition.team.platform": {
+    "message": "Platform team"
+  },
+  "composition.team.support": {
+    "message": "Support team"
+  },
+  "composition.orders.new": {
+    "message": "New order"
+  },
+  "composition.step.regions": {
+    "message": "The shell defines the regions"
+  },
+  "composition.step.ship": {
+    "message": "Each team ships its plugin"
+  },
+  "composition.step.compose": {
+    "message": "Harmonix composes them"
+  },
+  "composition.step.broker": {
+    "message": "They talk through the broker"
+  },
+  "composition.step.switch": {
+    "message": "Views switch without reloading"
+  },
+  "playground.legend": {
+    "message": "Choose which plugins the application loads:"
+  },
+  "playground.contributes.main": {
+    "message": "A view and a menu item."
+  },
+  "playground.contributes.region": {
+    "message": "A view in the {region}."
+  },
+  "playground.region.header": {
+    "message": "header"
+  },
+  "playground.region.menu": {
+    "message": "menu"
+  },
+  "playground.region.main": {
+    "message": "content"
+  },
+  "compose.description": {
+    "message": "Each plugin is independent: one team builds it, with the framework it prefers, and publishes it on its own. The application only decides which ones to load. Try it: switch plugins on and off, change views from the menu or create an order."
+  },
+  "getStarted.copy": {
+    "message": "Copy"
+  },
+  "getStarted.copied": {
+    "message": "Copied"
+  },
+  "diagram.anatomy.aria": {
+    "message": "A shell with three regions; three plugins from the Plugin Store inject views into them, some into more than one region."
+  },
+  "diagram.anatomy.shell": {
+    "message": "Shell: the main application"
+  },
+  "diagram.anatomy.region": {
+    "message": "Region: a space where views can be injected"
+  },
+  "diagram.anatomy.view": {
+    "message": "View: a Web Component from a plugin"
+  },
+  "diagram.anatomy.plugin": {
+    "message": "Plugin: published to the Plugin Store"
+  },
+  "diagram.broker.aria": {
+    "message": "An event reaches every subscriber, and if one fails the others still receive it. A request reaches its only handler and the answer goes back to the sender."
+  },
+  "diagram.broker.events": {
+    "message": "Events"
+  },
+  "diagram.broker.events.caption": {
+    "message": "Every subscriber receives it. If one fails, the others are not affected."
+  },
+  "diagram.broker.requests": {
+    "message": "Requests"
+  },
+  "diagram.broker.requests.caption": {
+    "message": "A single handler answers, and the answer goes back to whoever asked."
+  },
+  "diagram.lifecycle.active": {
+    "message": "views in the regions"
+  },
+  "diagram.lifecycle.aria": {
+    "message": "Three plugins go in parallel through loading, evaluation, initialization, rendering and disposal. One fails during initialization and the others carry on."
+  },
+  "diagram.lifecycle.loading": {
+    "message": "Loading"
+  },
+  "diagram.lifecycle.evaluation": {
+    "message": "Evaluation"
+  },
+  "diagram.lifecycle.initialization": {
+    "message": "Initialization"
+  },
+  "diagram.lifecycle.rendering": {
+    "message": "Rendering"
+  },
+  "diagram.lifecycle.disposal": {
+    "message": "Disposal"
+  },
+  "diagram.lifecycle.isolated": {
+    "message": "// insights failed and is isolated: orders and alerts carry on"
+  },
+  "diagram.packages.all": {
+    "message": "Each package has its moment, and they all sit on the core."
+  },
+  "diagram.packages.core": {
+    "message": "The core: the plugin contract, bootstrapPlugins and the regions. Every application is built on it."
+  },
+  "diagram.packages.create": {
+    "message": "Create"
+  },
+  "diagram.packages.create.caption": {
+    "message": "npm create generates the project, with the framework you choose."
+  },
+  "diagram.packages.develop": {
+    "message": "Develop"
+  },
+  "diagram.packages.develop.caption": {
+    "message": "npm run dev starts the plugin inside the demo shell."
+  },
+  "diagram.packages.publish": {
+    "message": "Publish"
+  },
+  "diagram.packages.publish.caption": {
+    "message": "harmonix publish uploads the bundle to the Plugin Store."
+  },
+  "diagram.packages.run": {
+    "message": "Run"
+  },
+  "diagram.packages.run.caption": {
+    "message": "React views become Web Components inside the application."
+  },
+  "diagram.workflow.aria": {
+    "message": "The application team builds the shell; plugin teams develop their plugins, publish them to the Plugin Store, and the application loads them when it runs."
+  },
+  "diagram.workflow.shell": {
+    "message": "Build the shell"
+  },
+  "diagram.workflow.shell.who": {
+    "message": "Application team"
+  },
+  "diagram.workflow.shell.done": {
+    "message": "Shell ready"
+  },
+  "diagram.workflow.develop": {
+    "message": "Develop the plugins"
+  },
+  "diagram.workflow.develop.who": {
+    "message": "Plugin teams"
+  },
+  "diagram.workflow.publish": {
+    "message": "Publish"
+  },
+  "diagram.workflow.run": {
+    "message": "Run"
+  },
+  "diagram.workflow.run.who": {
+    "message": "In the browser"
   }
 }

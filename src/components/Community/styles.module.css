@@ -103,8 +103,10 @@
     justify-content: center;
     gap: 32px;
     width: auto;
+    max-width: 100%;
+    box-sizing: border-box;
     height: auto;
-    padding-top: 23px;
+    padding: 23px 20px 32px;
   }
   .text {
     width: auto;
@@ -121,6 +123,6 @@
     width: auto;
   }
   .line {
-    width: 360px;
+    width: min(360px, calc(100% - 40px));
   }
 }

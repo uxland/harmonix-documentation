@@ -406,9 +406,9 @@
     "message": "COMENZAR",
     "description": "Get started button in hero"
   },
-  "hero.playground": {
-    "message": "PLAYGROUND",
-    "description": "Playground button in hero"
+  "hero.createPlugin": {
+    "message": "CREA UN PLUGIN",
+    "description": "Create a plugin button in hero"
   },
   "hero.subtitle.line1": {
     "message": "Building Faster,",
@@ -425,5 +425,191 @@
   "techStack.title": {
     "message": "Tecnologías soportadas",
     "description": "Tech stack section title"
+  },
+  "composition.aria": {
+    "message": "Harmonix compone en una sola aplicación los plugins de tres equipos"
+  },
+  "composition.plugin.orders": {
+    "message": "Pedidos"
+  },
+  "composition.plugin.insights": {
+    "message": "Indicadores"
+  },
+  "composition.plugin.alerts": {
+    "message": "Avisos"
+  },
+  "composition.plugin.profile": {
+    "message": "Perfil"
+  },
+  "composition.plugin.help": {
+    "message": "Ayuda"
+  },
+  "composition.team.sales": {
+    "message": "Equipo de ventas"
+  },
+  "composition.team.data": {
+    "message": "Equipo de datos"
+  },
+  "composition.team.platform": {
+    "message": "Equipo de plataforma"
+  },
+  "composition.team.support": {
+    "message": "Equipo de soporte"
+  },
+  "composition.orders.new": {
+    "message": "Nuevo pedido"
+  },
+  "composition.step.regions": {
+    "message": "El shell define las regiones"
+  },
+  "composition.step.ship": {
+    "message": "Cada equipo publica su plugin"
+  },
+  "composition.step.compose": {
+    "message": "Harmonix los compone"
+  },
+  "composition.step.broker": {
+    "message": "Se hablan por el broker"
+  },
+  "composition.step.switch": {
+    "message": "Cambian de vista sin recargar"
+  },
+  "playground.legend": {
+    "message": "Elige qué plugins carga la aplicación:"
+  },
+  "playground.contributes.main": {
+    "message": "Una vista y un elemento en el menú."
+  },
+  "playground.contributes.region": {
+    "message": "Una vista en la {region}."
+  },
+  "playground.region.header": {
+    "message": "cabecera"
+  },
+  "playground.region.menu": {
+    "message": "menú"
+  },
+  "playground.region.main": {
+    "message": "contenido"
+  },
+  "compose.description": {
+    "message": "Cada plugin es independiente: lo hace un equipo, con el framework que quiera, y se publica por su cuenta. La aplicación solo decide cuáles carga. Pruébalo: activa y desactiva plugins, cambia de vista en el menú o crea un pedido."
+  },
+  "getStarted.copy": {
+    "message": "Copiar"
+  },
+  "getStarted.copied": {
+    "message": "Copiado"
+  },
+  "diagram.anatomy.aria": {
+    "message": "Un shell con tres regiones; tres plugins del Plugin Store inyectan vistas en ellas, algunos en más de una región."
+  },
+  "diagram.anatomy.shell": {
+    "message": "Shell: la aplicación principal"
+  },
+  "diagram.anatomy.region": {
+    "message": "Región: un espacio donde se pueden inyectar vistas"
+  },
+  "diagram.anatomy.view": {
+    "message": "Vista: un Web Component de un plugin"
+  },
+  "diagram.anatomy.plugin": {
+    "message": "Plugin: se publica en el Plugin Store"
+  },
+  "diagram.broker.aria": {
+    "message": "Un evento llega a todos los suscriptores y, si uno falla, los demás lo reciben igualmente. Una petición llega a su único manejador y la respuesta vuelve a quien la envió."
+  },
+  "diagram.broker.events": {
+    "message": "Eventos"
+  },
+  "diagram.broker.events.caption": {
+    "message": "Todos los suscriptores lo reciben. Si uno falla, los demás no se ven afectados."
+  },
+  "diagram.broker.requests": {
+    "message": "Peticiones"
+  },
+  "diagram.broker.requests.caption": {
+    "message": "Un solo manejador responde y la respuesta vuelve a quien preguntó."
+  },
+  "diagram.lifecycle.active": {
+    "message": "vistas en las regiones"
+  },
+  "diagram.lifecycle.aria": {
+    "message": "Tres plugins pasan en paralelo por la carga, la evaluación, la inicialización, el renderizado y la liberación. Uno falla en la inicialización y los demás continúan."
+  },
+  "diagram.lifecycle.loading": {
+    "message": "Carga"
+  },
+  "diagram.lifecycle.evaluation": {
+    "message": "Evaluación"
+  },
+  "diagram.lifecycle.initialization": {
+    "message": "Inicialización"
+  },
+  "diagram.lifecycle.rendering": {
+    "message": "Renderizado"
+  },
+  "diagram.lifecycle.disposal": {
+    "message": "Liberación"
+  },
+  "diagram.lifecycle.isolated": {
+    "message": "// insights ha fallado y queda aislado: orders y alerts continúan"
+  },
+  "diagram.packages.all": {
+    "message": "Cada paquete tiene su momento, y todos se apoyan en el núcleo."
+  },
+  "diagram.packages.core": {
+    "message": "El núcleo: el contrato de los plugins, bootstrapPlugins y las regiones. Toda aplicación se basa en él."
+  },
+  "diagram.packages.create": {
+    "message": "Crear"
+  },
+  "diagram.packages.create.caption": {
+    "message": "npm create genera el proyecto, con el framework que elijas."
+  },
+  "diagram.packages.develop": {
+    "message": "Desarrollar"
+  },
+  "diagram.packages.develop.caption": {
+    "message": "npm run dev arranca el plugin dentro del shell de demostración."
+  },
+  "diagram.packages.publish": {
+    "message": "Publicar"
+  },
+  "diagram.packages.publish.caption": {
+    "message": "harmonix publish sube el bundle al Plugin Store."
+  },
+  "diagram.packages.run": {
+    "message": "Ejecutar"
+  },
+  "diagram.packages.run.caption": {
+    "message": "Las vistas de React se convierten en Web Components dentro de la aplicación."
+  },
+  "diagram.workflow.aria": {
+    "message": "El equipo de la aplicación construye el shell; los equipos de plugins los desarrollan, los publican en el Plugin Store y la aplicación los carga al ejecutarse."
+  },
+  "diagram.workflow.shell": {
+    "message": "Construir el shell"
+  },
+  "diagram.workflow.shell.who": {
+    "message": "Equipo de la aplicación"
+  },
+  "diagram.workflow.shell.done": {
+    "message": "Shell listo"
+  },
+  "diagram.workflow.develop": {
+    "message": "Desarrollar los plugins"
+  },
+  "diagram.workflow.develop.who": {
+    "message": "Equipos de plugins"
+  },
+  "diagram.workflow.publish": {
+    "message": "Publicar"
+  },
+  "diagram.workflow.run": {
+    "message": "Ejecutar"
+  },
+  "diagram.workflow.run.who": {
+    "message": "En el navegador"
   }
 }

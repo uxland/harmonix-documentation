@@ -7,6 +7,7 @@ import { Footer } from '../components/Footer';
 import styles from './index.module.css';
 import { Community } from '../components/Community';
 import { GetStarted } from '../components/GetStarted';
+import { Compose } from '../components/Compose';
 
 
 export default function Home(): JSX.Element {
@@ -16,6 +17,7 @@ export default function Home(): JSX.Element {
       description="Harmonix és un framework basat en un sistema de plugins modular">
       <main>
         <HeroSection />
+        <Compose />
         <Features />
         <TechStack />
         <Community />

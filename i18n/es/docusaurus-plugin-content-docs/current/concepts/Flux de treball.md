@@ -1,37 +1,28 @@
 ---
-sidebar_position: 3
+sidebar_position: 4
 ---
+
+import { Workflow } from '@site/src/components/Diagrams/Workflow';
 
 # Flujo de trabajo
 
-Harmonix ha sido creado para construir aplicaciones donde la **experiencia de desarrollo** se convierte en un punto clave, por eso la comodidad para el desarrollador es una prioridad.
+Harmonix está pensado para que los equipos puedan desarrollar plugins por su cuenta, con herramientas sencillas y estándar.
 
+## Flujo de desarrollo
 
+<Workflow />
 
-Esto se consigue gracias a **la autonomía** de desarrollo de plugins, junto con el conjunto de herramientas de configuración **sencilla y estándar.**
+1. **Construir el shell.** El equipo de la aplicación crea el shell sobre Harmonix: declara las regiones y la API, hasta que la aplicación está lista para alojar plugins. Consulta [Construir un shell](../api/building-a-shell.md).
+2. **Desarrollar los plugins.** Los equipos de los plugins empiezan con el [creador de plugins](../create-plugin/create-a-plugin.mdx). Les da un proyecto que se ejecuta en el shell de demostración de Harmonix.
+3. **Publicar.** Los plugins se construyen y se publican, normalmente en un Plugin Store. El store lleva el control de las versiones de cada plugin y de quién puede usarlas.
+4. **Ejecutar.** La aplicación carga los plugins y los inicializa en paralelo, y así construye la aplicación final.
 
+## Flujo de ejecución
 
-
-El **flujo de desarrollo** pasa por una **primera fase de creación del Shell** basado en Harmonix, donde se declaran las regiones principales y se configuran las herramientas necesarias hasta que la aplicación se convierte en un estado de "**fábrica de plugins**". Es entonces cuando los desarrolladores pueden comenzar a crear plugins con el sandbox proporcionado y que irán a parar en este Shell.
-
-
-
-Los plugins son **compilados y desplegados en el Plugin Store**, y desde allí se llevará un control sobre las versiones de cada plugin y se configurará los roles y permisos necesarios. Finalmente, la aplicación con el motor Harmonix obtendrá estos plugins y los **ejecutará asincrónicamente**, construyendo así la aplicación final.
-
-A continuación, se detalla el **flujo de ejecución** de una aplicación Harmonix:
-
-
-
-0- El usuario abre la aplicación en el Browser en el dominio correspondiente
-
-1- El shell, mediante Harmonix, crea el esqueleto, el objeto API e inicia el proceso principal de obtención de plugins
-
-2- Se descargan los ficheros de cada plugin publicados en el Plugin Store
-
-3- Se llama a la función de iniciación de cada plugin de forma paralela
-
-4- Cada plugin realiza las tareas que ha definido en su punto de inicialización
-
-5- La UI se va componiendo a medida que se van resolviendo los registros de componentes de plugins
-
-7- El usuario ve finalmente una sola aplicación compuesta de diferentes plugins y Web Components y puede interactuar con ella.
+1. El usuario abre la aplicación en el navegador.
+2. El shell pinta su esqueleto, crea sus regiones y empieza a cargar los plugins.
+3. Se carga cada plugin, normalmente desde el Plugin Store.
+4. Se llama a la función `initialize` de cada plugin en paralelo, cada una con su propia instancia de la API. Si un plugin falla, los demás se cargan igualmente.
+5. Cada plugin hace sus tareas de inicialización: registrar vistas, suscribirse a eventos, cargar datos.
+6. La interfaz se compone a medida que las vistas se registran en las regiones.
+7. El usuario ve una única aplicación formada por plugins diferentes y puede interactuar con ella.

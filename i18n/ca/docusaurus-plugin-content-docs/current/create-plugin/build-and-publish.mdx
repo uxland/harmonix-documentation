@@ -1,0 +1,111 @@
+---
+sidebar_position: 4
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Construir i publicar
+
+## Construir
+
+```bash
+npm run build
+```
+
+El resultat és **un únic mòdul ES, `dist/index.js`**, amb el teu plugin i el seu codi propi. No inclou:
+
+- **El shell** (`@uxland/harmonix-demo-shell`, o el shell de l'aplicació on s'executa).
+- **El framework**: React i React DOM, Lit, o Angular i RxJS.
+
+Els proporciona l'aplicació que carrega el plugin, perquè tots els plugins comparteixin una sola còpia: un shell, amb un gestor de regions i un broker, i una còpia de cada framework. Si un plugin portés la seva pròpia còpia del shell, registraria les seves vistes en un shell que ningú no pinta.
+
+<Tabs groupId="framework">
+  <TabItem value="react" label="React" default>
+
+`vite build` en mode llibreria: entrada `src/plugin.ts`, sortida `dist/index.js`.
+
+```typescript title="vite.config.ts"
+export default defineConfig({
+  server: { port: 5173 },
+  // The JSX runtime goes into the bundle and reads process.env.NODE_ENV, which browsers do not have.
+  define: { "process.env.NODE_ENV": JSON.stringify("production") },
+  build: {
+    lib: { entry: "src/plugin.ts", formats: ["es"], fileName: "index" },
+    rollupOptions: { external: ["@uxland/harmonix-demo-shell", "react", "react-dom", "react-dom/client"] },
+  },
+});
+```
+
+`@uxland/harmonix-adapters`, que renderitza components de React dins de web components, va dins del bundle.
+
+  </TabItem>
+  <TabItem value="lit" label="Lit">
+
+`vite build` en mode llibreria: entrada `src/plugin.ts`, sortida `dist/index.js`.
+
+```typescript title="vite.config.ts"
+export default defineConfig({
+  server: { port: 5173 },
+  build: {
+    lib: { entry: "src/plugin.ts", formats: ["es"], fileName: "index" },
+    rollupOptions: { external: ["@uxland/harmonix-demo-shell", /^lit($|\/)/, /^@lit\//] },
+  },
+});
+```
+
+  </TabItem>
+  <TabItem value="angular" label="Angular">
+
+Angular té el seu propi compilador, així que la construcció té dos passos (`ng build my-plugin && vite build`):
+
+1. **`ng build my-plugin`** compila la llibreria amb ng-packagr a `projects/my-plugin/dist`. La llibreria es compila en mode AOT complet (`"compilationMode": "full"` a `tsconfig.lib.json`): el resultat s'executa tal com és, sense el compilador d'Angular.
+2. **`vite build`** empaqueta aquest resultat en un únic `dist/index.js`, amb el codi que necessita el plugin i sense Angular, RxJS ni el shell.
+
+```typescript title="vite.config.ts"
+export default defineConfig({
+  build: {
+    lib: { entry: "projects/my-plugin/dist/fesm2022/my-plugin.mjs", formats: ["es"], fileName: () => "index.js" },
+    rollupOptions: { external: ["@uxland/harmonix-demo-shell", /^@angular\//, /^rxjs($|\/)/] },
+  },
+});
+```
+
+  </TabItem>
+</Tabs>
+
+Per comprovar els tipus sense construir: `npm run typecheck`.
+
+## Publicar al Plugin Store
+
+El fitxer que puges al Plugin Store és `dist/index.js`. L'aplicació obté la llista de plugins del store i carrega cadascun amb el seu id i la seva versió.
+
+El pots pujar amb la CLI d'Harmonix, [`@uxland/harmonix-cli`](https://www.npmjs.com/package/@uxland/harmonix-cli). Llegeix el plugin del `package.json`, que el creador ja ha omplert:
+
+| Camp | Valor | Ús |
+| --- | --- | --- |
+| `name` | `my-plugin` | L'id del plugin |
+| `version` | `0.1.0` | La versió que es publica |
+| `module` | `dist/index.js` | El fitxer que es puja |
+
+Crea un fitxer `.harmonixrc` a l'arrel del projecte amb l'adreça del store i la teva clau d'API:
+
+```ini title=".harmonixrc"
+registry=https://your-plugin-store.example.com/upload
+apiKey=your-api-key
+```
+
+:::danger
+`.harmonixrc` conté credencials: no el pugis mai al repositori. Els projectes fets amb el creador ja el tenen a `.gitignore`.
+:::
+
+En lloc del fitxer, també les pots passar com a opcions: `--registry <url>` i `--api-key <key>`.
+
+Després, construeix i publica:
+
+```bash
+npm run build
+npx @uxland/harmonix-cli publish
+```
+
+Per publicar una versió nova, canvia primer `version` al `package.json`.

@@ -1,116 +1,132 @@
 ---
-sidebar_position: 8
+sidebar_position: 2
 ---
 
-# Region and View Management in Harmonix
+# Regions and views
 
-# Introduction
+A **region** is an area of the shell where plugins inject views. A **view** is an HTML element, usually a Web Component, registered by a plugin.
 
-One of the characteristics of Harmonix applications is the Region concept. Any Harmonix-based shell must create the relevant regions and provide an **api** to plugins to manage the different **regions** of the application. To carry out all these functionalities, Harmonix uses the _@uxland/regions_ library.
+The shell creates the regions and gives each plugin a `regionManager` in its API. This page covers how plugins use it. To create regions in your own shell, see [Building a shell](./building-a-shell.md).
 
-Note: some functionalities will need to be imported from this library. In future versions, Harmonix will take care of exporting them making the shell only have Harmonix as a single dependency.
+Harmonix uses the [`@uxland/regions`](https://www.npmjs.com/package/@uxland/regions) library. The core re-exports `createRegionManager` and `createRegionHost`. The `@region` decorator and the adapters come from `@uxland/regions`, which the shell depends on directly.
 
-<br/>
-
-# HarmonixRegionManager API
-
-Harmonix has a default api to do all this view injection to regions management.
+## `HarmonixRegionManager`
 
 ```typescript
 export interface HarmonixRegionManager {
-    registerView(regionName: string, view: HarmonixViewDefinition): Promise<void>;
-    removeView(regionName: string, viewId: string): Promise<void>;
-    activateView(regionName: string, viewId: string): Promise<void>;
-    deactivateView(regionName: string, viewId: string): Promise<void>;
-    getRegion(regionName: string): Promise<IRegion>;
-    isViewActive(regionName: string, viewId: string): Promise<boolean>;
-    containsView(regionName: string, viewId: string): Promise<boolean>;
+  registerView(regionName: string, view: HarmonixViewDefinition): Promise<void>;
+  removeView(regionName: string, viewId: string): Promise<void>;
+  activateView(regionName: string, viewId: string): Promise<void>;
+  deactivateView(regionName: string, viewId: string): Promise<void>;
+  getRegion(regionName: string): Promise<IRegion>;
+  isViewActive(regionName: string, viewId: string): Promise<boolean>;
+  containsView(regionName: string, viewId: string): Promise<boolean>;
 }
 ```
 
+| Method | What it does |
+| --- | --- |
+| `registerView(region, view)` | Registers a view in a region |
+| `removeView(region, viewId)` | Removes the view from the region |
+| `activateView(region, viewId)` | Shows the view. In a single-active region, it hides the view that was active |
+| `deactivateView(region, viewId)` | Hides the view |
+| `getRegion(region)` | The `IRegion` object of `@uxland/regions` |
+| `isViewActive(region, viewId)` | Whether the view is shown |
+| `containsView(region, viewId)` | Whether the view is registered in the region |
 
+A plugin can register views in several regions.
 
-Each plugin can declare different views and inject them to different regions.
-
-<br/>
-
-# API regions extension and "friendly" api creation
-
-However, each Shell can extend this api and create more "friendly" methods for plugins such as: `registerMainView`, `registerSidebarMenu`, where they only ask for the "view" object, and plugins no longer need to know the region name, since the method itself is already explicit about which region it is "main", "sidebar". You will find an example of this extension in section 1 of the [Primary ETC integration document](https://doc.clickup.com/9012015559/d/h/8cjgwe7-3532/b3a23bc489160e1).
-
-
-<br/>
-
-# regionManager and regionHost creation
-
-The shell must create the `regionManager` object, the object in charge of view management and the regionHost, a Mixin for Lit necessary for all those WebComponents that need to declare regions and that is associated with the previous `regionManager`.
+## View definition
 
 ```typescript
-const regionManager: IRegionManager = createRegionManager("hes-cc-conf");
-export const HesCConfRegionHost: any = createRegionHost(regionManager as any);
-```
-
-<br/>
-
-# Creating a region in the Shell
-
-In the Shell component, we must use the **_@region_** decorator to declare a region, indicating the name and who will be the host (which HTML element will be the container where views will be injected). Example:
-
-```typescript
-@customElement("my-shell")
-export class HesCConfShell extends HesCConfRegionHost(LitElement) {
-
-  @region({ targetId: "header-right-region-container", name: shellRegions.headerRight })
-  headerRightRegion: IRegion | undefined;
+export interface HarmonixViewDefinition {
+  id: string;
+  factory: (regionContext?: unknown) => Promise<HTMLElement>;
+  sortHint?: string;
+  isDefault?: boolean;
+  removeFromDomWhenDeactivated?: boolean;
 }
 ```
 
-<br/>
+| Field | Description |
+| --- | --- |
+| `id` | Id of the view. Used by `activateView`, `removeView` and the other methods |
+| `factory(regionContext?)` | Async function that creates the element. It runs the first time the view is activated. `regionContext` is the context the shell set on the region, if any |
+| `sortHint` | Optional. Sort key for the views of a multiple-active region |
+| `isDefault` | Optional. In a single-active region, the view is activated when it is added if no other view is active, and again whenever the active view is deactivated |
+| `removeFromDomWhenDeactivated` | Optional. Removes the element from the DOM when the view is deactivated, instead of hiding it |
 
-# Complete example
+### View ids
 
-We can create a new component to continue with the example, which in this case will be `ExampleComponent`.
+In the demo shell, a view id only has to be unique within the plugin: the shell stores each view as `pluginId::viewId`. If your shell does not namespace ids this way, prefix them with `api.pluginInfo.pluginId`.
 
+## Region types
 
+The shell chooses how each region behaves:
 
-In the plugin initialization, the _api_ object is received, with a `regionManager`. This object will allow registering and injecting views, activating them, deactivating them, removing them and doing everything necessary.
+- **Single-active** regions show one view at a time. Activating a view hides the previous one. The main content area is usually single-active.
+- **Multiple-active** regions show all their views at once, for example a header or a menu. A view is activated as soon as it is registered.
 
+## Shell helpers
 
+A shell can add shortcuts so that plugins do not need to know region names. The [demo shell](../create-plugin/demo-shell.md) adds:
 
-The most basic action is to **register** a view. To do this, we just need to call the _registerView_ method indicating the region where we want to inject the view and the _View_ object. This object will define a factory that will return the component we want to inject.
+| Helper | What it does |
+| --- | --- |
+| `regions` | The region names: `regions.header`, `regions.sideMenu`, `regions.main` |
+| `registerMainView(view)` | `registerView` in the `main` region |
+| `activateMainView(viewId)` | `activateView` in the `main` region |
+| `registerNavigationItem({ id, label, icon?, mainViewId })` | Adds an item to the side menu that activates the main view `mainViewId` |
 
+These helpers belong to the demo shell, not to the core. Other shells can offer different ones.
 
+## Complete example
 
-However, some "helper" functions have been created so that injection is more declarative, such as `registerMainView` or `registerNavigationMenu`, where it will no longer be necessary to pass the region and the register function itself already explains where it will be injected, as we explained before.
-
-
-
-Similarly, we also inject the `PrimariaNavItem` into the side navigation menu region. This `PrimariaNavItem` will have the function of activating the `ExampleComponent` component view when clicked.
-
-
-
-The `activateMainView` function of the `regionManager` is in charge of selecting which is the active view in the main region. It needs as an argument the id of the plugin that was previously registered, in this case, "_plugin-main-view_".
-
-
-
-Example:
-
-
+First, the plugin defines the element it will show:
 
 ```typescript
-export const initialize = (api: PrimariaApi) => {
-  console.log(`Plugin ${api.pluginInfo.pluginId} initialized`);
-  api.regionManager.registerMainView({
+class ExampleComponent extends HTMLElement {
+  connectedCallback() {
+    const root = this.shadowRoot ?? this.attachShadow({ mode: "open" });
+    root.innerHTML = `<h1>Hello from ${this.getAttribute("plugin-id")}</h1>`;
+  }
+}
+
+if (!customElements.get("example-plugin-view")) {
+  customElements.define("example-plugin-view", ExampleComponent);
+}
+```
+
+Then the plugin registers it in `initialize` and removes it in `dispose`. This example uses the demo shell:
+
+```typescript
+import type { DemoShellApi } from "@uxland/harmonix-demo-shell";
+
+export const initialize = async (api: DemoShellApi) => {
+  // Generic: a view in any region.
+  await api.regionManager.registerView(api.regionManager.regions.main, {
     id: "plugin-main-view",
-    factory: () =>  Promise.resolve(new ExampleComponent()) ,
+    factory: async () => {
+      const element = new ExampleComponent();
+      element.setAttribute("plugin-id", api.pluginInfo.pluginId);
+      return element;
+    },
   });
 
-  api.regionManager.registerNavigationMenu({
-    id: "plugin-quick-action",
-    factory: () => Promise.resolve(new PrimariaNavItem("add_circle_outline", "Lit plugin", () => {
-      api.regionManager.activateMainView("plugin-main-view")
-    })),
+  // Helper: an item in the side menu that activates that view.
+  await api.regionManager.registerNavigationItem({
+    id: "plugin-menu",
+    label: "Example",
+    mainViewId: "plugin-main-view",
   });
-  return Promise.resolve();
+
+  // Show it.
+  await api.regionManager.activateMainView("plugin-main-view");
+};
+
+export const dispose = async (api: DemoShellApi) => {
+  const { regions } = api.regionManager;
+  await api.regionManager.removeView(regions.sideMenu, "plugin-menu");
+  await api.regionManager.removeView(regions.main, "plugin-main-view");
 };
 ```

@@ -1,55 +1,60 @@
 ---
-sidebar_position: 4
+sidebar_position: 5
 ---
 
-# Ciclo de vida de un Plugin
+import { PluginLifecycle } from '@site/src/components/Diagrams/PluginLifecycle';
 
-# Introducción
+# Ciclo de vida de un plugin
 
-Un plugin es una librería/paquete de Node.js que exporta al menos una función `initialize` que recibe una API de plugin para conectar componentes a una instancia de Harmonix Shell que lo aloja.
+Un plugin es un módulo ES, normalmente empaquetado en un único fichero JavaScript. Exporta dos funciones, y las dos devuelven una `Promise`:
 
-El ciclo de vida de un plugin existe en dos categorías diferentes:
+- `initialize(api)` arranca el plugin.
+- `dispose(api)` lo detiene y deshace todo lo que ha hecho `initialize`.
 
-*   **Ciclo de vida offline**, es decir, todo lo que hace referencia al desarrollo, mantenimiento y aprovisionamiento de un plugin.
-*   **Ciclo de vida online**, es decir, todo lo que hace referencia a cargar y evaluar un plugin dentro de una aplicación shell.
+```typescript
+import type { DemoShellApi, BrokerDisposableHandler } from "@uxland/harmonix-demo-shell";
 
-<br/>
+let subscription: BrokerDisposableHandler | undefined;
 
-# Ciclo de Vida Offline
+export const initialize = async (api: DemoShellApi) => {
+  await api.regionManager.registerMainView({
+    id: "orders",
+    factory: async () => document.createElement("orders-list"),
+  });
+  subscription = api.broker.subscribe("user:changed", () => console.log("Reload the orders"));
+};
 
-El ciclo de vida offline consiste en:
+export const dispose = async (api: DemoShellApi) => {
+  subscription?.dispose();
+  await api.regionManager.removeView(api.regionManager.regions.main, "orders");
+};
+```
 
-1. Inicialización/Estructuración
+El ciclo de vida de un plugin tiene dos partes:
+
+- **Ciclo de vida offline:** el desarrollo, el mantenimiento y la distribución del plugin.
+- **Ciclo de vida online:** lo que le pasa al plugin dentro de un shell en ejecución.
+
+## Ciclo de vida offline
+
+1. Creación
 2. Desarrollo y pruebas
 3. Publicación
 4. Mantenimiento
 5. Actualizaciones
-6. Desaprobación
+6. Obsolescencia
 7. Desactivación
 
+Las fases 1, 2 y 4 se hacen en local. Las fases 3, 5, 6 y 7 implican al Plugin Store, que debería dar soporte a todas ellas. Algunos Plugin Store también permiten un despliegue progresivo en la fase 3: una versión nueva empieza con una parte de los usuarios hasta que está lo bastante madura. Es una capacidad del Plugin Store, no de Harmonix.
 
+## Ciclo de vida online
 
-Mientras que las fases (1), (2) y (4) son puramente locales, las fases (3), (5), (6) y (7) implicarán el servicio de Plugin Store. Un servicio de Plugin Store debería dar soporte a todas estas acciones. Normalmente, en la fase (3) también se puede hacer un despliegue progresivo, que implicaría comenzar solo con un subconjunto de usuarios hasta que el plugin llegue al nivel de madurez deseado.
+<PluginLifecycle />
 
+1. **Carga.** El shell llama al `importer()` del `PluginDefinition` del plugin. Normalmente es un `import()` dinámico de la URL del plugin en el Plugin Store, o de un módulo local durante el desarrollo.
+2. **Evaluación.** El navegador evalúa el módulo, que expone `initialize` y `dispose`.
+3. **Inicialización.** Harmonix llama a `initialize(api)` con una instancia de la API creada para este plugin. Todos los plugins se inicializan en paralelo. Si uno lanza un error, el error se registra en la consola y los demás plugins siguen adelante.
+4. **Renderizado.** Las vistas registradas aparecen en sus regiones. La `factory` de cada vista se ejecuta cuando su región necesita el elemento.
+5. **Liberación.** El shell llama a `dispose(api)`. Esta función es obligatoria, y debe deshacerlo todo: eliminar las vistas, liberar las suscripciones del broker y los manejadores de peticiones, parar los temporizadores y liberar cualquier otro recurso.
 
-<br/>
-
-# Ciclo de Vida Online
-
-El ciclo de vida online describe qué pasa cuando un plugin se debe integrar en una aplicación shell. Tenemos:
-
-1. Carga
-2. Evaluación
-3. Configuración
-4. Renderización
-5. Desmontaje
-
-
-
-En la fase (1) se hace una petición al servicio de Plugin Store y se recupera el script.
-
-En la fase (2) se evalúa el script.
-
-En la fase (3) se ejecutará la función de configuración necesaria. En la fase de renderización (4) todos los componentes registrados de la fase (3) aparecerán en la aplicación cuando sean necesarios.
-
-En la fase (5) se ejecutará la función opcional de desmontaje.
+Consulta [Construir un shell](../api/building-a-shell.md) para ver la parte del shell en este proceso.

@@ -1,101 +1,104 @@
 ---
-sidebar_position: 6
+sidebar_position: 2
 ---
 
-# Ejemplo de uso de una aplicación basada en Harmonix - Primaria Shell
+# Ejemplo de uso
 
-# Visión rápida Shell
+Esta página muestra cómo se monta una aplicación Harmonix. Usa el [shell de demostración de Harmonix](../create-plugin/demo-shell.md), el shell pequeño que Harmonix proporciona para desarrollar y probar plugins.
 
-Para explicar el funcionamiento de **Harmonix** y cómo se puede construir una app compuesta de diferentes plugins desarrollada en diferentes tecnologías y por diferentes clientes, explicaremos un ejemplo de cómo funciona la aplicación de la Estación de trabajo de Primaria.
+## Las piezas
 
+Hay tres piezas:
 
+- **Harmonix** (`@uxland/harmonix`). El núcleo que carga los plugins, da una API a cada uno y gestiona las regiones.
+- **El shell.** La aplicación principal. Define un esqueleto con regiones donde los plugins inyectan Web Components. Cada aplicación construye su propio shell, con su propio layout y sus propios servicios.
+- **Los plugins.** Paquetes que desarrollan otros equipos. Se construyen y se publican, normalmente en un Plugin Store, y el shell los carga.
 
-Primero de todo, existe **Harmonix**, el motor principal capaz de obtener y unir todos estos plugins, dotarlos con funcionalidades para interactuar entre ellos y componiendo así la aplicación final.
+## El shell
 
+El shell de demostración tiene tres regiones: una cabecera, un menú lateral y el contenido principal. Por sí solo, el shell es un esqueleto vacío. Antes de que arranque ningún plugin, su DOM es así:
 
-
-Segundo, existe el "**Shell**", que será la aplicación principal y quien mediante Harmonix, definirá un esqueleto con regiones donde los plugins podrán inyectar diferentes Web Components. Cada aplicación debe construir un Shell diferente, ya que cada una tendrá un esqueleto y una forma de trabajar propios. En el caso de primaria, tenemos el "Primaria Shell". El shell, por sí solo, no es más que un conjunto de contenedores, un esqueleto vacío. Si viéramos el shell antes de iniciar los plugins, veríamos algo semejante a esto:
-
-
-
-```typescript
-<primaria-shell>
+```html
+<harmonix-demo-shell>
+  <header>
     <div id="header-region"></div>
-    <div id="menu-region"></div>
-    <div id="footer-region"></div>
+  </header>
+  <nav>
+    <div id="side-menu-region"></div>
+  </nav>
+  <main>
     <div id="main-region"></div>
-  </primaria-shell>
+  </main>
+</harmonix-demo-shell>
 ```
 
-<br/>
+## Un plugin
 
-# Visión rápida Plugin
+Cada plugin se construye y se empaqueta en un fichero JavaScript, por ejemplo `plugin1-1.2.0.js`.
 
-Y por último, tenemos los "**plugins**", que no son más que paquetes que desarrolla un 3ro, que se compilan, y que una vez publicados en un "Plugin Store", están listos para ser consumidos por el Shell.
+El fichero es un módulo ES que exporta dos funciones:
 
-
-
-Cada plugin necesita compilarse y hacer un bundle, generando un archivo JavaScript, por ejemplo:
-
-**_plugin1-version-23.45.js._**
-
-
-
-Estos plugins, en su Javascript necesitan definir un **punto de entrada** para iniciar su ciclo de vida. En este punto de iniciación, cada plugin recibe un objeto proveniente del Shell, llamado **api**. Con esta API, el plugin tiene todo lo necesario para funcionar dentro del Shell. Por ejemplo, tiene una forma de registrar cada componente en cada región que se haya definido (menú, header, main, footer). Tiene una forma de escuchar eventos que otro plugin haya podido comunicar, o un cliente HTTP para hacer llamadas a un backend, o una forma de mostrar un mensaje de notificación en pantalla, entre muchas otras cosas. Esto sería un ejemplo de punto de entrada de un plugin:
-
-
+- `initialize(api)` arranca el plugin. El shell la llama con un objeto **API**. A través de la API, el plugin registra sus vistas en las regiones (cabecera, menú lateral, principal) y publica eventos de otros plugins o los escucha. Cada shell puede añadir más servicios a su API, como un cliente HTTP o notificaciones.
+- `dispose(api)` detiene el plugin. Debe deshacer todo lo que ha hecho `initialize`.
 
 ```typescript
-export const initialize = (api: PrimariaApi) =>{
+import type { DemoShellApi } from "@uxland/harmonix-demo-shell";
 
-  //registro de Web Components en el esqueleto del Shell primaria
-  api.registerView(shellRegions.menu, ())=> new Plugin1MenuWebComponent());
-  api.registerView(shellRegions.header, ()=> new Plugin1HeaderWebComponent);
-  api.registerView(shellRegions.footer, ()=> new Plugin1FooterWebComponent());
-  api.registerView(shellRegions.main, ()=> new Plugin1MainWebComponent());
+export const initialize = async (api: DemoShellApi) => {
+  const { regions } = api.regionManager;
 
-  //hacer una llamada para obtener datos de mi plugin
-  api.httpClient.request(`${apiUrl}/get-plugin-data`).then((res: any) => { console.log(res) });
-}
+  // Register Web Components in the regions of the shell
+  await api.regionManager.registerView(regions.header, { id: "header", factory: async () => new Plugin1HeaderWebComponent() });
+  await api.regionManager.registerView(regions.sideMenu, { id: "menu", factory: async () => new Plugin1MenuWebComponent() });
+  await api.regionManager.registerView(regions.main, { id: "main", factory: async () => new Plugin1MainWebComponent() });
+
+  // Tell the other plugins that this one is ready
+  await api.broker.publish("plugin1:ready", { pluginId: api.pluginInfo.pluginId });
+};
+
+export const dispose = async (api: DemoShellApi) => {
+  const { regions } = api.regionManager;
+  await api.regionManager.removeView(regions.header, "header");
+  await api.regionManager.removeView(regions.sideMenu, "menu");
+  await api.regionManager.removeView(regions.main, "main");
+};
 ```
 
-<br/>
+`Plugin1HeaderWebComponent` y los demás son custom elements que define el plugin.
 
-# Visión rápida Shell + Plugins
+## El shell con plugins
 
-Una vez el Shell y el framework Harmonix ha dado la orden de iniciar los plugins, el esqueleto del Shell pasa de estar vacío, a ser ya una aplicación compuesta por muchos Web Components. Si ahora vemos cómo está el DOM, sería algo así:
+Cuando los plugins han arrancado, el esqueleto se llena con sus Web Components. Con dos plugins, el DOM es así:
 
-
-
-```typescript
-<primaria-shell>
+```html
+<harmonix-demo-shell>
+  <header>
     <div id="header-region">
-      <plugin1-header><h1>I'm Plugin 1</h1></plugin1-header>
-      <plugin2-header><h1>I'm Plugin 2</h1></plugin2-header>
+      <plugin1-header><span>I'm Plugin 1</span></plugin1-header>
+      <plugin2-header><span>I'm Plugin 2</span></plugin2-header>
     </div>
-    <div id="menu-region">
-      <plugin1-menu><span>Go to Plugin 1 Menu</span></plugin1-menu>
-      <plugin2-menu><span>Go to Plugin 2 Menu</span></plugin2-menu>
+  </header>
+  <nav>
+    <div id="side-menu-region">
+      <plugin1-menu><span>Go to Plugin 1</span></plugin1-menu>
+      <plugin2-menu><span>Go to Plugin 2</span></plugin2-menu>
     </div>
-    <div id="footer-region">
-      <plugin1-footer>Plugin 1 2024</plugin1-footer>
-      <plugin2-footer><h1>Plugin 2 2024</h1></plugin2-footer>
-    </div>
+  </nav>
+  <main>
     <div id="main-region">
       <plugin1-main>
         <div class="box">Plugin 1 Box main</div>
       </plugin1-main>
-      <plugin2-main>
+      <plugin2-main hidden>
         <div class="box">Plugin 2 Box main</div>
       </plugin2-main>
     </div>
-  </primaria-shell>
+  </main>
+</harmonix-demo-shell>
 ```
 
+La cabecera y el menú lateral son regiones de **varias vistas activas**: todas sus vistas se muestran a la vez. La región principal es de **vista activa única**: solo se muestra una vista a la vez. Cuando todos los plugins han arrancado, si ninguno ha activado una vista principal, el shell de demostración activa la primera que se ha registrado. La otra vista queda `hidden` hasta que un elemento del menú la activa.
 
+![Dos plugins en el shell de demostración](/img/create-plugin/demo-shell-regions.png)
 
-Como se puede comprobar, el plugin1 y el plugin2, han sido capaces mediante la API recibida en su punto inicial, de registrar diferentes Web Components en diferentes regiones. Ahora la aplicación Shell ya está llena.
-
-
-
-En los equipos de desarrollo se les proporciona un Sandbox para simular una aplicación donde se instala el "Primaria Shell", de esta manera pueden trabajar individualmente y ver cómo quedará su plugin.
+Para desarrollar un plugin, los equipos no necesitan la aplicación final. El [creador de plugins](../create-plugin/create-a-plugin.mdx) les da un proyecto que ejecuta el plugin en el shell de demostración, así que pueden trabajar por su cuenta y ver cómo quedará el plugin.

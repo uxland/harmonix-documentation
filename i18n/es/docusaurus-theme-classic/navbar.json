@@ -16,11 +16,15 @@
     "description": "Navbar item with label API"
   },
   "item.label.Getting started": {
-    "message": "Getting started",
+    "message": "Primeros pasos",
     "description": "Navbar item with label Getting started"
   },
+  "item.label.Packages": {
+    "message": "Paquetes",
+    "description": "Navbar item with label Packages"
+  },
   "item.label.Best practices": {
-    "message": "Best practices",
+    "message": "Buenas prácticas",
     "description": "Navbar item with label Best practices"
   },
   "item.label.FAQ": {

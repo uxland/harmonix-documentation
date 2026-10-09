@@ -1,0 +1,83 @@
+---
+sidebar_position: 1
+---
+
+import Tabs from '@theme/Tabs';
+import TabItem from '@theme/TabItem';
+
+# Crear un plugin
+
+La forma más rápida de empezar un plugin de Harmonix es el creador de plugins. Genera un proyecto con React, Lit o Angular que ya funciona: un plugin que registra una vista y un elemento de menú, ejecutándose dentro de un pequeño shell, el **shell de demostración de Harmonix**, para que lo veas desde el primer minuto.
+
+## Requisitos
+
+- [Node.js](https://nodejs.org) 20.19 o posterior, con npm.
+
+## 1. Crea el proyecto
+
+<Tabs groupId="framework">
+  <TabItem value="react" label="React" default>
+
+```bash
+npm create @uxland/harmonix-plugin@latest my-plugin -- --template react
+```
+
+  </TabItem>
+  <TabItem value="lit" label="Lit">
+
+```bash
+npm create @uxland/harmonix-plugin@latest my-plugin -- --template lit
+```
+
+  </TabItem>
+  <TabItem value="angular" label="Angular">
+
+```bash
+npm create @uxland/harmonix-plugin@latest my-plugin -- --template angular
+```
+
+  </TabItem>
+</Tabs>
+
+Crea la carpeta `my-plugin`. El nombre de la carpeta es también el **id del plugin** (`pluginId`) y el nombre del paquete, así que elígelo con cuidado: letras minúsculas, números y guiones.
+
+Sin argumentos, `npm create @uxland/harmonix-plugin@latest` te pregunta la carpeta y el framework.
+
+:::tip Usa siempre `@latest`
+Sin él, npm puede reutilizar una versión anterior del creador que ya tenga en caché, con plantillas antiguas.
+:::
+
+## 2. Arráncalo
+
+```bash
+cd my-plugin
+npm install
+npm run dev
+```
+
+Abre la dirección que aparece en el terminal: [http://localhost:5173](http://localhost:5173) para React y Lit, [http://localhost:4200](http://localhost:4200) para Angular.
+
+![El plugin creado con React, ejecutándose en el shell de demostración](/img/create-plugin/create-plugin-react.png)
+
+Lo que ves:
+
+- El **shell de demostración**: una cabecera, un menú lateral y el área de contenido. Cada una de estas partes es una **región** donde los plugins inyectan sus vistas. El shell no tiene vistas propias.
+- Tu **plugin**, que ha registrado dos vistas: el elemento **My plugin** del menú lateral y la página del área de contenido, que está activa.
+- El **broker** en acción: el botón publica un evento y la misma vista, suscrita a él, lo cuenta. Cualquier otro plugin podría publicar o escuchar ese evento.
+
+Edita la vista y guarda: la página se recarga con tus cambios.
+
+## 3. Constrúyelo
+
+```bash
+npm run build
+```
+
+El resultado es un único fichero, `dist/index.js`, con tu plugin y nada más: el framework y el shell quedan fuera del bundle, porque los proporciona la aplicación que carga el plugin. Ese fichero es el que subes a la Plugin Store. Consulta [Build y publicación](./build-and-publish.mdx).
+
+## Siguientes pasos
+
+- [Estructura del proyecto](./project-structure.mdx): qué hace cada fichero generado.
+- [El shell de demostración](./demo-shell.md): sus regiones y la API que recibe tu plugin.
+- [Notas por framework](./frameworks.mdx): qué tener en cuenta con React, Lit y Angular.
+- [Regiones y vistas](../api/gestio-regions-i-vistes.md) y [buenas prácticas](../best-practices/best-practices.md), para seguir haciendo crecer el plugin.

@@ -32,7 +32,7 @@
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 84px;
+  gap: 40px;
 }
 .header {
   color: #f4f4f4;
@@ -40,8 +40,8 @@
   font-weight: normal;
   font-size: 62px;
   line-height: 74px;
-  width: 838.6px;
-  height: 288.2px;
+  max-width: 838.6px;
+  margin-bottom: 40px;
 }
 .buttons {
   color: #30363a;
@@ -191,7 +191,7 @@
     width: auto;
     text-align: left;
     line-height: 46px;
-    height: 138px;
+    margin-bottom: 24px;
   }
   .buttons {
     flex-direction: column;
@@ -243,7 +243,7 @@
     display: none;
   }
   .line {
-    width: 360px;
+    width: min(360px, calc(100% - 40px));
     margin: 0;
   }
 }

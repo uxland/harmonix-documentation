@@ -1,0 +1,46 @@
+---
+sidebar_position: 5
+---
+
+# Notas por framework
+
+Una región solo recibe elementos HTML. Cada framework tiene su propia forma de convertir sus componentes en uno, y algunas cosas que hay que tener en cuenta.
+
+## Todos los frameworks
+
+- **Encapsula los estilos.** Las vistas viven dentro del shell, al lado de las vistas de otros plugins. Píntalas en su propio shadow DOM para que sus estilos no se escapen y los del shell no entren. Las tres plantillas ya lo hacen. Las propiedades CSS personalizadas, como los colores `--hx-*` del shell, sí atraviesan el shadow DOM: así es como las vistas pueden usarlas.
+- **Sin routing.** Un plugin no es dueño de la URL: el shell decide qué se muestra. Para moverte entre vistas, actívalas con el `regionManager` (`activateMainView`, `activateView`).
+- **La versión del framework es la de la aplicación.** El bundle del plugin no incluye el framework: usa el que proporciona la aplicación. Desarrolla con la misma versión mayor que usa la aplicación.
+- **Limpia en `dispose`.** Elimina las vistas, cancela las suscripciones al broker y para los temporizadores, para que el plugin se pueda descargar y volver a cargar sin dejar nada atrás.
+
+## React
+
+Los componentes React se convierten en web components con `wrapReactViewFactory`, de [`@uxland/harmonix-adapters`](https://www.npmjs.com/package/@uxland/harmonix-adapters):
+
+```typescript
+wrapReactViewFactory(MainView, styles, { fullHeight: true })({ api });
+```
+
+- El primer argumento es el componente; el segundo, su CSS como cadena (la plantilla lo importa con `?inline`), que se aplica dentro del shadow DOM del componente; el tercero, las opciones (`fullHeight` hace que la vista ocupe toda la altura de la región).
+- La función que devuelve recibe las props del componente. La plantilla le pasa la API.
+- Cada vista es una raíz de React independiente. Para compartir estado entre vistas del mismo plugin, guárdalo fuera de los componentes (un store, un contexto creado en `plugin.ts`…) o usa el broker.
+
+## Lit
+
+Los componentes Lit ya son web components: la factoría solo tiene que crear uno y darle sus propiedades.
+
+```typescript
+factory: async () => Object.assign(new MainView(), { api }),
+```
+
+- La plantilla usa decoradores (`@customElement`, `@property`, `@state`), así que `tsconfig.json` tiene `experimentalDecorators` activado y `useDefineForClassFields` desactivado.
+- Usa un nombre de etiqueta con el id del plugin como prefijo (`my-plugin-main-view`): los nombres de los custom elements son globales, y dos plugins no pueden definir el mismo.
+- En desarrollo, la consola puede mostrar *Multiple versions of Lit loaded*: la librería de regiones usa su propia versión de Lit. No afecta al plugin.
+
+## Angular
+
+- **Una aplicación Angular por plugin.** `plugin.ts` la crea con `createApplication` en `initialize` y la destruye en `dispose`. Sus providers son los del plugin.
+- **Componentes como vistas.** `angular-view.ts` crea el componente en esa aplicación, le asigna sus entradas y devuelve su elemento. Úsalo para cada vista que registres.
+- **`ViewEncapsulation.ShadowDom`** en cada componente de vista, por los motivos de arriba.
+- **Zoneless.** La plantilla no usa Zone.js (`provideZonelessChangeDetection`), para que el plugin no dependa de lo que cargue la aplicación. Guarda el estado de la vista en signals (`signal`, `input`): Angular actualiza la vista cuando cambian, también cuando el cambio viene del broker.
+- **Build en dos pasos**: ng-packagr y Vite (consulta [Build y publicación](./build-and-publish.mdx)).
