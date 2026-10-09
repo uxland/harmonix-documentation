@@ -5,6 +5,8 @@ sidebar_label: Adaptadors
 
 # `@uxland/harmonix-adapters`
 
+[![npm](https://img.shields.io/npm/v/@uxland/harmonix-adapters?label=npm&color=4bcbb6)](https://www.npmjs.com/package/@uxland/harmonix-adapters)
+
 Les regions només accepten elements HTML. Aquest paquet converteix un component de React en un element HTML: l'embolcalla en un Web Component amb el seu propi shadow DOM i els seus estils, perquè un plugin de React el pugui registrar com a vista. Els plugins de Lit i d'Angular no el necessiten.
 
 ## Instal·lació
@@ -51,7 +53,7 @@ Cada plugin de React empaqueta la seva pròpia còpia de l'adaptador, mentre que
 
 ## Versions i requisits
 
-La versió actual a npm (`latest`) és la 1.3.1. Requereix React 19: `react` i `react-dom` `^19.0.0` són dependències del paquet. Deixa'ls fora del paquet del plugin perquè tots els plugins comparteixin la còpia de l'aplicació, com fa la plantilla de React a `vite.config.ts`.
+Requereix React 19: `react` i `react-dom` `^19.0.0` són dependències del paquet. Deixa'ls fora del paquet del plugin perquè tots els plugins comparteixin la còpia de l'aplicació, com fa la plantilla de React a `vite.config.ts`.
 
 ## Enllaços
 

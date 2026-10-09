@@ -5,6 +5,8 @@ sidebar_label: Adapters
 
 # `@uxland/harmonix-adapters`
 
+[![npm](https://img.shields.io/npm/v/@uxland/harmonix-adapters?label=npm&color=4bcbb6)](https://www.npmjs.com/package/@uxland/harmonix-adapters)
+
 Regions only accept HTML elements. This package turns a React component into one: it wraps the component in a Web Component with its own shadow DOM and its styles, so a React plugin can register it as a view. Lit and Angular plugins do not need it.
 
 ## Install
@@ -51,7 +53,7 @@ Each React plugin bundles its own copy of the adapter, while React itself is pro
 
 ## Versions and requirements
 
-The current version on npm (`latest`) is 1.3.1. It requires React 19: `react` and `react-dom` `^19.0.0` are dependencies of the package. Leave them out of your plugin bundle so that all plugins share the application's copy, as the React template does in `vite.config.ts`.
+It requires React 19: `react` and `react-dom` `^19.0.0` are dependencies of the package. Leave them out of your plugin bundle so that all plugins share the application's copy, as the React template does in `vite.config.ts`.
 
 ## Links
 

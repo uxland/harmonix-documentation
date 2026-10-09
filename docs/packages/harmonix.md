@@ -5,6 +5,8 @@ sidebar_label: Core
 
 # `@uxland/harmonix`
 
+[![npm](https://img.shields.io/npm/v/@uxland/harmonix?label=npm&color=4bcbb6)](https://www.npmjs.com/package/@uxland/harmonix)
+
 The core of Harmonix. It defines the contract between a shell and its plugins (`Plugin`, `HarmonixApi` and the related types), loads the plugins (`bootstrapPlugins`) and provides the region manager that shells use to create regions and register views. It does not render anything and has no shell of its own: each application builds one on top of it. Plugins usually only import its types.
 
 ## Install
@@ -65,7 +67,7 @@ The full reference is in [API reference](../api/Api.md), [Regions and views](../
 
 ## Versions
 
-The current version is 1.1.6. The [demo shell](./demo-shell.md) depends on `^1.1.6`.
+The [demo shell](./demo-shell.md) depends on `^1.1.6`.
 
 ## Links
 

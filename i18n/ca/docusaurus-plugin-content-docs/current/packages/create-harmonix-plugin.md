@@ -5,6 +5,8 @@ sidebar_label: Creador de plugins
 
 # `@uxland/create-harmonix-plugin`
 
+[![npm](https://img.shields.io/npm/v/@uxland/create-harmonix-plugin?label=npm&color=4bcbb6)](https://www.npmjs.com/package/@uxland/create-harmonix-plugin)
+
 El creador de plugins. Genera un projecte de plugin amb React, Lit o Angular que ja funciona: un plugin que registra una vista a la regió `main` i un element al menú lateral, executant-se dins del [shell de demostració](./demo-shell.md). El fas servir un cop, per començar un projecte; no és una dependència del projecte que crea.
 
 ## Ús
