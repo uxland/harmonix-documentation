@@ -49,7 +49,6 @@ Node.js 20.19 o posterior.
 ## Enlaces
 
 - [npm](https://www.npmjs.com/package/@uxland/create-harmonix-plugin)
-- [Código fuente en GitHub](https://github.com/uxland/harmonix/tree/main/harmonix/create-plugin) (las plantillas están en `templates/`)
 - [Crear un plugin](../create-plugin/create-a-plugin.mdx): la guía paso a paso.
 - [Notas por framework](../create-plugin/frameworks.mdx): qué cambia entre React, Lit y Angular.
 - [Build y publicación](../create-plugin/build-and-publish.mdx)

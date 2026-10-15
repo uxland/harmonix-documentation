@@ -96,4 +96,4 @@ Yes. Each plugin is built and published on its own, so each team can have its ow
 
 ## Where can I find more resources?
 
-Start with [Create a plugin](../create-plugin/create-a-plugin.mdx). The source code is on [GitHub](https://github.com/uxland/harmonix).
+Start with [Create a plugin](../create-plugin/create-a-plugin.mdx).

@@ -103,6 +103,5 @@ Depèn d'`axios`, `commander` i `form-data`.
 ## Enllaços
 
 - [npm](https://www.npmjs.com/package/@uxland/harmonix-cli)
-- [Codi font a GitHub](https://github.com/uxland/harmonix/tree/main/harmonix/cli)
 - [Construir i publicar](../create-plugin/build-and-publish.mdx)
 - [Gestió de plugins amb un Plugin Store](../concepts/gestio-plugins-plugin-store.md)

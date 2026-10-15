@@ -96,4 +96,4 @@ Sí. Cada plugin es construeix i es publica pel seu compte, així que cada equip
 
 ## On puc trobar més recursos?
 
-Comença per [Crear un plugin](../create-plugin/create-a-plugin.mdx). El codi font és a [GitHub](https://github.com/uxland/harmonix).
+Comença per [Crear un plugin](../create-plugin/create-a-plugin.mdx).

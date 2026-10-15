@@ -6,7 +6,7 @@ sidebar_position: 4
 
 The shell is the main application. It renders the layout, creates the regions, builds the API that each plugin receives and loads the plugins.
 
-This page builds a small shell step by step. It is a simplified version of the [demo shell](../create-plugin/demo-shell.md), whose full source is on [GitHub](https://github.com/uxland/harmonix/tree/main/harmonix/demo-shell/src).
+This page builds a small shell step by step. It is a simplified version of the [demo shell](../create-plugin/demo-shell.md).
 
 The shell needs these packages:
 
@@ -120,8 +120,8 @@ The core only defines the interfaces. The shell implements them:
   };
   ```
 
-- **Broker.** Implement `HarmonixBroker` (see [Broker](./broker.md)). The demo shell's [in-memory broker](https://github.com/uxland/harmonix/blob/main/harmonix/demo-shell/src/broker.ts) is about 60 lines.
-- **Translations.** Implement `createLocaleManager`, which returns a `HarmonixLocaleApi`. See the demo shell's [locale.ts](https://github.com/uxland/harmonix/blob/main/harmonix/demo-shell/src/locale.ts).
+- **Broker.** Implement `HarmonixBroker` (see [Broker](./broker.md)). The demo shell's in-memory broker is about 60 lines.
+- **Translations.** Implement `createLocaleManager`, which returns a `HarmonixLocaleApi`.
 
 Add anything else your plugins need: an HTTP client, authentication, notifications, shortcuts for your regions…
 

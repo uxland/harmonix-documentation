@@ -72,5 +72,4 @@ El [shell de demostración](./demo-shell.md) depende de `^1.1.6`.
 ## Enlaces
 
 - [npm](https://www.npmjs.com/package/@uxland/harmonix)
-- [Código fuente en GitHub](https://github.com/uxland/harmonix/tree/main/harmonix/core)
 - [Construir un shell](../api/building-a-shell.md): un shell construido paso a paso sobre el núcleo.

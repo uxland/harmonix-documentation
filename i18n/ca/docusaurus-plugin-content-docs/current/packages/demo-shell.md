@@ -65,6 +65,5 @@ Depèn d'`@uxland/harmonix` `^1.1.6`, `@uxland/regions` `^1.0.0` i `lit` `^3.2.1
 ## Enllaços
 
 - [npm](https://www.npmjs.com/package/@uxland/harmonix-demo-shell)
-- [Codi font a GitHub](https://github.com/uxland/harmonix/tree/main/harmonix/demo-shell)
 - [El shell de demostració](../create-plugin/demo-shell.md)
 - [Construir un shell](../api/building-a-shell.md): com escriure el teu propi shell prenent com a model el shell de demostració.

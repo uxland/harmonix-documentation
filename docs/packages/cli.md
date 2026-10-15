@@ -103,6 +103,5 @@ It depends on `axios`, `commander` and `form-data`.
 ## Links
 
 - [npm](https://www.npmjs.com/package/@uxland/harmonix-cli)
-- [Source on GitHub](https://github.com/uxland/harmonix/tree/main/harmonix/cli)
 - [Build and publish](../create-plugin/build-and-publish.mdx)
 - [Plugin management with a Plugin Store](../concepts/gestio-plugins-plugin-store.md)

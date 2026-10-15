@@ -96,4 +96,4 @@ Sí. Cada plugin se construye y se publica por separado, así que cada equipo pu
 
 ## ¿Dónde encuentro más recursos?
 
-Empieza por [Crear un plugin](../create-plugin/create-a-plugin.mdx). El código fuente está en [GitHub](https://github.com/uxland/harmonix).
+Empieza por [Crear un plugin](../create-plugin/create-a-plugin.mdx).

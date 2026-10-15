@@ -65,6 +65,5 @@ It depends on `@uxland/harmonix` `^1.1.6`, `@uxland/regions` `^1.0.0` and `lit` 
 ## Links
 
 - [npm](https://www.npmjs.com/package/@uxland/harmonix-demo-shell)
-- [Source on GitHub](https://github.com/uxland/harmonix/tree/main/harmonix/demo-shell)
 - [The demo shell](../create-plugin/demo-shell.md)
 - [Building a shell](../api/building-a-shell.md): how to write your own shell, using the demo shell as a model.
