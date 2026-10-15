@@ -58,6 +58,5 @@ It requires React 19: `react` and `react-dom` `^19.0.0` are dependencies of the 
 ## Links
 
 - [npm](https://www.npmjs.com/package/@uxland/harmonix-adapters)
-- [Source on GitHub](https://github.com/uxland/harmonix/tree/main/harmonix/adapters)
 - [Framework notes](../create-plugin/frameworks.mdx): React, Lit and Angular views in a region.
 - [Regions and views](../api/gestio-regions-i-vistes.md)

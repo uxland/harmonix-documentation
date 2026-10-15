@@ -49,7 +49,6 @@ Node.js 20.19 o posterior.
 ## Enllaços
 
 - [npm](https://www.npmjs.com/package/@uxland/create-harmonix-plugin)
-- [Codi font a GitHub](https://github.com/uxland/harmonix/tree/main/harmonix/create-plugin) (les plantilles són a `templates/`)
 - [Crear un plugin](../create-plugin/create-a-plugin.mdx): la guia pas a pas.
 - [Notes per framework](../create-plugin/frameworks.mdx): què canvia entre React, Lit i Angular.
 - [Construir i publicar](../create-plugin/build-and-publish.mdx)

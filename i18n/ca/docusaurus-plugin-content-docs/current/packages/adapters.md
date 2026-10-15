@@ -58,6 +58,5 @@ Requereix React 19: `react` i `react-dom` `^19.0.0` són dependències del paque
 ## Enllaços
 
 - [npm](https://www.npmjs.com/package/@uxland/harmonix-adapters)
-- [Codi font a GitHub](https://github.com/uxland/harmonix/tree/main/harmonix/adapters)
 - [Notes per framework](../create-plugin/frameworks.mdx): vistes de React, Lit i Angular en una regió.
 - [Regions i vistes](../api/gestio-regions-i-vistes.md)

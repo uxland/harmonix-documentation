@@ -6,7 +6,7 @@ sidebar_position: 4
 
 El shell és l'aplicació principal. Pinta la disposició de la pàgina, crea les regions, construeix l'API que rep cada plugin i carrega els plugins.
 
-Aquesta pàgina construeix pas a pas un shell petit. És una versió simplificada del [shell de demostració](../create-plugin/demo-shell.md), el codi complet del qual és a [GitHub](https://github.com/uxland/harmonix/tree/main/harmonix/demo-shell/src).
+Aquesta pàgina construeix pas a pas un shell petit. És una versió simplificada del [shell de demostració](../create-plugin/demo-shell.md).
 
 El shell necessita aquests paquets:
 
@@ -120,8 +120,8 @@ El nucli només defineix les interfícies. El shell les implementa:
   };
   ```
 
-- **Broker.** Implementa `HarmonixBroker` (consulta [Broker](./broker.md)). El [broker en memòria](https://github.com/uxland/harmonix/blob/main/harmonix/demo-shell/src/broker.ts) del shell de demostració té unes 60 línies.
-- **Traduccions.** Implementa `createLocaleManager`, que retorna un `HarmonixLocaleApi`. Consulta el fitxer [locale.ts](https://github.com/uxland/harmonix/blob/main/harmonix/demo-shell/src/locale.ts) del shell de demostració.
+- **Broker.** Implementa `HarmonixBroker` (consulta [Broker](./broker.md)). El broker en memòria del shell de demostració té unes 60 línies.
+- **Traduccions.** Implementa `createLocaleManager`, que retorna un `HarmonixLocaleApi`.
 
 Afegeix-hi qualsevol altra cosa que necessitin els teus plugins: un client HTTP, autenticació, notificacions, dreceres per a les teves regions…
 
